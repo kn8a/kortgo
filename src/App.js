@@ -1,4 +1,10 @@
 import React from 'react';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Book from './pages/Book';
+import Bookings from './pages/Bookings';
+import Account from './pages/Account';
+import Menu from './pages/Menu';
 import {
   ChakraProvider,
   Box,
@@ -10,32 +16,42 @@ import {
   theme,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
 function App() {
   return (
-    <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
-      </Box>
-    </ChakraProvider>
+    <>
+      <ChakraProvider theme={theme}>
+      {/* <ColorModeSwitcher justifySelf="flex-end" /> */}
+      <Box>
+        <Router >
+        <Routes>
+            <Route
+              path='/'
+              element={<Menu/>}
+            />
+            <Route path='/login' element={<Login/>} />
+            {/* <Route path='/' element={<Board />} /> */}
+            <Route path='/account' element={<Account/>} />
+            <Route path='/book' element={<Book/>} />
+            <Route
+              path='/booking'
+              element={<Bookings />}
+            />
+          </Routes>
+
+
+          
+            
+
+
+        </Router>  
+        </Box>
+      </ChakraProvider>
+    </>
+    
   );
 }
 
