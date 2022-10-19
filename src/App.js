@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Book from './pages/Book';
@@ -21,6 +21,14 @@ import "react-toastify/dist/ReactToastify.css"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
 function App() {
+
+  const [loggedIn, setLoggedIn] = useState({})
+
+  const setLogin = (credentials) => {
+    setLoggedIn(credentials)
+    console.log(credentials)
+  }
+
   return (
     <>
       <ChakraProvider theme={theme}>
@@ -32,7 +40,7 @@ function App() {
               path='/'
               element={<Menu/>}
             />
-            <Route path='/login' element={<Login/>} />
+            <Route path='/login' element={<Login setLogin={setLogin}/>} />
             <Route path='/register' element={<Register/>} />
             {/* <Route path='/' element={<Board />} /> */}
             <Route path='/account' element={<Account/>} />
