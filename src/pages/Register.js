@@ -13,15 +13,18 @@ import {
     Text,
     useColorModeValue,
     Link,
+    useToast
   } from '@chakra-ui/react';
   import { useState } from 'react';
   import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
   import axios from 'axios';
   import { useNavigate } from 'react-router';
+  import { Link as RouteLink } from 'react-router-dom';
   
   export default function Register() {
 
     const navigate = useNavigate()
+    const toast = useToast()
 
     const registerURL = `${process.env.REACT_APP_API_URL}/users/register`
 
@@ -43,6 +46,13 @@ import {
         .then((response) => {
           //console.log(response)
           if (response.data.message == "Profile created successfully") {
+            toast({
+              title: 'Account created.',
+              description: "Account submitted for approval, we will notify you once approved.",
+              status: 'success',
+              duration: 9000,
+              isClosable: true,
+            })
             // toast.success(`${response.data.message}. Please login to continue`)
             // setRegBtnState("")
             setRegisterInfo({
@@ -58,6 +68,13 @@ import {
         })
         .catch((error) => {
           console.log(error)
+          toast({
+            title: "Error creating account",
+            description: error.response.data.message,
+              status: 'error',
+              duration: 4000,
+              isClosable: true,
+          })
           // toast.error(error.response.data.message)
           // setRegBtnState("")
         })
@@ -204,8 +221,10 @@ import {
                 </Button>
               </Stack>
               <Stack pt={6}>
-                <Text align={'center'}>
-                  Already a user? <Link color={'blue.400'}>Login</Link>
+                <Text align={'center'}><RouteLink to={"/login"}>
+                Already a user? <Link color={'blue.400'}>Login</Link>
+                </RouteLink>
+                  
                 </Text>
               </Stack>
             </Stack>

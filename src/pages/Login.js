@@ -12,8 +12,20 @@ import {
     Text,
     useColorModeValue,
   } from '@chakra-ui/react';
+import { useState } from 'react';
+
+import { Link as RouteLink } from 'react-router-dom';
   
   export default function Login() {
+
+    const [rememberMe, setRememberMe] = useState(false)
+
+    const onRemember = (e) => {
+      setRememberMe(!rememberMe)
+      console.log(rememberMe)
+    }
+
+
     return (
       <Flex
         minH={'100vh'}
@@ -24,7 +36,7 @@ import {
           <Stack align={'center'}>
             <Heading fontSize={'4xl'}>Sign in to your account</Heading>
             <Text fontSize={'lg'} color={'gray.600'}>
-              to enjoy all of our cool <Link color={'blue.400'}>features</Link> ✌️
+              Don't have an account? <RouteLink to={"/register"}><Link color={'blue.400'}>Click here to register</Link></RouteLink> 🎾
             </Text>
           </Stack>
           <Box
@@ -46,7 +58,7 @@ import {
                   direction={{ base: 'column', sm: 'row' }}
                   align={'start'}
                   justify={'space-between'}>
-                  <Checkbox>Remember me</Checkbox>
+                  <Checkbox onChange={onRemember}>Remember me</Checkbox>
                   <Link color={'blue.400'}>Forgot password?</Link>
                 </Stack>
                 <Button
