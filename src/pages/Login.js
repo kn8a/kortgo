@@ -50,8 +50,13 @@ import { useNavigate } from 'react-router-dom';
         .post(loginURL, credentials)
         .then((response) => {
           if (response.data.token) {
-            props.setLogin(credentials)
-            //console.log(response.data.token)
+            props.setLogin(response.data)
+            if (rememberMe) {
+            localStorage.setItem("waterfordToken", response.data.token)
+            localStorage.setItem("waterfordUserId", response.data.id)
+            localStorage.setItem("waterfordFirstName", response.data.name_first)
+            localStorage.setItem("waterfordLastName", response.data.name_last)
+            }
             // localStorage.setItem("palstalkToken", response.data.token)
             // localStorage.setItem("palstalkUserId", response.data.id)
             // localStorage.setItem("palstalkUserPic", response.data.profile_pic)
