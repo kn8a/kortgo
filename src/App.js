@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Book from './pages/Book';
@@ -21,6 +21,10 @@ import "react-toastify/dist/ReactToastify.css"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
 function App() {
+
+  useEffect(()=>{
+    
+  },[])
 
   const [loggedIn, setLoggedIn] = useState({})
 
