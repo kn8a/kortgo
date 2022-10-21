@@ -24,6 +24,7 @@ function Book() {
   const availabilityURL = `${process.env.REACT_APP_API_URL}/bookings/check/`
 
   const [date, setDate] = useState('')
+  const [times, setTimes] = useState([])
 
   const onDateChange = (e) => {
     setDate(e.target.value)
@@ -32,20 +33,12 @@ function Book() {
   const checkAvailability = (e) => {
     axios.get(`${availabilityURL}${date}`)
     .then((response) => {
-      console.log(response.data)
+      console.log(response.data.times)
+      setTimes(response.data.times)
     })
   }
   
-  const buildTimes = () => {
-    let slots= []
-    for (let i=7; i<22; i++) {
-      slots.push({time: `${i}:00`, value: i})
-      slots.push({time: `${i}:30`, value: i+0.5})
-    }
-    return slots
-  }
-  const times = buildTimes()
-  console.log(times)
+  
   return (
     <Flex
         minH={'100vh'}
