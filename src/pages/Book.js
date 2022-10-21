@@ -21,6 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import SlotButton from '../components/SlotButton';
 
 function Book() {
+  const toast = useToast()
   const availabilityURL = `${process.env.REACT_APP_API_URL}/bookings/check/`
 
   const [date, setDate] = useState('')
@@ -35,6 +36,20 @@ function Book() {
     .then((response) => {
       console.log(response.data.times)
       setTimes(response.data.times)
+
+    })
+    .catch((error) => {
+      setTimes([])
+      //console.log(error)
+      toast({
+        title: "Error creating account",
+        description: error.response.data.message,
+          status: 'error',
+          duration: 4000,
+          isClosable: true,
+      })
+      // toast.error(error.response.data.message)
+      // setRegBtnState("")
     })
   }
   
