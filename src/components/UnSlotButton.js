@@ -1,21 +1,19 @@
+import React from 'react'
+import { useState } from 'react'
 import { Button } from '@chakra-ui/react'
-import React, { useState } from 'react'
 
-function SlotButton(props) {
-
-  const [selected, setSelected] = useState({variant: 'solid', tennis: ''})
+function UnSlotButton(props) {
+    const [selected, setSelected] = useState({variant: 'solid', tennis: ''})
   const select = (e) => {
-    props.select(e)
+    props.unselect(e)
     if (selected.variant == 'solid') {
       setSelected({variant: 'outline', tennis: '🎾' })
     } else {
       setSelected({variant: 'solid', tennis: '' })
     }
   }
-
-
-
   return (
+    
     <Button
         id={props.slot.value}
         variant={selected.variant}
@@ -24,12 +22,12 @@ function SlotButton(props) {
         size={'lg'}
         m={2}
         p={2}
-        colorScheme={'green'}
+        colorScheme={'red'}
         >
-        {`+ ${props.slot.time}`} {selected.tennis}
+        {`x ${props.slot.time}`} {selected.tennis}
         
     </Button>
   )
 }
 
-export default SlotButton
+export default UnSlotButton

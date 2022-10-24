@@ -18,15 +18,26 @@ import {
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom"
 
 function App() {
+
+  
 
   useEffect(()=>{
     
   },[])
 
-  const [loggedIn, setLoggedIn] = useState({})
+
+
+  const [loggedIn, setLoggedIn] = useState({
+    id: localStorage.getItem("waterfordUserId"), 
+    name_first: localStorage.getItem("waterfordFirstName"),
+    name_last: localStorage.getItem("waterfordLastName"),
+    token: localStorage.getItem("waterfordToken")
+  })
+
+
 
   const setLogin = (credentials) => {
     setLoggedIn(credentials)
@@ -42,16 +53,16 @@ function App() {
         <Routes>
             <Route
               path='/'
-              element={<Menu/>}
+              element={<Menu loggedIn={loggedIn}/>}
             />
-            <Route path='/login' element={<Login setLogin={setLogin}/>} />
-            <Route path='/register' element={<Register/>} />
+            <Route path='/login' element={<Login loggedIn={loggedIn} setLogin={setLogin}/>} />
+            <Route path='/register' element={<Register loggedIn={loggedIn}/>} />
             {/* <Route path='/' element={<Board />} /> */}
-            <Route path='/account' element={<Account/>} />
-            <Route path='/book' element={<Book/>} />
+            <Route path='/account' element={<Account loggedIn={loggedIn}/>} />
+            <Route path='/book' element={<Book loggedIn={loggedIn}/>} />
             <Route
               path='/booking'
-              element={<Bookings />}
+              element={<Bookings loggedIn={loggedIn}/>}
             />
           </Routes>
 

@@ -12,26 +12,44 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  useToast
+  useToast,
+  Divider
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link as RouteLink } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SlotButton from '../components/SlotButton';
+import UnSlotButton from '../components/UnSlotButton';
+var array = require('lodash/array');
 
-function Book() {
+function Book(props) {
+
+  const bookingURL = `${process.env.REACT_APP_API_URL}/bookings`
+
+  const navigate = useNavigate()
+  useEffect(()=> {
+    if (!props.loggedIn.token) {
+      navigate('/login')
+    }
+    
+  })
   const toast = useToast()
   const availabilityURL = `${process.env.REACT_APP_API_URL}/bookings/check/`
 
-  const [date, setDate] = useState('')
-  const [times, setTimes] = useState([])
+  const [date, setDate] = useState('') //used for date selection
+  const [times, setTimes] = useState([]) //received available times from API
+  const [selected,setSelected] = useState([]) //used for user selected times
 
   const onDateChange = (e) => {
     setDate(e.target.value)
+    setTimes([])
+    setSelected([])
   }
   
   const checkAvailability = (e) => {
+    setTimes([])
+    setSelected([])
     axios.get(`${availabilityURL}${date}`)
     .then((response) => {
       console.log(response.data.times)
@@ -52,13 +70,40 @@ function Book() {
       // setRegBtnState("")
     })
   }
+
+  const select = (e) => {
+    let slotObj = times.find(time => time.value==e.target.id)
+    // let slotObj2 = times.find(time => time.value==Number(e.target.id)+0.5)
+    let newTimes = array.pull(times,slotObj)
+    let newSelected = ([...selected, slotObj])
+    newSelected.sort((a,b)=> (a.value>b.value) ? 1:-1)
+    setSelected(newSelected)
+    setTimes(newTimes)
+  }
   
+  const unselect = (e) => {
+    let slotObj = selected.find(time => time.value==e.target.id)
+    // let slotObj2 = selected.find(time => time.value==Number(e.target.id)+0.5)
+    let newTimes = [...times, slotObj]
+    newTimes.sort((a,b)=> (a.value>b.value) ? 1:-1)
+    let newSelected = array.pull(selected,slotObj)
+    // ([...selected, slotObj, slotObj2])
+    // newSelected.sort((a,b)=> (a.value>b.value) ? 1:-1)
+    setSelected(newSelected)
+    setTimes(newTimes)
+  }
+
+  const submitBooking = () => {
+    console.log(props.loggedIn.token)
+    axios.post(bookingURL, {date: date, slots: selected}, { headers: { Authorization: `Bearer ${props.loggedIn.token}` } } )
+  }
   
   return (
     <Flex
         minH={'100vh'}
         align={'center'}
         justify={'center'}
+        
         bg={useColorModeValue('gray.50', 'gray.800')}>
         <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
           <Stack align={'center'}>
@@ -68,6 +113,7 @@ function Book() {
             </Text>
           </Stack>
           <Box
+            
             rounded={'lg'}
             bg={useColorModeValue('white', 'gray.700')}
             boxShadow={'lg'}
@@ -94,10 +140,28 @@ function Book() {
                   >
                   Check availability
                 </Button>
-                <Flex maxH={400} gap={0} direction={'column'} width={250} overflow={'auto'}>
+                <Divider/>
+                <Flex justifyContent={'space-between'}>
+                <Flex maxH={400} gap={0} direction={'column'} minWidth={'120px'} overflow={'scroll'} alignItems='center' shadow={'inner'} p={2}>
+                  <Text>Available</Text>
                   {times.map(slot=> {
                     return (
-                      <SlotButton slot={slot}/>
+                      <Flex key={slot.time}>
+                        <SlotButton slot={slot} select={select}/>
+                      </Flex>                   
+                    )
+                  })}
+                </Flex>
+                <Divider orientation='vertical'/>
+                
+                <Flex maxH={400} gap={0} direction={'column'} minWidth={'120px'} overflow={'scroll'} alignItems='center' shadow={'inner'} p={2}>
+                  <Text>Selected</Text>
+                  {selected.map(slot=> {
+                    return (
+                      <Flex key={slot.time} justifyContent='center'>
+                        <UnSlotButton slot={slot} unselect={unselect}/>
+                      </Flex>
+                      
                       
                       //   <Button 
                       //   size={'lg'}
@@ -112,6 +176,15 @@ function Book() {
                     )
                   })}
                 </Flex>
+
+                </Flex>
+                <Button
+                  colorScheme={'blue'}
+                  size={'lg'}
+                  onClick={submitBooking}
+                  >
+                  Book
+                </Button>
 
 
             </Stack>
