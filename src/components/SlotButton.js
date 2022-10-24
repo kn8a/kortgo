@@ -17,13 +17,15 @@ function SlotButton(props) {
 
   return (
     <Button
+
+        shadow={'md'}
         id={props.slot.value}
         variant={selected.variant}
         onClick={select}
         isDisabled={props.slot.booked}
         size={'lg'}
-        m={2}
-        p={2}
+        mt={2}
+        
         colorScheme={'green'}
         >
         {`+ ${props.slot.time}`} {selected.tennis}
