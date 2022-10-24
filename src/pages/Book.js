@@ -142,7 +142,7 @@ function Book(props) {
                 </Button>
                 <Divider/>
                 <Flex justifyContent={'space-between'}>
-                <Flex maxH={400} gap={0} direction={'column'} minWidth={'120px'} overflow={'scroll'} alignItems='center' shadow={'inner'} p={2}>
+                <Flex maxH={400} gap={0} direction={'column'} minWidth={'140px'} overflow={'scroll'} alignItems='center' shadow={'inner'} p={2}>
                   <Text>Available</Text>
                   {times.map(slot=> {
                     return (
@@ -154,7 +154,7 @@ function Book(props) {
                 </Flex>
                 <Divider orientation='vertical'/>
                 
-                <Flex maxH={400} gap={0} direction={'column'} minWidth={'120px'} overflow={'scroll'} alignItems='center' shadow={'inner'} p={2}>
+                <Flex maxH={400} gap={0} direction={'column'} minWidth={'140px'} overflow={'scroll'} alignItems='center' shadow={'inner'} p={2}>
                   <Text>Selected</Text>
                   {selected.map(slot=> {
                     return (

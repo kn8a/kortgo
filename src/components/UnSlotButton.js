@@ -20,7 +20,6 @@ function UnSlotButton(props) {
         onClick={select}
         isDisabled={props.slot.booked}
         size={'lg'}
-        size={'lg'}
         mt={2}
         colorScheme={'red'}
         >
