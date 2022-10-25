@@ -13,7 +13,23 @@ import {
   Text,
   useColorModeValue,
   useToast,
-  Divider
+  Divider,
+  Modal,
+  ModalOverlay,
+  useDisclosure,
+  ModalBody,
+  ModalFooter,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { Link as RouteLink } from 'react-router-dom';
@@ -26,6 +42,8 @@ var array = require('lodash/array');
 function Book(props) {
 
   const bookingURL = `${process.env.REACT_APP_API_URL}/bookings`
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const navigate = useNavigate()
   useEffect(()=> {
@@ -120,6 +138,7 @@ function Book(props) {
   }
   
   return (
+    <>
     <Flex
         minH={'100vh'}
         align={'center'}
@@ -139,8 +158,8 @@ function Book(props) {
             bg={useColorModeValue('white', 'gray.700')}
             boxShadow={'lg'}
             p={8}>
-            <Stack spacing={6}>
-              <FormControl id="email">
+            <Stack spacing={4}>
+              <FormControl id="date">
                 <FormLabel>Select date</FormLabel>
                 <Input 
                 onChange={onDateChange}
@@ -163,7 +182,7 @@ function Book(props) {
                 </Button>
                 <Divider/>
                 <Flex justifyContent={'space-between'}>
-                <Flex maxH={400} gap={0} direction={'column'} minWidth={'140px'} overflow={'scroll'} alignItems='center' shadow={'inner'} p={2}>
+                <Flex maxH={400} gap={0} direction={'column'} minWidth={'130px'} overflow={'scroll'} alignItems='center' shadow={'inner'} p={2}>
                   <Text>Available</Text>
                   <Text fontSize={'smaller'}>(Click to select)</Text>
                   {times.map(slot=> {
@@ -176,7 +195,7 @@ function Book(props) {
                 </Flex>
                 <Divider orientation='vertical'/>
                 
-                <Flex maxH={400} gap={0} direction={'column'} minWidth={'140px'} overflow={'scroll'} alignItems='center' shadow={'inner'} p={2}>
+                <Flex maxH={400} gap={0} direction={'column'} minWidth={'130px'} overflow={'scroll'} alignItems='center' shadow={'inner'} p={2}>
                   <Text>Selected</Text>
                   <Text fontSize={'smaller'}>(Click to remove)</Text>
                   {selected.map(slot=> {
@@ -201,20 +220,81 @@ function Book(props) {
                 </Flex>
 
                 </Flex>
+                <Box>
                 <Text align={'center'}>Booking total price: <strong>{totalPrice}</strong></Text>
+                <Text align={'center'} fontSize={'xs'}>(Reminder: Two slots is 1 hour)</Text>
+                </Box>
+                
                 <Button
+
                   colorScheme={'blue'}
                   size={'lg'}
-                  onClick={submitBooking}
+                  onClick={onOpen}
                   >
-                  Book
+                  <Text>Book</Text>
+                  
                 </Button>
-
-
             </Stack>
           </Box>
         </Stack>
+        <Drawer
+                  isOpen={isOpen}
+                  placement='right'
+                  onClose={onClose}
+                  size='md'
+                  
+                  
+                >
+                  <DrawerOverlay />
+                  <DrawerContent >
+                    <DrawerCloseButton />
+                    <DrawerHeader >Confirm your booking</DrawerHeader>
+
+                    <DrawerBody justifyContent={'space-evenly'}>
+                      <Flex direction={'column'} gap={6}>
+
+                      
+                    <Box >
+                      <Text fontWeight={600} fontSize='lg'>Date:</Text>
+                      <Text>{date}</Text>
+                    </Box>
+
+                    <Box>
+                      <Text fontWeight={600} fontSize='lg'>Selected time slots:</Text>
+                      {selected.map(slot => {
+                        return(
+                          <div key={slot.value}>
+                            <Text>{slot.time}</Text>
+                          </div>
+                        )
+                      })}
+                    </Box>
+                    <Box>
+                    <Text align={'center'} fontSize={'sm'}>(Reminder: Two slots is 1 hour)</Text>
+                    <Divider mt={4} mb={4}/>
+                    <Flex alignItems='center' justifyContent={'space-evenly'}>
+                      <Text fontWeight={600} fontSize='lg'>Total price:</Text>
+                      <Text>{totalPrice}</Text>
+                    </Flex>
+                    
+                    </Box>
+                    
+                    
+                    
+                    </Flex>
+                    </DrawerBody>
+
+                    <DrawerFooter justifyContent={'space-evenly'}>
+                      <Button colorScheme={'red'} mr={3} onClick={onClose} size='lg'>
+                        X Cancel
+                      </Button>
+                      <Button colorScheme='green' size={'lg'}>🎾 Confirm!</Button>
+                    </DrawerFooter>
+                  </DrawerContent>
+                </Drawer>
       </Flex>
+      
+      </>
   )
 }
 

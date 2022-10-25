@@ -167,6 +167,27 @@ import {
                 placeholder='88/123'
                 />
               </FormControl>
+
+              <FormControl id="invitation" isRequired>
+                <FormLabel>Invitation code</FormLabel>
+                <InputGroup>
+                  <Input 
+                  required
+                  onChange={onRegChange}
+                  value={registerInfo.invitation}
+                  name='invitation'/>
+                  {/* <InputRightElement h={'full'}>
+                    <Button
+                      variant={'ghost'}
+                      onClick={() =>
+                        setShowPassword((showPassword) => !showPassword)
+                      }>
+                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    </Button>
+                  </InputRightElement> */}
+                </InputGroup>
+              </FormControl>
+              
               <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
                 <InputGroup>
@@ -188,6 +209,7 @@ import {
                   </InputRightElement> */}
                 </InputGroup>
               </FormControl>
+              
               <FormControl id="confirm_password" isRequired>
                 <FormLabel>Confirm Password</FormLabel>
                 <InputGroup>
@@ -207,6 +229,7 @@ import {
                   </InputRightElement> */}
                 </InputGroup>
               </FormControl>
+              
               <Stack spacing={10} pt={2}>
                 <Button
                   onClick={register}
