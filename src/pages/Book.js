@@ -46,6 +46,15 @@ function Book(props) {
     setTimes([])
     setSelected([])
   }
+
+  const [totalPrice, setTotalPrice] = useState(0)
+
+  useEffect(() => {
+    const totalAmount = selected.reduce((total, slot) => {
+      return total + slot.price
+    },0)
+    setTotalPrice(totalAmount)
+  }, [selected,times,date])
   
   const checkAvailability = (e) => {
     setTimes([])
@@ -96,6 +105,18 @@ function Book(props) {
   const submitBooking = () => {
     console.log(props.loggedIn.token)
     axios.post(bookingURL, {date: date, slots: selected}, { headers: { Authorization: `Bearer ${props.loggedIn.token}` } } )
+    .then((response)=> {
+
+    })
+    .catch((err)=>{
+      toast({
+        title: "Booking error",
+        description: err.response.data.message,
+        status: 'error',
+        duration: 8000,
+        isClosable: true,
+      })
+    })
   }
   
   return (
@@ -144,6 +165,7 @@ function Book(props) {
                 <Flex justifyContent={'space-between'}>
                 <Flex maxH={400} gap={0} direction={'column'} minWidth={'140px'} overflow={'scroll'} alignItems='center' shadow={'inner'} p={2}>
                   <Text>Available</Text>
+                  <Text fontSize={'smaller'}>(Click to select)</Text>
                   {times.map(slot=> {
                     return (
                       <Flex key={slot.time}>
@@ -156,6 +178,7 @@ function Book(props) {
                 
                 <Flex maxH={400} gap={0} direction={'column'} minWidth={'140px'} overflow={'scroll'} alignItems='center' shadow={'inner'} p={2}>
                   <Text>Selected</Text>
+                  <Text fontSize={'smaller'}>(Click to remove)</Text>
                   {selected.map(slot=> {
                     return (
                       <Flex key={slot.time} justifyContent='center'>
@@ -178,6 +201,7 @@ function Book(props) {
                 </Flex>
 
                 </Flex>
+                <Text align={'center'}>Booking total price: <strong>{totalPrice}</strong></Text>
                 <Button
                   colorScheme={'blue'}
                   size={'lg'}

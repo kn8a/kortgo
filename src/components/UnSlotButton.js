@@ -21,7 +21,7 @@ function UnSlotButton(props) {
         isDisabled={props.slot.booked}
         size={'lg'}
         mt={2}
-        colorScheme={'red'}
+        colorScheme={'orange'}
         >
         {`x ${props.slot.time}`} {selected.tennis}
         
