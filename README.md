@@ -5,6 +5,8 @@
 
 > App for booking sports venue (eg. Tennis court)
 
+![gif](https://user-images.githubusercontent.com/88045655/197958973-cefee12a-b5c9-4f38-98e0-ba95498c4d59.gif)
+
 ## Install
 
 ```sh
