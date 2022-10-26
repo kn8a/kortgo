@@ -16,66 +16,61 @@ import {
   theme,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { ToastContainer } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom"
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from 'react-router-dom';
 
 function App() {
-
-  
-
-  useEffect(()=>{
-    
-  },[])
-
-
+  useEffect(() => {}, []);
 
   const [loggedIn, setLoggedIn] = useState({
-    id: localStorage.getItem("waterfordUserId"), 
-    name_first: localStorage.getItem("waterfordFirstName"),
-    name_last: localStorage.getItem("waterfordLastName"),
-    token: localStorage.getItem("waterfordToken")
-  })
+    id: localStorage.getItem('waterfordUserId'),
+    name_first: localStorage.getItem('waterfordFirstName'),
+    name_last: localStorage.getItem('waterfordLastName'),
+    token: localStorage.getItem('waterfordToken'),
+  });
 
-
-
-  const setLogin = (credentials) => {
-    setLoggedIn(credentials)
-    console.log(credentials)
-  }
+  const setLogin = credentials => {
+    setLoggedIn(credentials);
+    console.log(credentials);
+  };
 
   return (
     <>
       <ChakraProvider theme={theme}>
-      {/* <ColorModeSwitcher justifySelf="flex-end" /> */}
-      <Box>
-        <Router >
-        <Routes>
-            <Route
-              path='/'
-              element={<Menu loggedIn={loggedIn}/>}
-            />
-            <Route path='/login' element={<Login loggedIn={loggedIn} setLogin={setLogin}/>} />
-            <Route path='/register' element={<Register loggedIn={loggedIn}/>} />
-            {/* <Route path='/' element={<Board />} /> */}
-            <Route path='/account' element={<Account loggedIn={loggedIn}/>} />
-            <Route path='/book' element={<Book loggedIn={loggedIn}/>} />
-            <Route
-              path='/booking'
-              element={<Bookings loggedIn={loggedIn}/>}
-            />
-          </Routes>
-
-
-          
-            
-
-
-        </Router>  
+        {/* <ColorModeSwitcher justifySelf="flex-end" /> */}
+        <Box>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Menu loggedIn={loggedIn} />} />
+              <Route
+                path="/login"
+                element={<Login loggedIn={loggedIn} setLogin={setLogin} />}
+              />
+              <Route
+                path="/register"
+                element={<Register loggedIn={loggedIn} />}
+              />
+              {/* <Route path='/' element={<Board />} /> */}
+              <Route
+                path="/account"
+                element={<Account loggedIn={loggedIn} />}
+              />
+              <Route path="/book" element={<Book loggedIn={loggedIn} />} />
+              <Route
+                path="/booking"
+                element={<Bookings loggedIn={loggedIn} />}
+              />
+            </Routes>
+          </Router>
         </Box>
       </ChakraProvider>
     </>
-    
   );
 }
 
