@@ -47,6 +47,7 @@ function Book(props) {
   const [times, setTimes] = useState([]); //received available times from API
   const [selected, setSelected] = useState([]); //used for user selected times
 
+
   const onDateChange = e => {
     setDate(e.target.value);
     setTimes([]);
@@ -107,16 +108,53 @@ function Book(props) {
     setSelected(newSelected);
     setTimes(newTimes);
   };
+  
+  const checkSlots = () => {
+    if (selected.length<2) {
+      toast({
+        title: 'Booking error',
+        description: 'Bookings must be at least 1 hour long. Please select at least 2 consecutive slots and retry.',
+        status: 'error',
+        duration: 8000,
+        isClosable: true,
+      })
+      return
+    }
+    for (let i=1; i<selected.length; i++) {
+      if (selected[i].value - selected[i-1].value != 0.5) {
+        toast({
+          title: `Error on slot "${selected[i].time}"`,
+          description: `A booking must have consecutive time slots. If you need to book non consecutive times, you may do so in a separate booking`,
+          status: 'error',
+          duration: 8000,
+          isClosable: true,
+        })
+          return
+      }
+    }
+    onOpen()
+  }
 
   const submitBooking = () => {
     console.log(props.loggedIn.token);
+
     axios
       .post(
         bookingURL,
         { date: date, slots: selected },
         { headers: { Authorization: `Bearer ${props.loggedIn.token}` } }
       )
-      .then(response => {})
+      .then(response => {
+        onClose()
+        toast({
+          title: 'Booking Confirmed',
+          description: `Your booking has been confirmed. Your remaining balance is ${response.data.remainingBalance}.`,
+          status: 'success',
+          duration: 8000,
+          isClosable: true,
+        });
+        checkAvailability()
+      })
       .catch(err => {
         toast({
           title: 'Booking error',
@@ -216,17 +254,28 @@ function Book(props) {
                 </Flex>
               </Flex>
               <Box>
+              <Text align={'center'}>
+                  Booking duration: <strong>{`${selected.length/2} `}</strong>hour/s
+                </Text>
                 <Text align={'center'}>
-                  Booking total price: <strong>{totalPrice}</strong>
+                  Total price: <strong>{totalPrice}</strong>
                 </Text>
-                <Text align={'center'} fontSize={'xs'}>
-                  (Reminder: Two slots is 1 hour)
+                <Text align={'center'}>
+                  Available balance: <strong>{props.loggedIn.balance}</strong>
                 </Text>
+                
+                
               </Box>
 
-              <Button colorScheme={'blue'} size={'lg'} onClick={onOpen}>
+              <Button colorScheme={'blue'} size={'lg'} onClick={checkSlots}>
                 <Text>Book</Text>
               </Button>
+              <RouteLink to={'/'}>
+              <Button width={'full'}>
+                Back to menu
+              </Button>
+              </RouteLink>
+              
             </Stack>
           </Box>
         </Stack>
@@ -252,22 +301,29 @@ function Book(props) {
                   {selected.map(slot => {
                     return (
                       <div key={slot.value}>
-                        <Text>{slot.time}</Text>
+                        <Text>{slot.time} (+ 30 mins)</Text>
                       </div>
                     );
                   })}
                 </Box>
                 <Box>
-                  <Text align={'center'} fontSize={'sm'}>
-                    (Reminder: Two slots is 1 hour)
+                  <Text fontWeight={600} fontSize="lg">
+                    Total duration:
                   </Text>
-                  <Divider mt={4} mb={4} />
+                  {`${selected.length/2} hour/s`}
+                </Box>
+                <Box>
+                  
+                  <Divider mt={2} mb={2} />
+                  
+                  
                   <Flex alignItems="center" justifyContent={'space-evenly'}>
                     <Text fontWeight={600} fontSize="lg">
                       Total price:
                     </Text>
                     <Text>{totalPrice}</Text>
                   </Flex>
+                  <Divider mt={2} mb={2}/>
                 </Box>
               </Flex>
             </DrawerBody>
@@ -276,7 +332,7 @@ function Book(props) {
               <Button colorScheme={'red'} mr={3} onClick={onClose} size="lg">
                 X Cancel
               </Button>
-              <Button colorScheme="green" size={'lg'}>
+              <Button colorScheme="green" size={'lg'} onClick={submitBooking}>
                 🎾 Confirm!
               </Button>
             </DrawerFooter>
