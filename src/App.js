@@ -47,7 +47,7 @@ function App() {
         <Box>
           <Router>
             <Routes>
-              <Route path="/" element={<Menu loggedIn={loggedIn} />} />
+              <Route path="/" element={<Menu loggedIn={loggedIn} setLogin={setLogin}/>} />
               <Route
                 path="/login"
                 element={<Login loggedIn={loggedIn} setLogin={setLogin} />}
@@ -63,7 +63,7 @@ function App() {
               />
               <Route path="/book" element={<Book loggedIn={loggedIn} />} />
               <Route
-                path="/booking"
+                path="/bookings"
                 element={<Bookings loggedIn={loggedIn} />}
               />
             </Routes>

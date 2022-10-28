@@ -57,11 +57,11 @@ function Menu(props) {
                 Make a booking
               </Button>
             </RouteLink>
-            <RouteLink to={'/book'}>
+            <RouteLink to={'/Bookings'}>
             <Button colorScheme={'blue'} width="full">My bookings</Button>
             </RouteLink>
             <Button colorScheme={'blue'}>My account</Button>
-            <Button colorScheme={'red'}>Logout</Button>
+            <Button onClick={()=>props.setLogin({})} colorScheme={'red'}>Logout</Button>
           </Stack>
         </Box>
       </Stack>
