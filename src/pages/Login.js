@@ -135,6 +135,7 @@ export default function Login(props) {
               <Button
                 onClick={login}
                 bg={'blue.400'}
+                size='lg'
                 color={'white'}
                 _hover={{
                   bg: 'blue.500',
@@ -143,9 +144,16 @@ export default function Login(props) {
                 Sign in
               </Button>
             </Stack>
+            
           </Stack>
+          <Box textAlign={'center'} mt={6}>
+          <RouteLink><Link fontSize={'sm'} color={'blue.400'}>Admin login</Link></RouteLink>
+          </Box>
+          
         </Box>
+        
       </Stack>
+      
     </Flex>
   );
 }
