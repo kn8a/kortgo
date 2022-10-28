@@ -30,6 +30,7 @@ import UnSlotButton from '../components/UnSlotButton';
 var array = require('lodash/array');
 
 function Book(props) {
+  
   const bookingURL = `${process.env.REACT_APP_API_URL}/bookings`;
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -215,7 +216,7 @@ function Book(props) {
                   gap={0}
                   direction={'column'}
                   minWidth={'130px'}
-                  overflow={'scroll'}
+                  overflow={'auto'}
                   alignItems="center"
                   shadow={'inner'}
                   p={2}
@@ -237,7 +238,7 @@ function Book(props) {
                   gap={0}
                   direction={'column'}
                   minWidth={'130px'}
-                  overflow={'scroll'}
+                  overflow={'auto'}
                   alignItems="center"
                   shadow={'inner'}
                   p={2}
