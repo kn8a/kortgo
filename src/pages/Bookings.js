@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Stack, Heading, Flex, Box, Button, Text, useColorModeValue, } from '@chakra-ui/react'
+import { Stack, Heading, Flex, Box, Button, Text, useColorModeValue, Divider, } from '@chakra-ui/react'
 import { Link as RouteLink } from 'react-router-dom';
 import Booking from '../components/Booking';
 import Loader from '../components/Loader';
@@ -37,6 +37,7 @@ function Bookings(props) {
           <Heading fontSize={'3xl'}>
             Upcoming bookings
           </Heading>
+          <Divider/>
           {/* <Text fontSize={'lg'} >
             {`Your account balance is ${props.loggedIn.balance}`}
           </Text> */}
@@ -50,7 +51,7 @@ function Bookings(props) {
         })}
         
         <RouteLink to={'/'}>
-            <Button colorScheme={'blue'} width="full">Back to menu</Button>
+            <Button colorScheme={'blue'} width="full" size={'lg'}>Back to menu</Button>
             </RouteLink>
       </Stack>
     </Flex>

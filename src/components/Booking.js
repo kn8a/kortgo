@@ -7,15 +7,27 @@ import {
   Text,
   Button,
   Divider,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerHeader,
+  DrawerFooter,
+  useDisclosure
 } from '@chakra-ui/react';
 
 function Booking(props) {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const cancelBooking = () => {
+
+    }
   return (
     <Flex w={'full'}>
       <Flex
         rounded={'lg'}
-        bg={useColorModeValue('white', 'gray.700')}
-        boxShadow={'lg'}
+        bg={useColorModeValue('green.50', 'green.700')}
+        boxShadow={'md'}
         p={2}
         w="full"
         justifyContent={'space-between'}
@@ -43,9 +55,70 @@ function Booking(props) {
         </Flex>
             <Divider/>
         <Flex justifyContent={'flex-end'} alignItems={'center'} w='full'>
-          <Button colorScheme={'red'} size={'sm'}>Cancel booking</Button>
+          <Button colorScheme={'red'} size={'sm'} onClick={onOpen}>Cancel this booking</Button>
         </Flex>
       </Flex>
+
+
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader>Confirm cancellation</DrawerHeader>
+
+            <DrawerBody justifyContent={'space-evenly'}>
+              <Flex direction={'column'} gap={6}>
+                <Box>
+                  <Text fontWeight={600} fontSize="lg">
+                    Date:
+                  </Text>
+                  <Text>{` ${props.booking.day}/${props.booking.month}/${props.booking.year}`}</Text>
+                </Box>
+
+                <Box>
+                  <Text fontWeight={600} fontSize="lg">
+                    Time slots:
+                  </Text>
+                  {props.booking.slots_full.map(time => {
+              return <Text>{time.time}</Text>;
+            })}
+                </Box>
+                <Box>
+                  <Text fontWeight={600} fontSize="lg">
+                    Total duration:
+                  </Text>
+                  {` ${props.booking.slots.length / 2} hour/s`}
+                </Box>
+                <Box>
+                  
+                  <Divider mt={2} mb={2} />
+                  
+                  
+                  <Flex alignItems="center" justifyContent={'space-evenly'}>
+                    <Text fontWeight={600} fontSize="lg">
+                      Credit amount:
+                    </Text>
+                    <Text>{props.booking.amount}</Text>
+                  </Flex>
+                  <Divider mt={2} mb={2}/>
+                </Box>
+              </Flex>
+            </DrawerBody>
+
+            <DrawerFooter justifyContent={'space-evenly'} display='flex' flexDirection={'column'}>
+                <Text pb={4}><strong>This cannot be undone</strong></Text>
+                <Flex>
+                <Button colorScheme={'blue'} mr={3} onClick={onClose} size="lg">
+                Go back
+              </Button>
+              <Button colorScheme="red" size={'lg'} onClick={cancelBooking}>
+                Confirm cancellation
+              </Button>
+                </Flex>
+              
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
     </Flex>
   );
 }
