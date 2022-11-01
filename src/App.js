@@ -40,6 +40,10 @@ function App() {
     console.log(credentials);
   };
 
+  const updateBalance = () => {
+    
+  }
+
   return (
     <>
       <ChakraProvider theme={theme}>
