@@ -14,13 +14,38 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerFooter,
-  useDisclosure
+  useDisclosure,
+  useToast
+
 } from '@chakra-ui/react';
+import axios from 'axios';
 
 function Booking(props) {
+    const toast = useToast()
+    const cancelURL = `${process.env.REACT_APP_API_URL}/bookings/cancel`
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelBooking = () => {
-
+        axios.put(cancelURL, props.booking, { headers: { Authorization: `Bearer ${props.loggedIn.token}` } })
+        .then(response => {
+            props.updateUpcoming()
+            onClose()
+            toast({
+                title: 'Booking cancelled',
+                description: response.data.message,
+                status: 'success',
+                duration: 8000,
+                isClosable: true,
+            })
+        })
+        .catch(err => {
+            toast({
+                title: 'Cancellation failed',
+                description: err.message,
+                status: 'error',
+                duration: 8000,
+                isClosable: true,
+            })
+        })
     }
   return (
     <Flex w={'full'}>

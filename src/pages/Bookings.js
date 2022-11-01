@@ -14,13 +14,24 @@ function Bookings(props) {
   useEffect(() => {
     axios.get(upcomingURL,  { headers: { Authorization: `Bearer ${props.loggedIn.token}` } })
     .then(response => {
-      console.log(response.data.upcoming)
+      //console.log(response.data.upcoming)
       setUpcoming(response.data.upcoming)
     })
     .catch(err => {
       console.log(err)
     })
   }, [])
+
+  const updateUpcoming = () => {
+    axios.get(upcomingURL,  { headers: { Authorization: `Bearer ${props.loggedIn.token}` } })
+    .then(response => {
+      console.log(response.data.upcoming)
+      setUpcoming(response.data.upcoming)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
 
   if (upcoming.length==0) {
     return (<Loader/>)
@@ -45,7 +56,7 @@ function Bookings(props) {
         {upcoming.map(booking => {
           return(
             <Flex>
-              <Booking booking={booking}/>
+              <Booking booking={booking} updateUpcoming={updateUpcoming}/>
             </Flex>
           )
         })}
