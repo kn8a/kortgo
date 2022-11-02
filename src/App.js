@@ -25,12 +25,11 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import Howto from './pages/Howto';
+import axios from 'axios';
 
 function App() {
-  useEffect(() => {
-    
-  }, []);
-
+  const balanceURL = `${process.env.REACT_APP_API_URL}/users/balance`;
+  
   const [loggedIn, setLoggedIn] = useState({
     id: localStorage.getItem('waterfordUserId'),
     name_first: localStorage.getItem('waterfordFirstName'),
@@ -38,12 +37,32 @@ function App() {
     token: localStorage.getItem('waterfordToken'),
   });
 
+  useEffect(() => {
+    updateBalance()
+  }, []);
+
   const setLogin = credentials => {
     setLoggedIn(credentials);
     console.log(credentials);
   };
 
-  const updateBalance = (amount) => {};
+  const updateBalance = (amount) => {
+    axios.get(balanceURL, {
+      headers: { Authorization: `Bearer ${loggedIn.token}` }})
+    .then(response => {
+      setLoggedIn({...loggedIn, balance: response.data.balance.balance})
+      console.log(response.data.balance.balance)
+    })
+  };
+
+  const logout = () =>{
+    if (localStorage.getItem('waterfordUserId')) {
+      localStorage.removeItem('waterfordUserId')
+      localStorage.removeItem('waterfordFirstName')
+      localStorage.removeItem('waterfordLastName')
+      localStorage.removeItem('waterfordToken')
+    }
+  }
 
   return (
     <>
@@ -54,7 +73,7 @@ function App() {
             <Routes>
               <Route
                 path="/"
-                element={<Menu loggedIn={loggedIn} setLogin={setLogin} />}
+                element={<Menu loggedIn={loggedIn} setLogin={setLogin} logout={logout} />}
               />
               <Route
                 path="/login"
@@ -73,10 +92,10 @@ function App() {
                 path="/account"
                 element={<Account loggedIn={loggedIn} />}
               />
-              <Route path="/book" element={<Book loggedIn={loggedIn} />} />
+              <Route path="/book" element={<Book loggedIn={loggedIn} updateBalance={updateBalance}/>} />
               <Route
                 path="/bookings"
-                element={<Bookings loggedIn={loggedIn} />}
+                element={<Bookings loggedIn={loggedIn} updateBalance={updateBalance}/>}
               />
             </Routes>
           </Router>

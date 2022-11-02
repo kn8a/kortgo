@@ -101,6 +101,7 @@ function Bookings(props) {
                 booking={booking}
                 updateUpcoming={updateUpcoming}
                 loggedIn={props.loggedIn}
+                updateBalance={props.updateBalance}
               />
             </Flex>
           );

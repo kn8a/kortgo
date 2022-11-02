@@ -145,6 +145,7 @@ function Book(props) {
         { headers: { Authorization: `Bearer ${props.loggedIn.token}` } }
       )
       .then(response => {
+        props.updateBalance()
         onClose();
         toast({
           title: 'Booking Confirmed',

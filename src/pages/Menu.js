@@ -60,7 +60,7 @@ function Menu(props) {
           >
             <RouteLink to={'/book'}>
               <Button colorScheme={'green'} width="full" leftIcon={<EditIcon/>} size={'lg'}>
-                Make a booking
+                New booking
               </Button>
             </RouteLink>
             <RouteLink to={'/Bookings'}>
@@ -74,7 +74,7 @@ function Menu(props) {
               </Button>
             </RouteLink>
             {/* <Button colorScheme={'blue'}>My account</Button> */}
-            <Button onClick={() => props.setLogin({})} leftIcon={<LockIcon/>} colorScheme={'red'}>
+            <Button onClick={() => {props.setLogin({}); props.logout()}} leftIcon={<LockIcon/>} colorScheme={'red'}>
               Logout
             </Button>
           </Stack>

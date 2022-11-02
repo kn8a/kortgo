@@ -31,6 +31,7 @@ function Booking(props) {
       })
       .then(response => {
         props.updateUpcoming();
+        props.updateBalance()
         onClose();
         toast({
           title: 'Booking cancelled',
