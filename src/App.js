@@ -40,9 +40,7 @@ function App() {
     console.log(credentials);
   };
 
-  const updateBalance = () => {
-    
-  }
+  const updateBalance = () => {};
 
   return (
     <>
@@ -51,7 +49,10 @@ function App() {
         <Box>
           <Router>
             <Routes>
-              <Route path="/" element={<Menu loggedIn={loggedIn} setLogin={setLogin}/>} />
+              <Route
+                path="/"
+                element={<Menu loggedIn={loggedIn} setLogin={setLogin} />}
+              />
               <Route
                 path="/login"
                 element={<Login loggedIn={loggedIn} setLogin={setLogin} />}

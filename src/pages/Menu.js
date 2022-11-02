@@ -41,7 +41,7 @@ function Menu(props) {
           <Heading fontSize={'4xl'}>
             Welcome {`${props.loggedIn.name_first}`}
           </Heading>
-          <Text fontSize={'lg'} >
+          <Text fontSize={'lg'}>
             {`Your account balance is ${props.loggedIn.balance}`}
           </Text>
         </Stack>
@@ -51,17 +51,26 @@ function Menu(props) {
           boxShadow={'lg'}
           p={8}
         >
-          <Stack spacing={6} alignContent="center" alignItems={'center'} width='full'>
+          <Stack
+            spacing={6}
+            alignContent="center"
+            alignItems={'center'}
+            width="full"
+          >
             <RouteLink to={'/book'}>
               <Button colorScheme={'green'} width="full" size={'lg'}>
                 Make a booking
               </Button>
             </RouteLink>
             <RouteLink to={'/Bookings'}>
-            <Button colorScheme={'blue'} width="full">My bookings</Button>
+              <Button colorScheme={'blue'} width="full">
+                My bookings
+              </Button>
             </RouteLink>
             <Button colorScheme={'blue'}>My account</Button>
-            <Button onClick={()=>props.setLogin({})} colorScheme={'red'}>Logout</Button>
+            <Button onClick={() => props.setLogin({})} colorScheme={'red'}>
+              Logout
+            </Button>
           </Stack>
         </Box>
       </Stack>

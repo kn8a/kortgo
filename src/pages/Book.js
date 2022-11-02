@@ -30,7 +30,6 @@ import UnSlotButton from '../components/UnSlotButton';
 var array = require('lodash/array');
 
 function Book(props) {
-  
   const bookingURL = `${process.env.REACT_APP_API_URL}/bookings`;
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -40,14 +39,13 @@ function Book(props) {
     if (!props.loggedIn.token) {
       navigate('/login');
     }
-  });
+  }, []);
   const toast = useToast();
   const availabilityURL = `${process.env.REACT_APP_API_URL}/bookings/check/`;
 
   const [date, setDate] = useState(''); //used for date selection
   const [times, setTimes] = useState([]); //received available times from API
   const [selected, setSelected] = useState([]); //used for user selected times
-
 
   const onDateChange = e => {
     setDate(e.target.value);
@@ -70,14 +68,14 @@ function Book(props) {
     axios
       .get(`${availabilityURL}${date}`)
       .then(response => {
-        console.log(response.data.times);
+        //console.log(response.data.times);
         setTimes(response.data.times);
       })
       .catch(error => {
         setTimes([]);
         //console.log(error)
         toast({
-          title: 'Error creating account',
+          title: 'Error',
           description: error.response.data.message,
           status: 'error',
           duration: 4000,
@@ -109,32 +107,33 @@ function Book(props) {
     setSelected(newSelected);
     setTimes(newTimes);
   };
-  
+
   const checkSlots = () => {
-    if (selected.length<2) {
+    if (selected.length < 2) {
       toast({
         title: 'Booking error',
-        description: 'Bookings must be at least 1 hour long. Please select at least 2 consecutive slots and retry.',
+        description:
+          'Bookings must be at least 1 hour long. Please select at least 2 consecutive slots and retry.',
         status: 'error',
         duration: 8000,
         isClosable: true,
-      })
-      return
+      });
+      return;
     }
-    for (let i=1; i<selected.length; i++) {
-      if (selected[i].value - selected[i-1].value != 0.5) {
+    for (let i = 1; i < selected.length; i++) {
+      if (selected[i].value - selected[i - 1].value != 0.5) {
         toast({
           title: `Error on slot "${selected[i].time}"`,
           description: `A booking must have consecutive time slots. If you need to book non consecutive times, you may do so in a separate booking`,
           status: 'error',
           duration: 8000,
           isClosable: true,
-        })
-          return
+        });
+        return;
       }
     }
-    onOpen()
-  }
+    onOpen();
+  };
 
   const submitBooking = () => {
     console.log(props.loggedIn.token);
@@ -146,7 +145,7 @@ function Book(props) {
         { headers: { Authorization: `Bearer ${props.loggedIn.token}` } }
       )
       .then(response => {
-        onClose()
+        onClose();
         toast({
           title: 'Booking Confirmed',
           description: `Your booking has been confirmed. Your remaining balance is ${response.data.remainingBalance}.`,
@@ -154,7 +153,7 @@ function Book(props) {
           duration: 8000,
           isClosable: true,
         });
-        checkAvailability()
+        checkAvailability();
       })
       .catch(err => {
         toast({
@@ -255,8 +254,9 @@ function Book(props) {
                 </Flex>
               </Flex>
               <Box>
-              <Text align={'center'}>
-                  Booking duration: <strong>{`${selected.length/2} `}</strong>hour/s
+                <Text align={'center'}>
+                  Booking duration: <strong>{`${selected.length / 2} `}</strong>
+                  hour/s
                 </Text>
                 <Text align={'center'}>
                   Total price: <strong>{totalPrice}</strong>
@@ -264,19 +264,14 @@ function Book(props) {
                 <Text align={'center'}>
                   Available balance: <strong>{props.loggedIn.balance}</strong>
                 </Text>
-                
-                
               </Box>
 
               <Button colorScheme={'blue'} size={'lg'} onClick={checkSlots}>
                 <Text>Book</Text>
               </Button>
               <RouteLink to={'/'}>
-              <Button width={'full'}>
-                Back to menu
-              </Button>
+                <Button width={'full'}>Back to menu</Button>
               </RouteLink>
-              
             </Stack>
           </Box>
         </Stack>
@@ -311,20 +306,18 @@ function Book(props) {
                   <Text fontWeight={600} fontSize="lg">
                     Total duration:
                   </Text>
-                  {`${selected.length/2} hour/s`}
+                  {`${selected.length / 2} hour/s`}
                 </Box>
                 <Box>
-                  
                   <Divider mt={2} mb={2} />
-                  
-                  
+
                   <Flex alignItems="center" justifyContent={'space-evenly'}>
                     <Text fontWeight={600} fontSize="lg">
                       Total price:
                     </Text>
                     <Text>{totalPrice}</Text>
                   </Flex>
-                  <Divider mt={2} mb={2}/>
+                  <Divider mt={2} mb={2} />
                 </Box>
               </Flex>
             </DrawerBody>
@@ -334,7 +327,7 @@ function Book(props) {
                 X Cancel
               </Button>
               <Button colorScheme="green" size={'lg'} onClick={submitBooking}>
-                🎾 Confirm!
+                🎾 Confirm & Pay
               </Button>
             </DrawerFooter>
           </DrawerContent>

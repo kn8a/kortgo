@@ -15,38 +15,41 @@ import {
   DrawerHeader,
   DrawerFooter,
   useDisclosure,
-  useToast
-
+  useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 function Booking(props) {
-    const toast = useToast()
-    const cancelURL = `${process.env.REACT_APP_API_URL}/bookings/cancel`
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const cancelBooking = () => {
-        axios.put(cancelURL, props.booking, { headers: { Authorization: `Bearer ${props.loggedIn.token}` } })
-        .then(response => {
-            props.updateUpcoming()
-            onClose()
-            toast({
-                title: 'Booking cancelled',
-                description: response.data.message,
-                status: 'success',
-                duration: 8000,
-                isClosable: true,
-            })
-        })
-        .catch(err => {
-            toast({
-                title: 'Cancellation failed',
-                description: err.message,
-                status: 'error',
-                duration: 8000,
-                isClosable: true,
-            })
-        })
-    }
+  const toast = useToast();
+  const cancelURL = `${process.env.REACT_APP_API_URL}/bookings/cancel`;
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelBooking = () => {
+    axios
+      .put(cancelURL, props.booking, {
+        headers: { Authorization: `Bearer ${props.loggedIn.token}` },
+      })
+      .then(response => {
+        props.updateUpcoming();
+        onClose();
+        toast({
+          title: 'Booking cancelled',
+          description: response.data.message,
+          status: 'success',
+          duration: 8000,
+          isClosable: true,
+        });
+      })
+      .catch(err => {
+        toast({
+          title: 'Cancellation failed',
+          description: err.message,
+          status: 'error',
+          duration: 8000,
+          isClosable: true,
+        });
+      });
+  };
   return (
     <Flex w={'full'}>
       <Flex
@@ -78,72 +81,76 @@ function Booking(props) {
             })}
           </Flex>
         </Flex>
-            <Divider/>
-        <Flex justifyContent={'flex-end'} alignItems={'center'} w='full'>
-          <Button colorScheme={'red'} size={'sm'} onClick={onOpen}>Cancel this booking</Button>
+        <Divider />
+        <Flex justifyContent={'flex-end'} alignItems={'center'} w="full">
+          <Button colorScheme={'red'} size={'sm'} onClick={onOpen}>
+            Cancel this booking
+          </Button>
         </Flex>
       </Flex>
 
-
       <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerCloseButton />
-            <DrawerHeader>Confirm cancellation</DrawerHeader>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Confirm cancellation</DrawerHeader>
 
-            <DrawerBody justifyContent={'space-evenly'}>
-              <Flex direction={'column'} gap={6}>
-                <Box>
-                  <Text fontWeight={600} fontSize="lg">
-                    Date:
-                  </Text>
-                  <Text>{` ${props.booking.day}/${props.booking.month}/${props.booking.year}`}</Text>
-                </Box>
+          <DrawerBody justifyContent={'space-evenly'}>
+            <Flex direction={'column'} gap={6}>
+              <Box>
+                <Text fontWeight={600} fontSize="lg">
+                  Date:
+                </Text>
+                <Text>{` ${props.booking.day}/${props.booking.month}/${props.booking.year}`}</Text>
+              </Box>
 
-                <Box>
-                  <Text fontWeight={600} fontSize="lg">
-                    Time slots:
-                  </Text>
-                  {props.booking.slots_full.map(time => {
-              return <Text>{time.time}</Text>;
-            })}
-                </Box>
-                <Box>
-                  <Text fontWeight={600} fontSize="lg">
-                    Total duration:
-                  </Text>
-                  {` ${props.booking.slots.length / 2} hour/s`}
-                </Box>
-                <Box>
-                  
-                  <Divider mt={2} mb={2} />
-                  
-                  
-                  <Flex alignItems="center" justifyContent={'space-evenly'}>
-                    <Text fontWeight={600} fontSize="lg">
-                      Credit amount:
-                    </Text>
-                    <Text>{props.booking.amount}</Text>
-                  </Flex>
-                  <Divider mt={2} mb={2}/>
-                </Box>
-              </Flex>
-            </DrawerBody>
+              <Box>
+                <Text fontWeight={600} fontSize="lg">
+                  Time slots:
+                </Text>
+                {props.booking.slots_full.map(time => {
+                  return <Text>{time.time}</Text>;
+                })}
+              </Box>
+              <Box>
+                <Text fontWeight={600} fontSize="lg">
+                  Total duration:
+                </Text>
+                {` ${props.booking.slots.length / 2} hour/s`}
+              </Box>
+              <Box>
+                <Divider mt={2} mb={2} />
 
-            <DrawerFooter justifyContent={'space-evenly'} display='flex' flexDirection={'column'}>
-                <Text pb={4}><strong>This cannot be undone</strong></Text>
-                <Flex>
-                <Button colorScheme={'blue'} mr={3} onClick={onClose} size="lg">
+                <Flex alignItems="center" justifyContent={'space-evenly'}>
+                  <Text fontWeight={600} fontSize="lg">
+                    Credit amount:
+                  </Text>
+                  <Text>{props.booking.amount}</Text>
+                </Flex>
+                <Divider mt={2} mb={2} />
+              </Box>
+            </Flex>
+          </DrawerBody>
+
+          <DrawerFooter
+            justifyContent={'space-evenly'}
+            display="flex"
+            flexDirection={'column'}
+          >
+            <Text pb={4}>
+              <strong>This cannot be undone</strong>
+            </Text>
+            <Flex>
+              <Button colorScheme={'blue'} mr={3} onClick={onClose} size="lg">
                 Go back
               </Button>
               <Button colorScheme="red" size={'lg'} onClick={cancelBooking}>
                 Confirm cancellation
               </Button>
-                </Flex>
-              
-            </DrawerFooter>
-          </DrawerContent>
-        </Drawer>
+            </Flex>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
     </Flex>
   );
 }

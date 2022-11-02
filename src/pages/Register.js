@@ -178,7 +178,6 @@ export default function Register() {
                   value={registerInfo.invitation}
                   name="invitation"
                 />
-
               </InputGroup>
             </FormControl>
 
