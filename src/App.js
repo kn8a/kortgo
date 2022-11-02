@@ -24,9 +24,12 @@ import {
   Route,
   useNavigate,
 } from 'react-router-dom';
+import Howto from './pages/Howto';
 
 function App() {
-  useEffect(() => {}, []);
+  useEffect(() => {
+    
+  }, []);
 
   const [loggedIn, setLoggedIn] = useState({
     id: localStorage.getItem('waterfordUserId'),
@@ -40,7 +43,7 @@ function App() {
     console.log(credentials);
   };
 
-  const updateBalance = () => {};
+  const updateBalance = (amount) => {};
 
   return (
     <>
@@ -56,6 +59,10 @@ function App() {
               <Route
                 path="/login"
                 element={<Login loggedIn={loggedIn} setLogin={setLogin} />}
+              />
+              <Route
+                path="/howto"
+                element={<Howto/>}
               />
               <Route
                 path="/register"

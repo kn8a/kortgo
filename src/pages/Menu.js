@@ -19,6 +19,7 @@ import { Link as RouteLink } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { PhoneIcon, AddIcon, WarningIcon, InfoOutlineIcon, CalendarIcon, EditIcon, PlusSquareIcon, LockIcon } from '@chakra-ui/icons'
 
 function Menu(props) {
   const navigate = useNavigate();
@@ -58,17 +59,22 @@ function Menu(props) {
             width="full"
           >
             <RouteLink to={'/book'}>
-              <Button colorScheme={'green'} width="full" size={'lg'}>
+              <Button colorScheme={'green'} width="full" leftIcon={<EditIcon/>} size={'lg'}>
                 Make a booking
               </Button>
             </RouteLink>
             <RouteLink to={'/Bookings'}>
-              <Button colorScheme={'blue'} width="full">
+              <Button colorScheme={'blue'} width="full" leftIcon={<CalendarIcon/>}>
                 My bookings
               </Button>
             </RouteLink>
-            <Button colorScheme={'blue'}>My account</Button>
-            <Button onClick={() => props.setLogin({})} colorScheme={'red'}>
+            <RouteLink to={'/howto'}>
+              <Button colorScheme={'blue'} leftIcon={<InfoOutlineIcon/>} width="full">
+                How to use?
+              </Button>
+            </RouteLink>
+            {/* <Button colorScheme={'blue'}>My account</Button> */}
+            <Button onClick={() => props.setLogin({})} leftIcon={<LockIcon/>} colorScheme={'red'}>
               Logout
             </Button>
           </Stack>

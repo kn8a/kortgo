@@ -41,7 +41,7 @@ function Bookings(props) {
             title: 'No bookings',
             description: "You don't have any upcoming bookings",
             status: 'warning',
-            duration: 8000,
+            duration: 2000,
             isClosable: true,
           });
         }
@@ -64,8 +64,9 @@ function Bookings(props) {
             title: 'No bookings',
             description: "You don't have any upcoming bookings",
             status: 'warning',
-            duration: 8000,
+            duration: 2000,
             isClosable: true,
+
           });
         }
         setUpcoming(response.data.upcoming);
