@@ -9,8 +9,8 @@ function Howto() {
       align={'center'}
       justify={'center'}
     >
-      <Stack spacing={6} mx={'auto'} w="full" py={12} px={2}>
-        <Stack align={'center'}>
+      <Stack spacing={6} mx={'auto'} w="auto" maxW={'500px'} py={12} px={2}>
+        <Stack align={'center'} px={4}>
           <Heading fontSize={'3xl'}>How to use</Heading>
           <Divider />
           <Heading fontSize={'large'}>1. Balance top-up</Heading>

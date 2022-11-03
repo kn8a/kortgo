@@ -83,10 +83,11 @@ function Bookings(props) {
   return (
     <Flex
       minH={'100vh'}
-      //align={'center'}
-      justify={'center'}
+      align={'center'}
+      justify={'space-between'}
+      flexDirection={'column'}
     >
-      <Stack spacing={6} mx={'auto'} w="full" py={12} px={2}>
+      <Stack spacing={6} mx={'auto'} w='auto' py={12} px={2}>
         <Stack align={'center'}>
           <Heading fontSize={'3xl'}>Upcoming bookings</Heading>
           <Divider />
@@ -96,7 +97,7 @@ function Bookings(props) {
         </Stack>
         {upcoming.map(booking => {
           return (
-            <Flex>
+            <Flex key={booking.date}>
               <Booking
                 booking={booking}
                 updateUpcoming={updateUpcoming}
@@ -107,12 +108,16 @@ function Bookings(props) {
           );
         })}
 
-        <RouteLink to={'/'}>
+        
+      </Stack>
+      <Flex pb={4} w='auto'>
+      <RouteLink to={'/'}>
           <Button colorScheme={'blue'} width="full" size={'lg'}>
             Back to menu
           </Button>
         </RouteLink>
-      </Stack>
+      </Flex>
+      
     </Flex>
   );
 }

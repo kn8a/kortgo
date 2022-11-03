@@ -78,7 +78,7 @@ function Booking(props) {
           </Text>
           <Flex gap={2} wrap="wrap">
             {props.booking.slots_full.map(time => {
-              return <Text>{time.time}</Text>;
+              return <Text key={time.time}>{time.time}</Text>;
             })}
           </Flex>
         </Flex>

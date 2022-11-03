@@ -173,6 +173,7 @@ export default function Register() {
               <FormLabel>Invitation code</FormLabel>
               <InputGroup>
                 <Input
+                  type={'text'}
                   required
                   onChange={onRegChange}
                   value={registerInfo.invitation}
