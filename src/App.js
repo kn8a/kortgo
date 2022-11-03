@@ -26,6 +26,7 @@ import {
 } from 'react-router-dom';
 import Howto from './pages/Howto';
 import axios from 'axios';
+import AdminMenu from './pages/AdminMenu';
 
 function App() {
   const balanceURL = `${process.env.REACT_APP_API_URL}/users/balance`;
@@ -96,6 +97,10 @@ function App() {
               <Route
                 path="/bookings"
                 element={<Bookings loggedIn={loggedIn} updateBalance={updateBalance}/>}
+              />
+              <Route
+                path="/admin"
+                element={<AdminMenu loggedIn={loggedIn} setLogin={setLogin} />}
               />
             </Routes>
           </Router>
