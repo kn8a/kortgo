@@ -22,14 +22,16 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  useNavigate,
 } from 'react-router-dom';
 import Howto from './pages/Howto';
 import axios from 'axios';
-import AdminMenu from './pages/AdminMenu';
+import AdminMenu from './admin-pages/AdminMenu';
+import InviteCode from './admin-pages/InviteCode';
 
 function App() {
+
   const balanceURL = `${process.env.REACT_APP_API_URL}/users/balance`;
+
   
   const [loggedIn, setLoggedIn] = useState({
     id: localStorage.getItem('waterfordUserId'),
@@ -101,6 +103,10 @@ function App() {
               <Route
                 path="/admin"
                 element={<AdminMenu loggedIn={loggedIn} setLogin={setLogin} />}
+              />
+              <Route
+                path="/admin/invite"
+                element={<InviteCode loggedIn={loggedIn} setLogin={setLogin} />}
               />
             </Routes>
           </Router>

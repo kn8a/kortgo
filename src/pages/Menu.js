@@ -23,12 +23,26 @@ import { PhoneIcon, AddIcon, WarningIcon, InfoOutlineIcon, CalendarIcon, EditIco
 
 function Menu(props) {
   const navigate = useNavigate();
+  const isAdminURL = `${process.env.REACT_APP_API_URL}/admin/check`
 
   useEffect(() => {
     if (!props.loggedIn.token) {
       navigate('/login');
     }
   });
+
+  useEffect(() => {
+    axios.get(isAdminURL,{headers: { Authorization: `Bearer ${props.loggedIn.token}` }})
+    .then(response => {
+      console.log(response.data)
+      if (response.data.admin === true) {
+        navigate('/admin')
+      }
+    })
+    .catch(err => {
+      console.log('user')
+    })
+  },[])
 
   return (
     <Flex
