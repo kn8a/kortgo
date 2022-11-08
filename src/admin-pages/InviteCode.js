@@ -5,9 +5,7 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
   Stack,
-  Link,
   Button,
   Heading,
   Text,
@@ -17,11 +15,9 @@ import {
 import { useState } from 'react';
 import { Link as RouteLink } from 'react-router-dom';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 function InviteCode(props) {
   const toast = useToast();
-  const navigate = useNavigate();
   const inviteURL = `${process.env.REACT_APP_API_URL}/admin/invite`;
 
   const [address, setAddress] = useState({ address: '' });
@@ -42,48 +38,14 @@ function InviteCode(props) {
       })
       .catch(err => {
         toast({
-            title: 'Error generating code',
-            description: err.response.data.message,
-            status: 'error',
-            duration: 4000,
-            isClosable: true,
-          });
-      })
-      
+          title: 'Error generating code',
+          description: err.response.data.message,
+          status: 'error',
+          duration: 4000,
+          isClosable: true,
+        });
+      });
   };
-
-  // const login = e => {
-  //   //setLoginBtnState("is-loading")
-  //   e.preventDefault();
-  //   axios
-  //     .post(loginURL, credentials)
-  //     .then(response => {
-  //       if (response.data.token) {
-  //         props.setLogin(response.data);
-  //         if (rememberMe) {
-  //           localStorage.setItem('waterfordToken', response.data.token);
-  //           localStorage.setItem('waterfordUserId', response.data.id);
-  //           localStorage.setItem(
-  //             'waterfordFirstName',
-  //             response.data.name_first
-  //           );
-  //           localStorage.setItem('waterfordLastName', response.data.name_last);
-  //         }
-  //         setCredentials({ email: '', password: '' });
-  //         navigate('/');
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //       toast({
-  //         title: 'Error',
-  //         description: error.response.data.message,
-  //         status: 'error',
-  //         duration: 4000,
-  //         isClosable: true,
-  //       });
-  //     });
-  // };
 
   return (
     <Flex
