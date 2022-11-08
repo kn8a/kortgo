@@ -100,7 +100,7 @@ function AdminMenu(props) {
 
             <Flex flexDir={'column'} gap="2">
               <Heading size={'md'}>Manage Users</Heading>
-              <RouteLink to={'/book-manage'}>
+              <RouteLink to={'/admin/topup'}>
                 <Button
                   colorScheme={'blue'}
                   width="full"

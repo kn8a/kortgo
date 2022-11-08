@@ -27,6 +27,7 @@ import Howto from './pages/Howto';
 import axios from 'axios';
 import AdminMenu from './admin-pages/AdminMenu';
 import InviteCode from './admin-pages/InviteCode';
+import TopUp from './admin-pages/TopUp';
 
 function App() {
 
@@ -107,6 +108,10 @@ function App() {
               <Route
                 path="/admin/invite"
                 element={<InviteCode loggedIn={loggedIn} setLogin={setLogin} />}
+              />
+              <Route
+                path="/admin/topup"
+                element={<TopUp loggedIn={loggedIn} setLogin={setLogin} />}
               />
             </Routes>
           </Router>
