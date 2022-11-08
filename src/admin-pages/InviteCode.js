@@ -39,7 +39,17 @@ function InviteCode(props) {
       })
       .then(response => {
         setCode(response.data.code);
-      });
+      })
+      .catch(err => {
+        toast({
+            title: 'Error generating code',
+            description: err.response.data.message,
+            status: 'error',
+            duration: 4000,
+            isClosable: true,
+          });
+      })
+      
   };
 
   // const login = e => {
