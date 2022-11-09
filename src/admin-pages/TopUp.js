@@ -19,7 +19,7 @@ import {
 
 function TopUp(props) {
     const toast = useToast();
-    const inviteURL = `${process.env.REACT_APP_API_URL}/admin/invite`;
+
     const getUsersURL = `${process.env.REACT_APP_API_URL}/admin/users-top-up`
     const topUpURL = `${process.env.REACT_APP_API_URL}/admin/top-up`
   
@@ -42,7 +42,7 @@ function TopUp(props) {
 
     const topUp = () => {
         const topUpDetails = {
-            user: selectedUser,
+            userId: selectedUser,
             amount: amount,
             receipt: receipt,
         }
@@ -52,7 +52,15 @@ function TopUp(props) {
             headers: { Authorization: `Bearer ${props.loggedIn.token}` },
           })
           .then(response => {
-            console.log(response.data.code);
+            toast({
+                title: 'Top-up complete',
+                description: response.data.message,
+                status: 'success',
+                duration: 4000,
+                isClosable: true,
+              });
+            setAmount('')
+            setReceipt('')
           })
           .catch(err => {
             toast({
@@ -108,7 +116,7 @@ function TopUp(props) {
                 <FormLabel>User</FormLabel>
                 <Select placeholder='Select user' onChange={onUserChange}>
                     {users.map(user => {
-                        return(<option value={user._id} key={user._id}>{`${user.address}-${user.email}-${user.balance}`}</option>)
+                        return(<option value={user._id} key={user._id}>{`${user.address}-${user.name_first}-${user.balance}`}</option>)
                     })}
                 </Select>
               </FormControl>
