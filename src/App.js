@@ -103,7 +103,7 @@ function App() {
               />
               <Route
                 path="/admin"
-                element={<AdminMenu loggedIn={loggedIn} setLogin={setLogin} />}
+                element={<AdminMenu loggedIn={loggedIn} setLogin={setLogin} logout={logout} />}
               />
               <Route
                 path="/admin/invite"
