@@ -89,9 +89,9 @@ function AdminMenu(props) {
                   Refund past booking
                 </Button>
               </RouteLink>
-              <RouteLink to={'/book-manage'}>
+              <RouteLink to={'/admin/future-bookings'}>
                 <Button
-                disabled
+                
                   colorScheme={'blue'}
                   width="full"
                   leftIcon={<FaRegCalendarTimes />}

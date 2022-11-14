@@ -29,6 +29,7 @@ import AdminMenu from './admin-pages/AdminMenu';
 import InviteCode from './admin-pages/InviteCode';
 import TopUp from './admin-pages/TopUp';
 import PastBookings from './admin-pages/PastBookings';
+import FutureBookings from './admin-pages/FutureBookings';
 
 function App() {
 
@@ -117,6 +118,10 @@ function App() {
               <Route
                 path="/admin/past-bookings"
                 element={<PastBookings loggedIn={loggedIn} setLogin={setLogin} />}
+              />
+              <Route
+                path="/admin/future-bookings"
+                element={<FutureBookings loggedIn={loggedIn} setLogin={setLogin} />}
               />
             </Routes>
           </Router>

@@ -4,10 +4,7 @@ import {
   Stack,
   Heading,
   Flex,
-  Box,
   Button,
-  Text,
-  useColorModeValue,
   Divider,
   useToast,
 } from '@chakra-ui/react';
@@ -16,10 +13,10 @@ import BookingAdmin from './components/BookingAdmin';
 import Loader from '../components/Loader';
 import { useNavigate } from 'react-router-dom';
 
-function PastBookings(props) {
-    const toast = useToast();
+function FutureBookings(props) {
+  const toast = useToast();
   const navigate = useNavigate();
-  const pastBookingsURL = `${process.env.REACT_APP_API_URL}/admin/bookings/past`;
+  const futureBookingsURL = `${process.env.REACT_APP_API_URL}/admin/bookings/future`;
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
@@ -30,7 +27,7 @@ function PastBookings(props) {
 
   useEffect(() => {
     axios
-      .get(pastBookingsURL, {
+      .get(futureBookingsURL, {
         headers: { Authorization: `Bearer ${props.loggedIn.token}` },
       })
       .then(response => {
@@ -39,7 +36,7 @@ function PastBookings(props) {
           navigate('/');
           toast({
             title: 'No bookings',
-            description: "No confirmed bookings in the past 30 days",
+            description: 'No future bookings',
             status: 'warning',
             duration: 2000,
             isClosable: true,
@@ -54,7 +51,7 @@ function PastBookings(props) {
 
   const updateBookings = () => {
     axios
-      .get(pastBookingsURL, {
+      .get(futureBookingsURL, {
         headers: { Authorization: `Bearer ${props.loggedIn.token}` },
       })
       .then(response => {
@@ -66,7 +63,6 @@ function PastBookings(props) {
             status: 'warning',
             duration: 2000,
             isClosable: true,
-
           });
         }
         setBookings(response.data.bookings);
@@ -87,13 +83,13 @@ function PastBookings(props) {
       justify={'space-between'}
       flexDirection={'column'}
     >
-      <Stack spacing={6} mx={'auto'} w='auto' py={12} px={2}>
+      <Stack spacing={6} mx={'auto'} w="auto" py={12} px={2}>
         <Stack align={'center'}>
           <Heading fontSize={'3xl'}>Upcoming bookings</Heading>
           <Divider />
           {/* <Text fontSize={'lg'} >
-            {`Your account balance is ${props.loggedIn.balance}`}
-          </Text> */}
+              {`Your account balance is ${props.loggedIn.balance}`}
+            </Text> */}
         </Stack>
         {bookings.map(booking => {
           return (
@@ -102,23 +98,21 @@ function PastBookings(props) {
                 booking={booking}
                 updateBookings={updateBookings}
                 loggedIn={props.loggedIn}
+                updateBalance={props.updateBalance}
               />
             </Flex>
           );
         })}
-
-        
       </Stack>
-      <Flex pb={4} w='auto'>
-      <RouteLink to={'/'}>
+      <Flex pb={4} w="auto">
+        <RouteLink to={'/'}>
           <Button colorScheme={'blue'} width="full" size={'lg'}>
             Back to menu
           </Button>
         </RouteLink>
       </Flex>
-      
     </Flex>
   );
 }
 
-export default PastBookings
+export default FutureBookings;
