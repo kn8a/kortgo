@@ -28,6 +28,7 @@ import axios from 'axios';
 import AdminMenu from './admin-pages/AdminMenu';
 import InviteCode from './admin-pages/InviteCode';
 import TopUp from './admin-pages/TopUp';
+import PastBookings from './admin-pages/PastBookings';
 
 function App() {
 
@@ -112,6 +113,10 @@ function App() {
               <Route
                 path="/admin/topup"
                 element={<TopUp loggedIn={loggedIn} setLogin={setLogin} />}
+              />
+              <Route
+                path="/admin/past-bookings"
+                element={<PastBookings loggedIn={loggedIn} setLogin={setLogin} />}
               />
             </Routes>
           </Router>

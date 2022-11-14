@@ -71,6 +71,7 @@ function AdminMenu(props) {
               <Heading size={'md'}>Manage Bookings</Heading>
               <RouteLink to={'/admin/invite'}>
                 <Button
+                  disabled
                   colorScheme={'blue'}
                   width="full"
                   leftIcon={<FaRegCalendarPlus />}
@@ -78,8 +79,9 @@ function AdminMenu(props) {
                   Add booking
                 </Button>
               </RouteLink>
-              <RouteLink to={'/book-manage'}>
+              <RouteLink to={'/admin/past-bookings'}>
                 <Button
+                  
                   colorScheme={'blue'}
                   width="full"
                   leftIcon={<FaFileInvoiceDollar />}
@@ -89,6 +91,7 @@ function AdminMenu(props) {
               </RouteLink>
               <RouteLink to={'/book-manage'}>
                 <Button
+                disabled
                   colorScheme={'blue'}
                   width="full"
                   leftIcon={<FaRegCalendarTimes />}
@@ -120,6 +123,7 @@ function AdminMenu(props) {
               </RouteLink>
               <RouteLink to={'/book-manage'}>
                 <Button
+                disabled
                   colorScheme={'blue'}
                   width="full"
                   leftIcon={<FaUsersCog />}
@@ -129,6 +133,7 @@ function AdminMenu(props) {
               </RouteLink>
               <RouteLink to={'/book-manage'}>
                 <Button
+                disabled
                   colorScheme={'blue'}
                   width="full"
                   leftIcon={<FaUserPlus />}
