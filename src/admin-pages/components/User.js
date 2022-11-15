@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Stack,
@@ -16,6 +16,11 @@ import {
   DrawerFooter,
   useDisclosure,
   useToast,
+  FormControl,
+  Input,
+  HStack,
+  FormLabel,
+  InputGroup
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
@@ -23,6 +28,8 @@ import { useNavigate } from 'react-router';
 function User(props) {
     const toast = useToast();
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const [user, setUser] = useState(props.user)
     
     
     return (
@@ -64,8 +71,95 @@ function User(props) {
             <DrawerCloseButton />
             <DrawerHeader>{`Editing ${props.user.name_first} ${props.user.name_last}`}</DrawerHeader>
   
-            <DrawerBody justifyContent={'space-evenly'}>
-              <Flex direction={'column'} gap={6}>
+            <DrawerBody justifyContent={'space-evenly'} p={4}>
+              <Flex direction={'column'} gap={2}>
+                <Flex gap={2} shadow='md' rounded={'md'} p={2}>
+                <FormControl id="firstName">
+                    <FormLabel>First Name</FormLabel>
+                    <Input
+                        required
+                        // onChange={onRegChange}
+                        value={user.name_first}
+                        name="name_first"
+                        type="text"
+                        placeholder="John"
+                    />
+                </FormControl>
+                <FormControl id="firstName">
+                    <FormLabel>Last Name</FormLabel>
+                    <Input
+                        required
+                        // onChange={onRegChange}
+                        value={user.name_first}
+                        name="name_first"
+                        type="text"
+                        placeholder="John"
+                    />
+                </FormControl>
+                </Flex>
+                <Flex shadow='md' rounded={'md'} p={2}>
+                <FormControl id="firstName" >
+                    <FormLabel>Email</FormLabel>
+                    <Input
+                        required
+                        // onChange={onRegChange}
+                        value={user.email}
+                        name="name_first"
+                        type="text"
+                        placeholder="John"
+                    />
+                </FormControl>
+                </Flex>
+                
+                <Flex gap={2} shadow='md' rounded={'md'} p={2}>
+                <FormControl id="firstName" >
+                    <FormLabel>Address</FormLabel>
+                    <Input
+                        required
+                        // onChange={onRegChange}
+                        value={user.address}
+                        name="name_first"
+                        type="text"
+                        placeholder="John"
+                    />
+                </FormControl>
+                <FormControl id="firstName" >
+                    <FormLabel>Balance</FormLabel>
+                    <Input
+                        required
+                        // onChange={onRegChange}
+                        value={user.balance}
+                        name="name_first"
+                        type="text"
+                        placeholder="John"
+                    />
+                </FormControl>
+                </Flex>
+                
+                <Flex gap={2} shadow='md' rounded={'md'} p={2}>
+                <FormControl id="firstName" >
+                    <FormLabel>Status</FormLabel>
+                    <Input
+                        required
+                        // onChange={onRegChange}
+                        value={user.status}
+                        name="name_first"
+                        type="text"
+                        placeholder="John"
+                    />
+                </FormControl>
+                <FormControl id="firstName" >
+                    <FormLabel>Role</FormLabel>
+                    <Input
+                        required
+                        // onChange={onRegChange}
+                        value={user.role}
+                        name="name_first"
+                        type="text"
+                        placeholder="John"
+                    />
+                </FormControl>
+                </Flex>
                 
               </Flex>
             </DrawerBody>
@@ -76,7 +170,7 @@ function User(props) {
               flexDirection={'column'}
             >
               <Text pb={4}>
-                <strong>Please ensure information accuracy</strong>
+                <strong>⚠️ Ensure information accuracy</strong>
               </Text>
               <Flex>
                 <Button colorScheme={'blue'} mr={3} onClick={onClose} size="lg">
