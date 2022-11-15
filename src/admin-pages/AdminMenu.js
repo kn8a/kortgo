@@ -121,9 +121,9 @@ function AdminMenu(props) {
                   New invite code
                 </Button>
               </RouteLink>
-              <RouteLink to={'/book-manage'}>
+              <RouteLink to={'/admin/manage-users'}>
                 <Button
-                disabled
+                
                   colorScheme={'blue'}
                   width="full"
                   leftIcon={<FaUsersCog />}

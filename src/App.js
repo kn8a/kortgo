@@ -30,6 +30,7 @@ import InviteCode from './admin-pages/InviteCode';
 import TopUp from './admin-pages/TopUp';
 import PastBookings from './admin-pages/PastBookings';
 import FutureBookings from './admin-pages/FutureBookings';
+import ManageUsers from './admin-pages/ManageUsers';
 
 function App() {
 
@@ -122,6 +123,10 @@ function App() {
               <Route
                 path="/admin/future-bookings"
                 element={<FutureBookings loggedIn={loggedIn} setLogin={setLogin} />}
+              />
+              <Route
+                path="/admin/manage-users"
+                element={<ManageUsers loggedIn={loggedIn} setLogin={setLogin} />}
               />
             </Routes>
           </Router>
