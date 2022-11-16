@@ -40,6 +40,17 @@ function ManageUsers(props) {
       });
   }, []);
 
+  const updateUsers = () => {
+    axios
+      .get(getUsersURL, {
+        headers: { Authorization: `Bearer ${props.loggedIn.token}` },
+      })
+      .then(response => {
+        console.log(response.data.users);
+        setUsers(response.data.users);
+      });
+  }
+
   const topUp = () => {
     const topUpDetails = {
       userId: selectedUser,
@@ -92,11 +103,20 @@ function ManageUsers(props) {
   return (
     <Flex
       minH={'100vh'}
-      align={'center'}
+      align={'flex-start'}
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6} w='full'>
+      
+      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w='full'>
+      <RouteLink to={'/admin'}>
+                <Button
+                  size="sm"
+                  colorScheme={'blue'}
+                >
+                  Back to menu
+                </Button>
+              </RouteLink>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>Manage users</Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
@@ -110,10 +130,10 @@ function ManageUsers(props) {
           w='full'
           p={4}
         >
-          <Stack gap={4}>
+          <Stack gap={2}>
             {users.map(user=>{
               return(
-                <div><User user={user}/></div>
+                <div><User user={user} updateUsers={updateUsers} loggedIn={props.loggedIn}/></div>
               )
             })}
             {/* <FormControl id="user">
@@ -134,30 +154,7 @@ function ManageUsers(props) {
 
             
 
-            <Stack spacing={10}>
-              <Button
-                onClick={topUp}
-                bg={'blue.400'}
-                size="lg"
-                color={'white'}
-                _hover={{
-                  bg: 'blue.500',
-                }}
-              >
-                Top-up
-              </Button>
-
-              <RouteLink to={'/admin'}>
-                <Button
-                  size="lg"
-                  _hover={{
-                    bg: 'blue.500',
-                  }}
-                >
-                  Back to menu
-                </Button>
-              </RouteLink>
-            </Stack>
+            
           </Stack>
         </Box>
       </Stack>

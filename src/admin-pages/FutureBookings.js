@@ -33,7 +33,7 @@ function FutureBookings(props) {
       .then(response => {
         //console.log(response.data.upcoming)
         if (response.data.bookings.length == 0) {
-          navigate('/');
+          navigate('/admin');
           toast({
             title: 'No bookings',
             description: 'No future bookings',
@@ -56,7 +56,7 @@ function FutureBookings(props) {
       })
       .then(response => {
         if (response.data.bookings.length == 0) {
-          navigate('/');
+          navigate('/admin');
           toast({
             title: 'No bookings',
             description: "You don't have any upcoming bookings",

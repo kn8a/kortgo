@@ -48,7 +48,7 @@ function AdminMenu(props) {
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>
             Welcome {`${props.loggedIn.name_first}`}
@@ -59,10 +59,10 @@ function AdminMenu(props) {
           rounded={'lg'}
           bg={useColorModeValue('white', 'gray.700')}
           boxShadow={'lg'}
-          p={8}
+          p={4}
         >
           <Stack
-            spacing={6}
+            spacing={4}
             alignContent="center"
             alignItems={'center'}
             width="full"
@@ -141,6 +141,30 @@ function AdminMenu(props) {
                   Create new user
                 </Button>
               </RouteLink>
+            </Flex>
+            <Flex flexDir={'column'} gap="2">
+              <Heading size={'md'}>Maintenance</Heading>
+              <RouteLink to={'/admin/invite'}>
+                <Button
+                  disabled
+                  colorScheme={'blue'}
+                  width="full"
+                  leftIcon={<FaRegCalendarPlus />}
+                >
+                  View logs
+                </Button>
+              </RouteLink>
+              <RouteLink to={'/admin/past-bookings'}>
+                <Button
+                  disabled
+                  colorScheme={'blue'}
+                  width="full"
+                  leftIcon={<FaFileInvoiceDollar />}
+                >
+                  Database cleanup
+                </Button>
+              </RouteLink>
+              
             </Flex>
 
             {/* <Button colorScheme={'blue'}>My account</Button> */}
