@@ -16,6 +16,7 @@ import {
 import { useState } from 'react';
 import { Link as RouteLink } from 'react-router-dom';
 import axios from 'axios';
+import { FaArrowLeft, FaDonate, } from 'react-icons/fa';
 
 function TopUp(props) {
   const toast = useToast();
@@ -91,11 +92,20 @@ function TopUp(props) {
   return (
     <Flex
       minH={'100vh'}
-      align={'center'}
+      align={'flex-start'}
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={4} px={4} w='full'>
+      <RouteLink to={'/admin'}>
+                <Button
+                  size="sm"
+                  colorScheme={'blue'}
+                  leftIcon={<FaArrowLeft/>}
+                >
+                  Back to menu
+                </Button>
+              </RouteLink>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>Top-up</Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
@@ -152,26 +162,12 @@ function TopUp(props) {
             <Stack spacing={10}>
               <Button
                 onClick={topUp}
-                bg={'blue.400'}
+                colorScheme='green'
                 size="lg"
-                color={'white'}
-                _hover={{
-                  bg: 'blue.500',
-                }}
+                leftIcon={<FaDonate/>}
               >
                 Top-up
               </Button>
-
-              <RouteLink to={'/admin'}>
-                <Button
-                  size="lg"
-                  _hover={{
-                    bg: 'blue.500',
-                  }}
-                >
-                  Back to menu
-                </Button>
-              </RouteLink>
             </Stack>
           </Stack>
         </Box>

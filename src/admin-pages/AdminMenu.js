@@ -44,7 +44,7 @@ function AdminMenu(props) {
   return (
     <Flex
       minH={'100vh'}
-      align={'center'}
+      align={'flex-start'}
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >

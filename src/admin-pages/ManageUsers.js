@@ -13,21 +13,22 @@ import {
   useToast,
   Select,
 } from '@chakra-ui/react';
+
 import { useState } from 'react';
 import { Link as RouteLink } from 'react-router-dom';
 import axios from 'axios';
 import User from './components/User';
+import Loader from '../components/Loader';
+
+import { FaArrowLeft, FaCaretLeft } from 'react-icons/fa';
 
 function ManageUsers(props) {
   const toast = useToast();
 
   const getUsersURL = `${process.env.REACT_APP_API_URL}/admin/users-manage`;
-  const topUpURL = `${process.env.REACT_APP_API_URL}/admin/top-up`;
 
-  const [amount, setAmount] = useState('');
   const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState({});
-  const [receipt, setReceipt] = useState('');
+
 
   useEffect(() => {
     axios
@@ -51,61 +52,16 @@ function ManageUsers(props) {
       });
   }
 
-  const topUp = () => {
-    const topUpDetails = {
-      userId: selectedUser,
-      amount: amount,
-      receipt: receipt,
-    };
-    console.log(topUpDetails);
-    axios
-      .post(topUpURL, topUpDetails, {
-        headers: { Authorization: `Bearer ${props.loggedIn.token}` },
-      })
-      .then(response => {
-        toast({
-          title: 'Top-up complete',
-          description: response.data.message,
-          status: 'success',
-          duration: 4000,
-          isClosable: true,
-        });
-        setAmount('');
-        setReceipt('');
-      })
-      .catch(err => {
-        toast({
-          title: 'Error generating code',
-          description: err.response.data.message,
-          status: 'error',
-          duration: 4000,
-          isClosable: true,
-        });
-      });
-  };
-
-  const onUserChange = e => {
-    const value = e.target.value;
-    console.log(value);
-    setSelectedUser(value);
-  };
-
-  const onAmountChange = e => {
-    const value = e.target.value;
-    setAmount(value);
-  };
-
-  const onRecieptChange = e => {
-    const value = e.target.value;
-    setReceipt(value);
-  };
+  if (users.length == 0) {
+    return <Loader />;
+  }
 
   return (
     <Flex
       minH={'100vh'}
       align={'flex-start'}
       justify={'center'}
-      bg={useColorModeValue('gray.50', 'gray.800')}
+      bg="gray.50" _dark={{ bg: 'gray.800' }}
     >
       
       <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w='full'>
@@ -113,6 +69,7 @@ function ManageUsers(props) {
                 <Button
                   size="sm"
                   colorScheme={'blue'}
+                  leftIcon={<FaArrowLeft/>}
                 >
                   Back to menu
                 </Button>
@@ -125,7 +82,8 @@ function ManageUsers(props) {
         </Stack>
         <Box
           rounded={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
+          bg="white" _dark={{ bg: 'gray.700' }}
+          
           boxShadow={'lg'}
           w='full'
           p={4}
@@ -136,24 +94,6 @@ function ManageUsers(props) {
                 <div><User user={user} updateUsers={updateUsers} loggedIn={props.loggedIn}/></div>
               )
             })}
-            {/* <FormControl id="user">
-              <FormLabel>User</FormLabel>
-              <Select placeholder="Select user" onChange={onUserChange}>
-                {users.map(user => {
-                  return (
-                    <option
-                      value={user._id}
-                      key={user._id}
-                    >{`${user.address}-${user.name_first}-${user.balance}`}</option>
-                  );
-                })}
-              </Select>
-            </FormControl> */}
-
-            
-
-            
-
             
           </Stack>
         </Box>

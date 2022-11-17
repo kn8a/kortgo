@@ -15,6 +15,7 @@ import {
 import { useState } from 'react';
 import { Link as RouteLink } from 'react-router-dom';
 import axios from 'axios';
+import { FaArrowLeft } from 'react-icons/fa';
 
 function InviteCode(props) {
   const toast = useToast();
@@ -50,11 +51,20 @@ function InviteCode(props) {
   return (
     <Flex
       minH={'100vh'}
-      align={'center'}
+      align={'flex-start'}
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w='full'>
+      <RouteLink to={'/admin'}>
+                <Button
+                  size="sm"
+                  colorScheme={'blue'}
+                  leftIcon={<FaArrowLeft/>}
+                >
+                  Back to menu
+                </Button>
+              </RouteLink>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>Invitation code</Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
@@ -83,12 +93,9 @@ function InviteCode(props) {
             <Stack spacing={10}>
               <Button
                 onClick={generateCode}
-                bg={'blue.400'}
+                colorScheme='green'
                 size="lg"
-                color={'white'}
-                _hover={{
-                  bg: 'blue.500',
-                }}
+                
               >
                 Generate code
               </Button>
@@ -103,16 +110,7 @@ function InviteCode(props) {
                   fontSize="x-large"
                 ></Input>
               </Flex>
-              <RouteLink to={'/admin'}>
-                <Button
-                  size="lg"
-                  _hover={{
-                    bg: 'blue.500',
-                  }}
-                >
-                  Back to menu
-                </Button>
-              </RouteLink>
+              
             </Stack>
           </Stack>
         </Box>
