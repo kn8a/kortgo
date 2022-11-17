@@ -15,9 +15,10 @@ import { Link as RouteLink } from 'react-router-dom';
 import BookingAdmin from './components/BookingAdmin';
 import Loader from '../components/Loader';
 import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft, FaCaretLeft } from 'react-icons/fa';
 
 function PastBookings(props) {
-    const toast = useToast();
+  const toast = useToast();
   const navigate = useNavigate();
   const pastBookingsURL = `${process.env.REACT_APP_API_URL}/admin/bookings/past`;
   const [bookings, setBookings] = useState([]);
@@ -39,7 +40,7 @@ function PastBookings(props) {
           navigate('/admin');
           toast({
             title: 'No bookings',
-            description: "No confirmed bookings in the past 30 days",
+            description: 'No confirmed bookings in the past 30 days',
             status: 'warning',
             duration: 2000,
             isClosable: true,
@@ -66,7 +67,6 @@ function PastBookings(props) {
             status: 'warning',
             duration: 2000,
             isClosable: true,
-
           });
         }
         setBookings(response.data.bookings);
@@ -83,13 +83,18 @@ function PastBookings(props) {
   return (
     <Flex
       minH={'100vh'}
-      align={'center'}
+      align={'flex-start'}
       justify={'space-between'}
       flexDirection={'column'}
     >
-      <Stack spacing={6} mx={'auto'} w='auto' py={12} px={2}>
+      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w="full">
+        <RouteLink to={'/admin'}>
+          <Button size="sm" colorScheme={'blue'} leftIcon={<FaArrowLeft />}>
+            Back to menu
+          </Button>
+        </RouteLink>
         <Stack align={'center'}>
-          <Heading fontSize={'3xl'}>Upcoming bookings</Heading>
+          <Heading fontSize={'3xl'}>Past bookings</Heading>
           <Divider />
           {/* <Text fontSize={'lg'} >
             {`Your account balance is ${props.loggedIn.balance}`}
@@ -106,19 +111,9 @@ function PastBookings(props) {
             </Flex>
           );
         })}
-
-        
       </Stack>
-      <Flex pb={4} w='auto'>
-      <RouteLink to={'/'}>
-          <Button colorScheme={'blue'} width="full" size={'lg'}>
-            Back to menu
-          </Button>
-        </RouteLink>
-      </Flex>
-      
     </Flex>
   );
 }
 
-export default PastBookings
+export default PastBookings;

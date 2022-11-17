@@ -91,7 +91,7 @@ function ManageUsers(props) {
           <Stack gap={2}>
             {users.map(user=>{
               return(
-                <div><User user={user} updateUsers={updateUsers} loggedIn={props.loggedIn}/></div>
+                <div key={user.id}><User user={user} updateUsers={updateUsers} loggedIn={props.loggedIn}/></div>
               )
             })}
             

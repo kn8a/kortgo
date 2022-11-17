@@ -110,7 +110,7 @@ function BookingAdmin(props) {
                   Time slots:
                 </Text>
                 {props.booking.slots_full.map(time => {
-                  return <Text>{time.time}</Text>;
+                  return <Text key={time.time}>{time.time}</Text>;
                 })}
               </Box>
               <Box>
