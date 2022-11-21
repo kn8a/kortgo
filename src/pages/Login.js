@@ -12,11 +12,14 @@ import {
   Text,
   useColorModeValue,
   useToast,
+  Image,
+  Divider,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Link as RouteLink } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import KortGo from '../assets/images/kortgo-logo.svg'
 
 export default function Login(props) {
   const toast = useToast();
@@ -79,13 +82,15 @@ export default function Login(props) {
   return (
     <Flex
       minH={'100vh'}
-      align={'center'}
+      align={'flex-start'}
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={8} px={6}>
         <Stack align={'center'}>
-          <Heading fontSize={'4xl'}>Sign in to your account</Heading>
+
+          
+          <Heading fontSize={'4xl'}>Log in to your account</Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
             Don't have an account?{' '}
             <RouteLink to={'/register'}>

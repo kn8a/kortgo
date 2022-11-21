@@ -1,17 +1,27 @@
 import React from 'react'
 import { Flex, Stack, Divider, Heading, Button, Text } from '@chakra-ui/react';
 import { Link as RouteLink } from 'react-router-dom';
+import { FaArrowLeft, FaCaretLeft } from 'react-icons/fa';
 
 function Howto() {
   return (
     <Flex
       minH={'100vh'}
-      align={'center'}
+      align={'flex-start'}
       justify={'center'}
     >
-      <Stack spacing={6} mx={'auto'} w="auto" maxW={'500px'} py={12} px={2}>
+      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w='full'>
+      <RouteLink to={'/'}>
+                <Button
+                  size="sm"
+                  colorScheme={'blue'}
+                  leftIcon={<FaArrowLeft/>}
+                >
+                  Back to menu
+                </Button>
+              </RouteLink>
         <Stack align={'center'} px={4}>
-          <Heading fontSize={'3xl'}>How to use</Heading>
+          <Heading fontSize={'2xl'}>How to use the booking system</Heading>
           <Divider />
           <Heading fontSize={'large'}>1. Balance top-up</Heading>
             <Text>1.1. You can top-up your balance at the juristic office.</Text>
@@ -36,13 +46,6 @@ function Howto() {
             <Text>2.4. In the event you require a credit or partial credit for a booking after its start time (eg. rain), please see juristic office for further assistance.</Text>
             
         </Stack>
-        
-
-        <RouteLink to={'/'}>
-          <Button colorScheme={'blue'} width="full" size={'lg'}>
-            Back to menu
-          </Button>
-        </RouteLink>
       </Stack>
     </Flex>
   )

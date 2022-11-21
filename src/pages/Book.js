@@ -27,6 +27,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SlotButton from '../components/SlotButton';
 import UnSlotButton from '../components/UnSlotButton';
+import { FaArrowLeft } from 'react-icons/fa';
 var array = require('lodash/array');
 
 function Book(props) {
@@ -171,11 +172,20 @@ function Book(props) {
     <>
       <Flex
         minH={'100vh'}
-        align={'center'}
+        align={'flex-start'}
         justify={'center'}
         bg={useColorModeValue('gray.50', 'gray.800')}
       >
-        <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+        <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w='full'>
+        <RouteLink to={'/'}>
+                <Button
+                  size="sm"
+                  colorScheme={'blue'}
+                  leftIcon={<FaArrowLeft/>}
+                >
+                  Back to menu
+                </Button>
+              </RouteLink>
           <Stack align={'center'}>
             <Heading fontSize={'4xl'}>New booking</Heading>
             <Text fontSize={'lg'} color={'gray.600'}>
@@ -270,9 +280,7 @@ function Book(props) {
               <Button colorScheme={'blue'} size={'lg'} onClick={checkSlots}>
                 <Text>Book</Text>
               </Button>
-              <RouteLink to={'/'}>
-                <Button width={'full'}>Back to menu</Button>
-              </RouteLink>
+              
             </Stack>
           </Box>
         </Stack>

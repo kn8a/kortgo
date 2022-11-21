@@ -15,6 +15,7 @@ import { Link as RouteLink } from 'react-router-dom';
 import Booking from '../components/Booking';
 import Loader from '../components/Loader';
 import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft, FaCaretLeft } from 'react-icons/fa';
 
 function Bookings(props) {
   const toast = useToast();
@@ -83,11 +84,20 @@ function Bookings(props) {
   return (
     <Flex
       minH={'100vh'}
-      align={'center'}
+      align={'flex-start'}
       justify={'space-between'}
       flexDirection={'column'}
     >
-      <Stack spacing={6} mx={'auto'} w='auto' py={12} px={2}>
+      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w='full'>
+      <RouteLink to={'/'}>
+                <Button
+                  size="sm"
+                  colorScheme={'blue'}
+                  leftIcon={<FaArrowLeft/>}
+                >
+                  Back to menu
+                </Button>
+              </RouteLink>
         <Stack align={'center'}>
           <Heading fontSize={'3xl'}>Upcoming bookings</Heading>
           <Divider />
@@ -110,13 +120,7 @@ function Bookings(props) {
 
         
       </Stack>
-      <Flex pb={4} w='auto'>
-      <RouteLink to={'/'}>
-          <Button colorScheme={'blue'} width="full" size={'lg'}>
-            Back to menu
-          </Button>
-        </RouteLink>
-      </Flex>
+
       
     </Flex>
   );

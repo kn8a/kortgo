@@ -47,11 +47,11 @@ function Menu(props) {
   return (
     <Flex
       minH={'100vh'}
-      align={'center'}
+      align={'flex-start'}
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w='full'>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>
             Welcome {`${props.loggedIn.name_first}`}
