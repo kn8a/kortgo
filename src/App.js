@@ -31,6 +31,7 @@ import TopUp from './admin-pages/TopUp';
 import PastBookings from './admin-pages/PastBookings';
 import FutureBookings from './admin-pages/FutureBookings';
 import ManageUsers from './admin-pages/ManageUsers';
+import AddUser from './admin-pages/AddUser';
 
 function App() {
 
@@ -74,7 +75,6 @@ function App() {
   return (
     <>
       <ChakraProvider theme={theme}>
-        {/* <ColorModeSwitcher justifySelf="flex-end" /> */}
         <Box>
           <Router>
             <Routes>
@@ -123,6 +123,10 @@ function App() {
               <Route
                 path="/admin/future-bookings"
                 element={<FutureBookings loggedIn={loggedIn} setLogin={setLogin} />}
+              />
+              <Route
+                path="/admin/add-user"
+                element={<AddUser loggedIn={loggedIn} setLogin={setLogin} />}
               />
               <Route
                 path="/admin/manage-users"

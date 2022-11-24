@@ -131,9 +131,8 @@ function AdminMenu(props) {
                   Manage existing users
                 </Button>
               </RouteLink>
-              <RouteLink to={'/book-manage'}>
+              <RouteLink to={'/admin/add-user'}>
                 <Button
-                disabled
                   colorScheme={'blue'}
                   width="full"
                   leftIcon={<FaUserPlus />}

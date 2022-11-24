@@ -257,7 +257,7 @@ function User(props) {
                     <option value="suspended">suspended</option>
                   </Select>
                 </FormControl>
-                <FormControl id="firstName">
+                <FormControl id="role">
                   <FormLabel>
                     <small>⛔Role</small>
                   </FormLabel>

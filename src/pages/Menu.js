@@ -20,6 +20,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { PhoneIcon, AddIcon, WarningIcon, InfoOutlineIcon, CalendarIcon, EditIcon, PlusSquareIcon, LockIcon } from '@chakra-ui/icons'
+import { ColorModeSwitcher } from '../ColorModeSwitcher';
 
 function Menu(props) {
   const navigate = useNavigate();
@@ -87,10 +88,14 @@ function Menu(props) {
                 How to use?
               </Button>
             </RouteLink>
-            {/* <Button colorScheme={'blue'}>My account</Button> */}
-            <Button onClick={() => {props.setLogin({}); props.logout()}} leftIcon={<LockIcon/>} colorScheme={'red'}>
+            <Flex gap={4} justifyContent='center'>
+              <ColorModeSwitcher/>
+              <Button onClick={() => {props.setLogin({}); props.logout()}} leftIcon={<LockIcon/>} colorScheme={'red'}>
               Logout
             </Button>
+            </Flex>
+            {/* <Button colorScheme={'blue'}>My account</Button> */}
+            
           </Stack>
         </Box>
       </Stack>

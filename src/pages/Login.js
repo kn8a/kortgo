@@ -88,15 +88,17 @@ export default function Login(props) {
     >
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={8} px={6}>
         <Stack align={'center'}>
-
+            <Image src={KortGo} px={10}/>
+            
+            
+            <Divider></Divider>
           
-          <Heading fontSize={'4xl'}>Log in to your account</Heading>
-          <Text fontSize={'lg'} color={'gray.600'}>
+          <Heading fontSize={'4xl'} textAlign='center'>Log in to your account</Heading>
+          <Text fontSize={'lg'} color={'gray.600'} textAlign='center'>
             Don't have an account?{' '}
             <RouteLink to={'/register'}>
               <Link color={'blue.400'}>Click here to register</Link>
-            </RouteLink>{' '}
-            🎾
+            </RouteLink>
           </Text>
         </Stack>
         <Box
@@ -150,13 +152,7 @@ export default function Login(props) {
               </Button>
             </Stack>
           </Stack>
-          <Box textAlign={'center'} mt={6}>
-            <RouteLink>
-              <Link fontSize={'sm'} color={'blue.400'}>
-                Admin login
-              </Link>
-            </RouteLink>
-          </Box>
+
         </Box>
       </Stack>
     </Flex>

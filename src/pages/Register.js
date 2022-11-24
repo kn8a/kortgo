@@ -6,7 +6,6 @@ import {
   Input,
   InputGroup,
   HStack,
-  InputRightElement,
   Stack,
   Button,
   Heading,
@@ -14,6 +13,9 @@ import {
   useColorModeValue,
   Link,
   useToast,
+
+  FormHelperText,
+
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
@@ -25,7 +27,9 @@ export default function Register() {
   const navigate = useNavigate();
   const toast = useToast();
 
+
   const registerURL = `${process.env.REACT_APP_API_URL}/users/register`;
+  const validationURL = `${process.env.REACT_APP_API_URL}/users/validate`;
 
   const [registerInfo, setRegisterInfo] = useState({
     name_first: '',
@@ -43,18 +47,15 @@ export default function Register() {
     axios
       .post(registerURL, registerInfo)
       .then(response => {
-        //console.log(response)
         if (response.data.message == 'Profile created successfully') {
           toast({
             title: 'Account created.',
             description:
-              'Account submitted for approval, we will notify you once approved.',
+              'Please verify your email address with the code we sent you.',
             status: 'success',
             duration: 9000,
             isClosable: true,
           });
-          // toast.success(`${response.data.message}. Please login to continue`)
-          // setRegBtnState("")
           setRegisterInfo({
             name_first: '',
             name_last: '',
@@ -95,14 +96,16 @@ export default function Register() {
     return regex.test(input);
   }
 
+
+
   return (
     <Flex
       minH={'100vh'}
-      align={'center'}
+      align={'flex-start'}
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w='full'>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'} textAlign={'center'}>
             Sign up
@@ -148,6 +151,7 @@ export default function Register() {
             </HStack>
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
+              
               <Input
                 required
                 onChange={onRegChange}
@@ -155,7 +159,7 @@ export default function Register() {
                 name="email"
                 type="email"
                 placeholder="example@email.com"
-              />
+              /><FormHelperText>Used only to send important notifications about your bookings. No spam!</FormHelperText>
             </FormControl>
             <FormControl id="address" isRequired>
               <FormLabel>Condo / Apt Number</FormLabel>
@@ -221,6 +225,7 @@ export default function Register() {
               >
                 Sign up
               </Button>
+              
             </Stack>
             <Stack pt={6}>
               <Text align={'center'}>
@@ -232,6 +237,7 @@ export default function Register() {
           </Stack>
         </Box>
       </Stack>
+      
     </Flex>
   );
 }

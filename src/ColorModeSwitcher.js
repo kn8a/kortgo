@@ -12,12 +12,13 @@ export const ColorModeSwitcher = props => {
       size="md"
       fontSize="lg"
       aria-label={`Switch to ${text} mode`}
-      variant="ghost"
-      color="current"
+      variant='solid'
+      shadow={'md'}
       marginLeft="2"
       onClick={toggleColorMode}
+      bg="orange" _dark={{ bg: 'orange.700' }}
       icon={<SwitchIcon />}
       {...props}
-    />
+    ></IconButton>
   );
 };
