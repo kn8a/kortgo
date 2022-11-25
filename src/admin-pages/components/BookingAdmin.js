@@ -24,7 +24,7 @@ function BookingAdmin(props) {
   const toast = useToast();
   const cancelURL = `${process.env.REACT_APP_API_URL}/admin/bookings/cancel`;
   const { isOpen, onOpen, onClose } = useDisclosure();
-  
+
   const cancelBooking = () => {
     axios
       .put(cancelURL, props.booking, {

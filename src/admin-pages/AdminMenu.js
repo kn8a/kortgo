@@ -40,9 +40,8 @@ import {
   FaRegCalendarTimes,
 } from 'react-icons/fa';
 
-
 function AdminMenu(props) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     if (!props.loggedIn.token) {
       navigate('/login');
@@ -79,7 +78,7 @@ function AdminMenu(props) {
               <Heading size={'md'}>Manage Bookings</Heading>
               <RouteLink to={'/admin/invite'}>
                 <Button
-                justifyContent="flex-start"
+                  justifyContent="flex-start"
                   disabled
                   colorScheme={'blue'}
                   width="full"
@@ -114,7 +113,7 @@ function AdminMenu(props) {
               <Heading size={'md'}>Manage Users</Heading>
               <RouteLink to={'/admin/topup'}>
                 <Button
-                justifyContent="flex-start"
+                  justifyContent="flex-start"
                   colorScheme={'blue'}
                   width="full"
                   leftIcon={<FaDonate />}
@@ -124,7 +123,7 @@ function AdminMenu(props) {
               </RouteLink>
               <RouteLink to={'/admin/invite'}>
                 <Button
-                justifyContent="flex-start"
+                  justifyContent="flex-start"
                   colorScheme={'blue'}
                   width="full"
                   leftIcon={<FaBarcode />}
@@ -134,7 +133,7 @@ function AdminMenu(props) {
               </RouteLink>
               <RouteLink to={'/admin/manage-users'}>
                 <Button
-                justifyContent="flex-start"
+                  justifyContent="flex-start"
                   colorScheme={'blue'}
                   width="full"
                   leftIcon={<FaUsersCog />}
@@ -144,7 +143,7 @@ function AdminMenu(props) {
               </RouteLink>
               <RouteLink to={'/admin/add-user'}>
                 <Button
-                justifyContent="flex-start"
+                  justifyContent="flex-start"
                   colorScheme={'blue'}
                   width="full"
                   leftIcon={<FaUserPlus />}
@@ -167,7 +166,7 @@ function AdminMenu(props) {
               </RouteLink>
               <RouteLink to={'/admin/past-bookings'}>
                 <Button
-                justifyContent="flex-start"
+                  justifyContent="flex-start"
                   disabled
                   colorScheme={'blue'}
                   width="full"
@@ -176,7 +175,6 @@ function AdminMenu(props) {
                   Database cleanup
                 </Button>
               </RouteLink>
-              
             </Flex>
 
             {/* <Button colorScheme={'blue'}>My account</Button> */}

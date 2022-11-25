@@ -24,7 +24,6 @@ import { useNavigate } from 'react-router';
 import { FaEdit } from 'react-icons/fa';
 
 function User(props) {
-
   const userUpdateURL = `${process.env.REACT_APP_API_URL}/admin/users/update`;
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -156,7 +155,13 @@ function User(props) {
           </Flex>
         </Flex>
         <Flex alignItems={'center'}>
-          <Button colorScheme={'blue'} size={'md'} shadow='md' onClick={onOpen} leftIcon={<FaEdit/>}>
+          <Button
+            colorScheme={'blue'}
+            size={'md'}
+            shadow="md"
+            onClick={onOpen}
+            leftIcon={<FaEdit />}
+          >
             Edit
           </Button>
         </Flex>

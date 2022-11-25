@@ -1,21 +1,17 @@
-import React from 'react'
+import React from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 function DbCleanup(props) {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  useEffect(() => {
+    if (!props.loggedIn.token) {
+      navigate('/login');
+    }
+  }, []);
 
-
-    useEffect(() => {
-        if (!props.loggedIn.token) {
-          navigate('/login');
-        }
-      },[]);
-
-  return (
-    <div>DbCleanup</div>
-  )
+  return <div>DbCleanup</div>;
 }
 
-export default DbCleanup
+export default DbCleanup;
