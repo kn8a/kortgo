@@ -16,8 +16,20 @@ import { useState } from 'react';
 import { Link as RouteLink } from 'react-router-dom';
 import axios from 'axios';
 import { FaArrowLeft } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function InviteCode(props) {
+
+  const navigate = useNavigate();
+
+
+    useEffect(() => {
+        if (!props.loggedIn.token) {
+          navigate('/login');
+        }
+      },[]);
+
   const toast = useToast();
   const inviteURL = `${process.env.REACT_APP_API_URL}/admin/invite`;
 

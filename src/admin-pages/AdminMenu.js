@@ -40,7 +40,15 @@ import {
   FaRegCalendarTimes,
 } from 'react-icons/fa';
 
+
 function AdminMenu(props) {
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (!props.loggedIn.token) {
+      navigate('/login');
+    }
+  });
+
   return (
     <Flex
       minH={'100vh'}

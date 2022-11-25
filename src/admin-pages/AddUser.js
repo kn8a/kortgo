@@ -18,16 +18,23 @@ import {
     FormHelperText,
   
   } from '@chakra-ui/react';
-  import { useState } from 'react';
+  import { useState, useEffect } from 'react';
   import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
   import axios from 'axios';
   import { useNavigate } from 'react-router';
   import { Link as RouteLink } from 'react-router-dom';
   import { FaArrowLeft } from 'react-icons/fa';
+
   
   export default function AddUser(props) {
     const navigate = useNavigate();
     const toast = useToast();
+
+    useEffect(() => {
+        if (!props.loggedIn.token) {
+          navigate('/login');
+        }
+      },[]);
   
   
     const registerURL = `${process.env.REACT_APP_API_URL}/admin/users/add`;

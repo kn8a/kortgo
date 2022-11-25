@@ -17,9 +17,18 @@ import { useState } from 'react';
 import { Link as RouteLink } from 'react-router-dom';
 import axios from 'axios';
 import { FaArrowLeft, FaDonate, } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 function TopUp(props) {
   const toast = useToast();
+
+  const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!props.loggedIn.token) {
+          navigate('/login');
+        }
+      },[]);
 
   const getUsersURL = `${process.env.REACT_APP_API_URL}/admin/users-top-up`;
   const topUpURL = `${process.env.REACT_APP_API_URL}/admin/top-up`;

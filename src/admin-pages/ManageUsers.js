@@ -21,8 +21,18 @@ import User from './components/User';
 import Loader from '../components/Loader';
 
 import { FaArrowLeft, FaCaretLeft } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 function ManageUsers(props) {
+
+  const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!props.loggedIn.token) {
+          navigate('/login');
+        }
+      },[]);
+
   const toast = useToast();
 
   const getUsersURL = `${process.env.REACT_APP_API_URL}/admin/users-manage`;

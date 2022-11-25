@@ -32,6 +32,7 @@ import PastBookings from './admin-pages/PastBookings';
 import FutureBookings from './admin-pages/FutureBookings';
 import ManageUsers from './admin-pages/ManageUsers';
 import AddUser from './admin-pages/AddUser';
+import ViewLogs from './admin-pages/ViewLogs';
 
 function App() {
 
@@ -131,6 +132,10 @@ function App() {
               <Route
                 path="/admin/manage-users"
                 element={<ManageUsers loggedIn={loggedIn} setLogin={setLogin} />}
+              />
+              <Route
+                path="/admin/logs"
+                element={<ViewLogs loggedIn={loggedIn} setLogin={setLogin} />}
               />
             </Routes>
           </Router>
