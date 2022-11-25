@@ -1,8 +1,44 @@
 import React from 'react'
 
-function Log() {
+
+import {
+  useColorModeValue,
+  Flex,
+  Text,
+  Button,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerHeader,
+  DrawerFooter,
+  useDisclosure,
+  useToast,
+  FormControl,
+  Input,
+  FormLabel,
+  Textarea,
+  Select,
+} from '@chakra-ui/react';
+import axios from 'axios';
+import { DateTime } from "luxon"
+import { useNavigate } from 'react-router';
+import { FaEdit } from 'react-icons/fa';
+
+function Log(props) {
   return (
-    <div>Log</div>
+    <Flex>
+        <Text fontSize={'sm'}>
+        {props.log.text}  
+        </Text>
+        <Text fontSize={'sm'}>
+            {DateTime.fromISO(props.log.createdAt).toLocaleString(
+                      DateTime.DATE_SHORT
+                    )}
+        </Text>
+        
+    </Flex>
   )
 }
 

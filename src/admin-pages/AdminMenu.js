@@ -75,10 +75,11 @@ function AdminMenu(props) {
             alignItems={'center'}
             width="full"
           >
-            <Flex flexDir={'column'} gap="2">
+            <Flex flexDir={'column'} gap="2" w={'100%'}>
               <Heading size={'md'}>Manage Bookings</Heading>
               <RouteLink to={'/admin/invite'}>
                 <Button
+                justifyContent="flex-start"
                   disabled
                   colorScheme={'blue'}
                   width="full"
@@ -89,7 +90,7 @@ function AdminMenu(props) {
               </RouteLink>
               <RouteLink to={'/admin/past-bookings'}>
                 <Button
-                  
+                  justifyContent="flex-start"
                   colorScheme={'blue'}
                   width="full"
                   leftIcon={<FaFileInvoiceDollar />}
@@ -99,7 +100,7 @@ function AdminMenu(props) {
               </RouteLink>
               <RouteLink to={'/admin/future-bookings'}>
                 <Button
-                
+                  justifyContent="flex-start"
                   colorScheme={'blue'}
                   width="full"
                   leftIcon={<FaRegCalendarTimes />}
@@ -109,10 +110,11 @@ function AdminMenu(props) {
               </RouteLink>
             </Flex>
 
-            <Flex flexDir={'column'} gap="2">
+            <Flex flexDir={'column'} gap="2" w={'100%'}>
               <Heading size={'md'}>Manage Users</Heading>
               <RouteLink to={'/admin/topup'}>
                 <Button
+                justifyContent="flex-start"
                   colorScheme={'blue'}
                   width="full"
                   leftIcon={<FaDonate />}
@@ -122,6 +124,7 @@ function AdminMenu(props) {
               </RouteLink>
               <RouteLink to={'/admin/invite'}>
                 <Button
+                justifyContent="flex-start"
                   colorScheme={'blue'}
                   width="full"
                   leftIcon={<FaBarcode />}
@@ -131,7 +134,7 @@ function AdminMenu(props) {
               </RouteLink>
               <RouteLink to={'/admin/manage-users'}>
                 <Button
-                
+                justifyContent="flex-start"
                   colorScheme={'blue'}
                   width="full"
                   leftIcon={<FaUsersCog />}
@@ -141,6 +144,7 @@ function AdminMenu(props) {
               </RouteLink>
               <RouteLink to={'/admin/add-user'}>
                 <Button
+                justifyContent="flex-start"
                   colorScheme={'blue'}
                   width="full"
                   leftIcon={<FaUserPlus />}
@@ -149,11 +153,11 @@ function AdminMenu(props) {
                 </Button>
               </RouteLink>
             </Flex>
-            <Flex flexDir={'column'} gap="2">
+            <Flex flexDir={'column'} gap="2" w={'100%'}>
               <Heading size={'md'}>Maintenance</Heading>
-              <RouteLink to={'/admin/invite'}>
+              <RouteLink to={'/admin/logs'}>
                 <Button
-                  disabled
+                  justifyContent="flex-start"
                   colorScheme={'blue'}
                   width="full"
                   leftIcon={<FaRegCalendarPlus />}
@@ -163,6 +167,7 @@ function AdminMenu(props) {
               </RouteLink>
               <RouteLink to={'/admin/past-bookings'}>
                 <Button
+                justifyContent="flex-start"
                   disabled
                   colorScheme={'blue'}
                   width="full"

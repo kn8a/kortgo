@@ -26,6 +26,7 @@ import {
   import { Link as RouteLink } from 'react-router-dom';
   import { FaArrowLeft } from 'react-icons/fa';
   import { useEffect } from 'react';
+  import Log from './components/Log';
   
 
 function ViewLogs(props) {
@@ -33,11 +34,39 @@ function ViewLogs(props) {
     const navigate = useNavigate();
     const toast = useToast();
 
+    
+
     useEffect(() => {
         if (!props.loggedIn.token) {
           navigate('/login');
         }
       },[]);
+
+    const [logs, setLogs] = useState([])
+    const [logsForm,setLogsForm] = useState({
+        type: '',
+        duration: '',
+    })
+
+    const fetchLogs = () => {
+        const logsURL = `${process.env.REACT_APP_API_URL}/admin/logs/${logsForm.type}/${logsForm.duration}`;
+        axios.get(logsURL, {
+            headers: { Authorization: `Bearer ${props.loggedIn.token}` },
+          })
+        .then(response => {
+            setLogs(response.data.logs)
+            console.log(response.data.logs)
+        })
+    }
+
+    const onFormChange = e => {
+        const value = e.target.value;
+        setLogsForm({
+          ...logsForm,
+          [e.target.name]: value,
+        });
+      };
+    
 
   return (
     <Flex
@@ -57,120 +86,84 @@ function ViewLogs(props) {
                 </Button>
               </RouteLink>
           <Stack align={'center'}>
-            <Heading fontSize={'4xl'} textAlign={'center'}>
-              Add new user
+            <Heading fontSize={'2xl'} textAlign={'center'}>
+              View logs
             </Heading>
           </Stack>
           <Box
             rounded={'lg'}
             bg={useColorModeValue('white', 'gray.700')}
             boxShadow={'lg'}
-            p={8}
+            p={4}
           >
-            <Stack spacing={4}>
-              <HStack>
-                <Box>
-                  
-                </Box>
-                <Box>
-                  <FormControl id="lastName" isRequired>
-                    <FormLabel>Last Name</FormLabel>
-                    <Input
-                      required
-                      //onChange={onRegChange}
-                      //value={registerInfo.name_last}
-                      name="name_last"
-                      type="text"
-                      placeholder="Smith"
-                    />
-                  </FormControl>
-                </Box>
-              </HStack>
-              <FormControl id="email" isRequired>
-                <FormLabel>Email address</FormLabel>
-                
-                <Input
-                  required
-                  //onChange={onRegChange}
-                  //value={registerInfo.email}
-                  name="email"
-                  type="email"
-                  placeholder="example@email.com"
-                />
-              </FormControl>
-
-              <FormControl id="address" isRequired>
-                <FormLabel>Condo / Apt Number</FormLabel>
-                <Input
-                  required
-                  //onChange={onRegChange}
-                  //value={registerInfo.address}
-                  name="address"
-                  type="text"
-                  placeholder="88/123"
-                />
-              </FormControl>
+            <Stack spacing={2}>
   
               <FormControl id="role" isRequired>
-                  <FormLabel>
-                    Role
+                  <FormLabel fontSize={'sm'} fontWeight='bold'>
+                    Log type
                   </FormLabel>
-
                   <Select
-                    name="role"
-                    //defaultValue={registerInfo.role}
-                    //onChange={onRegChange}
+                    name="type"
+                    placeholder='Select option'
+                    onChange={onFormChange}
                   >
-                    <option value="user">user</option>
-                    <option value="guard">guard</option>
-                    <option value="admin">admin</option>
+                    <option value="booking">Booking</option>
+                    <option value="refund">Refund</option>
+                    <option value="topup">Top-up</option>
+                    <option value="registration">Registration</option>
+                    <option value="edit">Edit</option>
+                    <option value="other">Other</option>
+                    <option value="all">All</option>
+                  </Select>
+                </FormControl>
+                <FormControl id="duration" isRequired>
+                  <FormLabel fontSize={'sm'} fontWeight='bold'>
+                    Duration
+                  </FormLabel>
+                  <Select
+                    name="duration"
+                    placeholder='Select option'
+                    onChange={onFormChange}
+                  >
+                    <option value="3">Past 3 Days</option>
+                    <option value="7">Past 7 Days</option>
+                    <option value="30">Past 30 Days</option>
+                    <option value="90">Past 3 Months</option>
+                    <option value="180">Past 6 Months</option>
+                    <option value="365">Past 1 Year</option>
+                    <option value="All">All</option>
                   </Select>
                 </FormControl>
   
-              <FormControl id="password" isRequired>
-                <FormLabel>Password</FormLabel>
-                <InputGroup>
-                  <Input
-                    name="password"
-                    required
-                    //onChange={onRegChange}
-                    //value={registerInfo.password}
-                    //type={showPassword ? 'text' : 'password'}
-                  />
-                </InputGroup>
-              </FormControl>
-  
-              <FormControl id="confirm_password" isRequired>
-                <FormLabel>Confirm Password</FormLabel>
-                <InputGroup>
-                  <Input
-                    required
-                    //onChange={onRegChange}
-                    //value={registerInfo.confirm_password}
-                    //name="confirm_password"
-                    //type={showPassword ? 'text' : 'password'}
-                  />
-                </InputGroup>
-              </FormControl>
+              
   
               <Stack spacing={10} pt={2}>
                 <Button
-                  //onClick={register}
+                  onClick={fetchLogs}
                   loadingText="Submitting"
-                  size="lg"
+                  size="md"
                   bg={'blue.400'}
                   color={'white'}
                   _hover={{
                     bg: 'blue.500',
                   }}
                 >
-                  Sign up
+                  Get logs
                 </Button>
                 
               </Stack>
               
             </Stack>
           </Box>
+            <Flex flexDirection={'column'} gap={2} px={2}>
+                  {logs.map(log => {
+                    return(
+                        <div>
+                            <Log log={log}/>
+                        </div>
+                    )
+                  })}
+          </Flex>
         </Stack>
         
       </Flex>
