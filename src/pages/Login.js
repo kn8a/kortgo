@@ -20,6 +20,7 @@ import { Link as RouteLink } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import KortGo from '../assets/images/kortgo-logo.svg'
+import { ColorModeSwitcher } from '../ColorModeSwitcher';
 
 export default function Login(props) {
   const toast = useToast();
@@ -86,14 +87,16 @@ export default function Login(props) {
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
+      
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={8} px={6}>
+      
         <Stack align={'center'}>
             <Image src={KortGo} px={10}/>
             
             
             <Divider></Divider>
           
-          <Heading fontSize={'4xl'} textAlign='center'>Log in to your account</Heading>
+          <Heading fontSize={'2xl'} textAlign='center'>Log in to your account</Heading>
           <Text fontSize={'lg'} color={'gray.600'} textAlign='center'>
             Don't have an account?{' '}
             <RouteLink to={'/register'}>
@@ -150,11 +153,14 @@ export default function Login(props) {
               >
                 Sign in
               </Button>
+              
             </Stack>
           </Stack>
 
         </Box>
+        <Flex alignItems={'center'} gap={2} justifyContent={'center'}><ColorModeSwitcher/><Text alignItems={'center'}>Light/Dark mode</Text></Flex>
       </Stack>
+      
     </Flex>
   );
 }

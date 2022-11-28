@@ -11,7 +11,9 @@ function DbCleanup(props) {
     }
   }, []);
 
-  return <div>DbCleanup</div>;
+  return(
+    <div>DbCleanup</div>
+  ) 
 }
 
 export default DbCleanup;

@@ -39,6 +39,7 @@ import {
   FaRegWindowClose,
   FaRegCalendarTimes,
 } from 'react-icons/fa';
+import { ColorModeSwitcher } from '../ColorModeSwitcher';
 
 function AdminMenu(props) {
   const navigate = useNavigate();
@@ -178,6 +179,8 @@ function AdminMenu(props) {
             </Flex>
 
             {/* <Button colorScheme={'blue'}>My account</Button> */}
+            <Flex gap={4} justifyContent='center'>
+            <ColorModeSwitcher/>
             <Button
               onClick={() => {
                 props.setLogin({});
@@ -188,6 +191,7 @@ function AdminMenu(props) {
             >
               Logout
             </Button>
+            </Flex>
           </Stack>
         </Box>
       </Stack>

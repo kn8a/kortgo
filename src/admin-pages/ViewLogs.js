@@ -120,7 +120,7 @@ function ViewLogs(props) {
                 <option value="90">Past 3 Months</option>
                 <option value="180">Past 6 Months</option>
                 <option value="365">Past 1 Year</option>
-                <option value="All">All</option>
+                <option value="730">Past 2 years</option>
               </Select>
             </FormControl>
 
