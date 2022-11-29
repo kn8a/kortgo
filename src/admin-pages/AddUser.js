@@ -9,15 +9,11 @@ import {
   Stack,
   Button,
   Heading,
-  Text,
   useColorModeValue,
-  Link,
   useToast,
   Select,
-  FormHelperText,
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { Link as RouteLink } from 'react-router-dom';

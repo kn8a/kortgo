@@ -55,6 +55,7 @@ export default function Login(props) {
       .then(response => {
         if (response.data.token) {
           props.setLogin(response.data);
+          //console.log(response.data)
           if (rememberMe) {
             localStorage.setItem('waterfordToken', response.data.token);
             localStorage.setItem('waterfordUserId', response.data.id);
@@ -65,7 +66,15 @@ export default function Login(props) {
             localStorage.setItem('waterfordLastName', response.data.name_last);
           }
           setCredentials({ email: '', password: '' });
-          navigate('/');
+
+          if (response.data.role == 'user') {
+            navigate('/');
+          } else if (response.data.role == 'admin') {
+            navigate('/admin');
+          } else if (response.data.role == 'guard') {
+            navigate('/guard')
+          }
+          
         }
       })
       .catch(error => {
@@ -144,12 +153,11 @@ export default function Login(props) {
               </Stack>
               <Button
                 onClick={login}
-                bg={'blue.400'}
+                
                 size="lg"
-                color={'white'}
-                _hover={{
-                  bg: 'blue.500',
-                }}
+                colorScheme={'whatsapp'}
+                shadow='md'
+                
               >
                 Sign in
               </Button>

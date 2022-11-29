@@ -2,16 +2,11 @@ import React, { useEffect } from 'react';
 import {
   Flex,
   Box,
-  FormControl,
-  FormLabel,
-  Input,
   Stack,
   Button,
   Heading,
   Text,
-  useColorModeValue,
   useToast,
-  Select,
 } from '@chakra-ui/react';
 
 import { useState } from 'react';
@@ -20,7 +15,7 @@ import axios from 'axios';
 import User from './components/User';
 import Loader from '../components/Loader';
 
-import { FaArrowLeft, FaCaretLeft } from 'react-icons/fa';
+import { FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 function ManageUsers(props) {

@@ -12,7 +12,7 @@ import { Link as RouteLink } from 'react-router-dom';
 import BookingAdmin from './components/BookingAdmin';
 import Loader from '../components/Loader';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft, FaCaretLeft } from 'react-icons/fa';
+import { FaArrowLeft } from 'react-icons/fa';
 
 function FutureBookings(props) {
   const toast = useToast();

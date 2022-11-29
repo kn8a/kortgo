@@ -81,6 +81,10 @@ function BookingAdmin(props) {
               return <Text key={time.time}>{time.time}</Text>;
             })}
           </Flex>
+          <Text>
+            <strong>Status:</strong>
+            {` ${props.booking.status}`}
+          </Text>
         </Flex>
         <Divider />
         <Flex justifyContent={'flex-end'} alignItems={'center'} w="full">

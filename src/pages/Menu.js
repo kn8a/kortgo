@@ -25,6 +25,7 @@ import { ColorModeSwitcher } from '../ColorModeSwitcher';
 function Menu(props) {
   const navigate = useNavigate();
   const isAdminURL = `${process.env.REACT_APP_API_URL}/admin/check`
+  const isGuardURL = `${process.env.REACT_APP_API_URL}/guard/check`
 
   useEffect(() => {
     if (!props.loggedIn.token) {
@@ -41,6 +42,21 @@ function Menu(props) {
       }
     })
     .catch(err => {
+
+      console.log('user')
+    })
+  },[])
+
+  useEffect(() => {
+    axios.get(isGuardURL,{headers: { Authorization: `Bearer ${props.loggedIn.token}` }})
+    .then(response => {
+      console.log(response.data)
+      if (response.data.guard === true) {
+        navigate('/guard')
+      }
+    })
+    .catch(err => {
+      
       console.log('user')
     })
   },[])
@@ -81,6 +97,11 @@ function Menu(props) {
             <RouteLink to={'/Bookings'}>
               <Button colorScheme={'blue'} width="full" leftIcon={<CalendarIcon/>}>
                 My bookings
+              </Button>
+            </RouteLink>
+            <RouteLink to={'/howto'}>
+              <Button colorScheme={'blue'} leftIcon={<InfoOutlineIcon/>} width="full">
+                Manage account
               </Button>
             </RouteLink>
             <RouteLink to={'/howto'}>

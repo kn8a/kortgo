@@ -9,15 +9,16 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { Link as RouteLink } from 'react-router-dom';
-import BookingAdmin from './components/BookingAdmin';
+import GuardBooking from '../components/GuardBooking';
 import Loader from '../components/Loader';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft} from 'react-icons/fa';
+import { FaArrowLeft, FaCaretLeft, } from 'react-icons/fa';
+import { LockIcon, RepeatIcon } from '@chakra-ui/icons';
 
-function PastBookings(props) {
-  const toast = useToast();
+function GuardPage(props) {
+    const toast = useToast();
   const navigate = useNavigate();
-  const pastBookingsURL = `${process.env.REACT_APP_API_URL}/admin/bookings/past`;
+  const BookingsURL = `${process.env.REACT_APP_API_URL}/guard/bookings`;
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
@@ -28,16 +29,16 @@ function PastBookings(props) {
 
   useEffect(() => {
     axios
-      .get(pastBookingsURL, {
+      .get(BookingsURL, {
         headers: { Authorization: `Bearer ${props.loggedIn.token}` },
       })
       .then(response => {
-        //console.log(response.data.upcoming)
+        console.log(response.data.bookings)
         if (response.data.bookings.length == 0) {
-          navigate('/admin');
+          
           toast({
             title: 'No bookings',
-            description: 'No confirmed bookings in the past 30 days',
+            description: 'There are no bookings for today',
             status: 'warning',
             duration: 2000,
             isClosable: true,
@@ -52,15 +53,16 @@ function PastBookings(props) {
 
   const updateBookings = () => {
     axios
-      .get(pastBookingsURL, {
+      .get(BookingsURL, {
         headers: { Authorization: `Bearer ${props.loggedIn.token}` },
       })
       .then(response => {
+        console.log(response.data.bookings)
         if (response.data.bookings.length == 0) {
-          navigate('/admin');
+          
           toast({
             title: 'No bookings',
-            description: "You don't have any upcoming bookings",
+            description: "There are no bookings for today",
             status: 'warning',
             duration: 2000,
             isClosable: true,
@@ -73,9 +75,9 @@ function PastBookings(props) {
       });
   };
 
-  if (bookings.length == 0) {
-    return <Loader />;
-  }
+//   if (bookings.length == 0) {
+//     return <Loader />;
+//   }
 
   return (
     <Flex
@@ -84,23 +86,40 @@ function PastBookings(props) {
       justify={'space-between'}
       flexDirection={'column'}
     >
-      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w="full">
-        <RouteLink to={'/admin'}>
-          <Button size="sm" colorScheme={'blue'} leftIcon={<FaArrowLeft />}>
-            Back to menu
-          </Button>
-        </RouteLink>
+      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w='full'>
+        <Flex justifyContent={'space-evenly'}>
+        
+                <Button
+                  size="lg"
+                  colorScheme={'blue'}
+                  leftIcon={<RepeatIcon/>}
+                  onClick={updateBookings}
+                >
+                  Refresh
+                </Button>
+
+                <Button
+                  size="lg"
+                  colorScheme={'red'}
+                  leftIcon={<LockIcon/>}
+                  onClick={() => {props.setLogin({}); props.logout()}}
+                >
+                  Logout
+                </Button>
+              
+        </Flex>
+      
         <Stack align={'center'}>
-          <Heading fontSize={'3xl'}>Past bookings</Heading>
+          <Heading fontSize={'3xl'}>Today's bookings</Heading>
           <Divider />
           {/* <Text fontSize={'lg'} >
-            {`Your account balance is ${props.loggedIn.balance}`}
-          </Text> */}
+              {`Your account balance is ${props.loggedIn.balance}`}
+            </Text> */}
         </Stack>
         {bookings.map(booking => {
           return (
             <Flex key={booking.date}>
-              <BookingAdmin
+              <GuardBooking
                 booking={booking}
                 updateBookings={updateBookings}
                 loggedIn={props.loggedIn}
@@ -109,8 +128,9 @@ function PastBookings(props) {
           );
         })}
       </Stack>
+      
     </Flex>
   );
 }
 
-export default PastBookings;
+export default GuardPage

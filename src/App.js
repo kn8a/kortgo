@@ -33,6 +33,7 @@ import FutureBookings from './admin-pages/FutureBookings';
 import ManageUsers from './admin-pages/ManageUsers';
 import AddUser from './admin-pages/AddUser';
 import ViewLogs from './admin-pages/ViewLogs';
+import GuardPage from './pages/GuardPage';
 
 function App() {
 
@@ -136,6 +137,10 @@ function App() {
               <Route
                 path="/admin/logs"
                 element={<ViewLogs loggedIn={loggedIn} setLogin={setLogin} />}
+              />
+              <Route
+                path="/guard"
+                element={<GuardPage loggedIn={loggedIn} setLogin={setLogin} logout={logout} />}
               />
             </Routes>
           </Router>
