@@ -2,33 +2,16 @@ import React from 'react';
 import {
   Flex,
   Box,
-  FormControl,
-  FormLabel,
-  Input,
-  Checkbox,
   Stack,
-  Link,
   Button,
   Heading,
   Text,
   useColorModeValue,
-  useToast,
 } from '@chakra-ui/react';
-import { useState } from 'react';
 import { Link as RouteLink } from 'react-router-dom';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import {
-  PhoneIcon,
-  AddIcon,
-  WarningIcon,
-  InfoOutlineIcon,
-  CalendarIcon,
-  EditIcon,
-  PlusSquareIcon,
-  LockIcon,
-} from '@chakra-ui/icons';
+import { LockIcon } from '@chakra-ui/icons';
 import {
   FaDonate,
   FaBarcode,
@@ -36,7 +19,8 @@ import {
   FaUserPlus,
   FaRegCalendarPlus,
   FaFileInvoiceDollar,
-  FaRegWindowClose,
+  FaDatabase,
+  FaRegListAlt,
   FaRegCalendarTimes,
 } from 'react-icons/fa';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
@@ -160,7 +144,7 @@ function AdminMenu(props) {
                   justifyContent="flex-start"
                   colorScheme={'blue'}
                   width="full"
-                  leftIcon={<FaRegCalendarPlus />}
+                  leftIcon={<FaRegListAlt />}
                 >
                   View logs
                 </Button>
@@ -171,26 +155,26 @@ function AdminMenu(props) {
                   disabled
                   colorScheme={'blue'}
                   width="full"
-                  leftIcon={<FaFileInvoiceDollar />}
+                  leftIcon={<FaDatabase />}
                 >
-                  Database cleanup
+                  Database maintenance
                 </Button>
               </RouteLink>
             </Flex>
 
             {/* <Button colorScheme={'blue'}>My account</Button> */}
-            <Flex gap={4} justifyContent='center'>
-            <ColorModeSwitcher/>
-            <Button
-              onClick={() => {
-                props.setLogin({});
-                props.logout();
-              }}
-              leftIcon={<LockIcon />}
-              colorScheme={'red'}
-            >
-              Logout
-            </Button>
+            <Flex gap={4} justifyContent="center">
+              <ColorModeSwitcher />
+              <Button
+                onClick={() => {
+                  props.setLogin({});
+                  props.logout();
+                }}
+                leftIcon={<LockIcon />}
+                colorScheme={'red'}
+              >
+                Logout
+              </Button>
             </Flex>
           </Stack>
         </Box>
