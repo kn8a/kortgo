@@ -12,7 +12,7 @@ import { Link as RouteLink } from 'react-router-dom';
 import BookingAdmin from './components/BookingAdmin';
 import Loader from '../components/Loader';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft} from 'react-icons/fa';
+import { FaArrowLeft } from 'react-icons/fa';
 
 function PastBookings(props) {
   const toast = useToast();
@@ -32,7 +32,6 @@ function PastBookings(props) {
         headers: { Authorization: `Bearer ${props.loggedIn.token}` },
       })
       .then(response => {
-        //console.log(response.data.upcoming)
         if (response.data.bookings.length == 0) {
           navigate('/admin');
           toast({
@@ -93,9 +92,6 @@ function PastBookings(props) {
         <Stack align={'center'}>
           <Heading fontSize={'3xl'}>Past bookings</Heading>
           <Divider />
-          {/* <Text fontSize={'lg'} >
-            {`Your account balance is ${props.loggedIn.balance}`}
-          </Text> */}
         </Stack>
         {bookings.map(booking => {
           return (
