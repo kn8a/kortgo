@@ -19,7 +19,7 @@ import { useState } from 'react';
 import { Link as RouteLink } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import KortGo from '../assets/images/kortgo-logo.svg'
+import KortGo from '../assets/images/kortgo-logo.svg';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 
 export default function Login(props) {
@@ -44,18 +44,15 @@ export default function Login(props) {
 
   const onRemember = e => {
     setRememberMe(!rememberMe);
-    console.log(rememberMe);
   };
 
   const login = e => {
-    //setLoginBtnState("is-loading")
     e.preventDefault();
     axios
       .post(loginURL, credentials)
       .then(response => {
         if (response.data.token) {
           props.setLogin(response.data);
-          //console.log(response.data)
           if (rememberMe) {
             localStorage.setItem('waterfordToken', response.data.token);
             localStorage.setItem('waterfordUserId', response.data.id);
@@ -72,9 +69,8 @@ export default function Login(props) {
           } else if (response.data.role == 'admin') {
             navigate('/admin');
           } else if (response.data.role == 'guard') {
-            navigate('/guard')
+            navigate('/guard');
           }
-          
         }
       })
       .catch(error => {
@@ -96,17 +92,16 @@ export default function Login(props) {
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={8} px={6}>
-      
         <Stack align={'center'}>
-            <Image src={KortGo} px={10}/>
-            
-            
-            <Divider></Divider>
-          
-          <Heading fontSize={'2xl'} textAlign='center'>Log in to your account</Heading>
-          <Text fontSize={'lg'} color={'gray.600'} textAlign='center'>
+          <Image src={KortGo} px={10} />
+
+          <Divider></Divider>
+
+          <Heading fontSize={'2xl'} textAlign="center">
+            Log in to your account
+          </Heading>
+          <Text fontSize={'lg'} color={'gray.600'} textAlign="center">
             Don't have an account?{' '}
             <RouteLink to={'/register'}>
               <Link color={'blue.400'}>Click here to register</Link>
@@ -153,22 +148,20 @@ export default function Login(props) {
               </Stack>
               <Button
                 onClick={login}
-                
                 size="lg"
                 colorScheme={'whatsapp'}
-                shadow='md'
-                
+                shadow="md"
               >
                 Sign in
               </Button>
-              
             </Stack>
           </Stack>
-
         </Box>
-        <Flex alignItems={'center'} gap={2} justifyContent={'center'}><ColorModeSwitcher/><Text alignItems={'center'}>Light/Dark mode</Text></Flex>
+        <Flex alignItems={'center'} gap={2} justifyContent={'center'}>
+          <ColorModeSwitcher />
+          <Text alignItems={'center'}>Light/Dark mode</Text>
+        </Flex>
       </Stack>
-      
     </Flex>
   );
 }
