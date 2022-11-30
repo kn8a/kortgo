@@ -69,12 +69,10 @@ function Book(props) {
     axios
       .get(`${availabilityURL}${date}`)
       .then(response => {
-        //console.log(response.data.times);
         setTimes(response.data.times);
       })
       .catch(error => {
         setTimes([]);
-        //console.log(error)
         toast({
           title: 'Error',
           description: error.response.data.message,
@@ -82,14 +80,11 @@ function Book(props) {
           duration: 4000,
           isClosable: true,
         });
-        // toast.error(error.response.data.message)
-        // setRegBtnState("")
       });
   };
 
   const select = e => {
     let slotObj = times.find(time => time.value == e.target.id);
-    // let slotObj2 = times.find(time => time.value==Number(e.target.id)+0.5)
     let newTimes = array.pull(times, slotObj);
     let newSelected = [...selected, slotObj];
     newSelected.sort((a, b) => (a.value > b.value ? 1 : -1));
@@ -99,12 +94,9 @@ function Book(props) {
 
   const unselect = e => {
     let slotObj = selected.find(time => time.value == e.target.id);
-    // let slotObj2 = selected.find(time => time.value==Number(e.target.id)+0.5)
     let newTimes = [...times, slotObj];
     newTimes.sort((a, b) => (a.value > b.value ? 1 : -1));
     let newSelected = array.pull(selected, slotObj);
-    // ([...selected, slotObj, slotObj2])
-    // newSelected.sort((a,b)=> (a.value>b.value) ? 1:-1)
     setSelected(newSelected);
     setTimes(newTimes);
   };
@@ -146,7 +138,7 @@ function Book(props) {
         { headers: { Authorization: `Bearer ${props.loggedIn.token}` } }
       )
       .then(response => {
-        props.updateBalance()
+        props.updateBalance();
         onClose();
         toast({
           title: 'Booking Confirmed',
@@ -176,16 +168,12 @@ function Book(props) {
         justify={'center'}
         bg={useColorModeValue('gray.50', 'gray.800')}
       >
-        <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w='full'>
-        <RouteLink to={'/'}>
-                <Button
-                  size="sm"
-                  colorScheme={'blue'}
-                  leftIcon={<FaArrowLeft/>}
-                >
-                  Back to menu
-                </Button>
-              </RouteLink>
+        <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w="full">
+          <RouteLink to={'/'}>
+            <Button size="sm" colorScheme={'blue'} leftIcon={<FaArrowLeft />}>
+              Back to menu
+            </Button>
+          </RouteLink>
           <Stack align={'center'}>
             <Heading fontSize={'4xl'}>New booking</Heading>
             <Text fontSize={'lg'} color={'gray.600'}>
@@ -206,8 +194,6 @@ function Book(props) {
                   size={'lg'}
                   type="date"
                   required
-                  // onChange={onChange}
-                  // value={credentials.email}
                   name="date"
                 />
               </FormControl>
@@ -280,7 +266,6 @@ function Book(props) {
               <Button colorScheme={'blue'} size={'lg'} onClick={checkSlots}>
                 <Text>Book</Text>
               </Button>
-              
             </Stack>
           </Box>
         </Stack>
