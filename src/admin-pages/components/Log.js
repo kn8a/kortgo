@@ -42,6 +42,12 @@ function Log(props) {
             case 'edit':
                 setColor('purple')
                 break
+            case 'refund':
+                setColor('red')
+                break
+            case 'check-in':
+                setColor('blue')
+                break;
             
         }
     })

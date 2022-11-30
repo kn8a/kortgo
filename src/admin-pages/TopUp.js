@@ -37,6 +37,7 @@ function TopUp(props) {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState({});
   const [receipt, setReceipt] = useState('');
+  const [loading,setLoading] = useState(false)
 
   useEffect(() => {
     axios
@@ -44,12 +45,12 @@ function TopUp(props) {
         headers: { Authorization: `Bearer ${props.loggedIn.token}` },
       })
       .then(response => {
-        console.log(response.data.users);
         setUsers(response.data.users);
       });
   }, []);
 
   const topUp = () => {
+    setLoading(true)
     const topUpDetails = {
       userId: selectedUser,
       amount: amount,
@@ -70,6 +71,7 @@ function TopUp(props) {
         });
         setAmount('');
         setReceipt('');
+        setLoading(false)
       })
       .catch(err => {
         toast({
@@ -79,6 +81,7 @@ function TopUp(props) {
           duration: 4000,
           isClosable: true,
         });
+        setLoading(false)
       });
   };
 
@@ -136,7 +139,7 @@ function TopUp(props) {
                     <option
                       value={user._id}
                       key={user._id}
-                    >{`${user.address}-${user.name_first}-${user.balance}`}</option>
+                    >{`${user.address} - ${user.name_first} ${user.name_last}- ${user.balance}`}</option>
                   );
                 })}
               </Select>
@@ -168,14 +171,20 @@ function TopUp(props) {
               />
             </FormControl>
 
-            <Stack spacing={10}>
+            <Stack spacing={2} pt={4}>
+            
+            <Text textAlign={'center'}>
+              <strong>⚠️ Ensure information accuracy</strong>
+            </Text>
               <Button
+              isLoading={loading}
                 onClick={topUp}
+                loadingText='Topping up...'
                 colorScheme='green'
                 size="lg"
                 leftIcon={<FaDonate/>}
               >
-                Top-up
+                {`Top-up ${amount}`}
               </Button>
             </Stack>
           </Stack>

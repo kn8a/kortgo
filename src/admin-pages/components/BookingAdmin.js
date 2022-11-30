@@ -16,18 +16,39 @@ import {
   DrawerFooter,
   useDisclosure,
   useToast,
+  FormControl,
+  Input,
+  FormLabel,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import { useState, useEffect } from 'react';
 
 function BookingAdmin(props) {
+  const [color, setColor] = useState('')
+    useEffect(()=>{
+        switch (props.booking.status) {
+            case 'confirmed':
+                setColor('green')
+                break;
+            
+            case 'completed':
+                setColor('blue')
+                break;
+            
+        }
+    })
   const toast = useToast();
   const cancelURL = `${process.env.REACT_APP_API_URL}/admin/bookings/cancel`;
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const [reason, setReason] = useState('')
+
   const cancelBooking = () => {
+    // props.booking.reason = reason
+    // console.log(props.booking.reason)
     axios
-      .put(cancelURL, props.booking, {
+      .put(cancelURL, {...props.booking, reason:reason}, {
         headers: { Authorization: `Bearer ${props.loggedIn.token}` },
       })
       .then(response => {
@@ -51,11 +72,15 @@ function BookingAdmin(props) {
         });
       });
   };
+
+  const onReasonChange = (e) => {
+    setReason(e.target.value)
+  }
   return (
     <Flex w={'full'}>
       <Flex
         rounded={'lg'}
-        bg={useColorModeValue('green.50', 'green.700')}
+        bg={useColorModeValue(`${color}.50`, `${color}.700`)}
         boxShadow={'md'}
         p={2}
         w="full"
@@ -123,8 +148,23 @@ function BookingAdmin(props) {
                 </Text>
                 {` ${props.booking.slots.length / 2} hour/s`}
               </Box>
+              <FormControl id="reason" isRequired>
+                  <FormLabel>
+                    Refund reason
+                  </FormLabel>
+                  <Input
+                    variant={'outline'}
+                    outlineColor='orange'
+                    required
+                    onChange={onReasonChange}
+                    value={reason}
+                    name="reason"
+                    type="text"
+                  />
+                </FormControl>
               <Box>
                 <Divider mt={2} mb={2} />
+
 
                 <Flex alignItems="center" justifyContent={'space-evenly'}>
                   <Text fontWeight={600} fontSize="lg">
@@ -134,6 +174,7 @@ function BookingAdmin(props) {
                 </Flex>
                 <Divider mt={2} mb={2} />
               </Box>
+              
             </Flex>
           </DrawerBody>
 
