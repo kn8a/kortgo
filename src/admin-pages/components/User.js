@@ -20,7 +20,6 @@ import {
   Select,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { useNavigate } from 'react-router';
 import { FaEdit } from 'react-icons/fa';
 
 function User(props) {
@@ -34,8 +33,6 @@ function User(props) {
 
   const [color, setColor] = useState('green');
   const [warning, setWarning] = useState('');
-
-  //console.log(props.loggedIn)
 
   useEffect(() => {
     if (user._id == props.loggedIn.id) {
@@ -129,7 +126,6 @@ function User(props) {
         p={2}
         w="full"
         justifyContent={'space-between'}
-        //flexDirection={'column'}
         gap={2}
       >
         <Flex flexDirection={'column'}>
