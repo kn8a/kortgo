@@ -16,7 +16,7 @@ import {
 import { useState } from 'react';
 import { Link as RouteLink } from 'react-router-dom';
 import axios from 'axios';
-import { FaArrowLeft, FaDonate, } from 'react-icons/fa';
+import { FaArrowLeft, FaDonate } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 function TopUp(props) {
@@ -24,11 +24,11 @@ function TopUp(props) {
 
   const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!props.loggedIn.token) {
-          navigate('/login');
-        }
-      },[]);
+  useEffect(() => {
+    if (!props.loggedIn.token) {
+      navigate('/login');
+    }
+  }, []);
 
   const getUsersURL = `${process.env.REACT_APP_API_URL}/admin/users-top-up`;
   const topUpURL = `${process.env.REACT_APP_API_URL}/admin/top-up`;
@@ -37,7 +37,7 @@ function TopUp(props) {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState({});
   const [receipt, setReceipt] = useState('');
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     axios
@@ -50,7 +50,7 @@ function TopUp(props) {
   }, []);
 
   const topUp = () => {
-    setLoading(true)
+    setLoading(true);
     const topUpDetails = {
       userId: selectedUser,
       amount: amount,
@@ -71,7 +71,7 @@ function TopUp(props) {
         });
         setAmount('');
         setReceipt('');
-        setLoading(false)
+        setLoading(false);
       })
       .catch(err => {
         toast({
@@ -81,7 +81,7 @@ function TopUp(props) {
           duration: 4000,
           isClosable: true,
         });
-        setLoading(false)
+        setLoading(false);
       });
   };
 
@@ -108,16 +108,12 @@ function TopUp(props) {
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={4} px={4} w='full'>
-      <RouteLink to={'/admin'}>
-                <Button
-                  size="sm"
-                  colorScheme={'blue'}
-                  leftIcon={<FaArrowLeft/>}
-                >
-                  Back to menu
-                </Button>
-              </RouteLink>
+      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={4} px={4} w="full">
+        <RouteLink to={'/admin'}>
+          <Button size="sm" colorScheme={'blue'} leftIcon={<FaArrowLeft />}>
+            Back to menu
+          </Button>
+        </RouteLink>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>Top-up</Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
@@ -172,17 +168,16 @@ function TopUp(props) {
             </FormControl>
 
             <Stack spacing={2} pt={4}>
-            
-            <Text textAlign={'center'}>
-              <strong>⚠️ Ensure information accuracy</strong>
-            </Text>
+              <Text textAlign={'center'}>
+                <strong>⚠️ Ensure information accuracy</strong>
+              </Text>
               <Button
-              isLoading={loading}
+                isLoading={loading}
                 onClick={topUp}
-                loadingText='Topping up...'
-                colorScheme='green'
+                loadingText="Topping up..."
+                colorScheme="green"
                 size="lg"
-                leftIcon={<FaDonate/>}
+                leftIcon={<FaDonate />}
               >
                 {`Top-up ${amount}`}
               </Button>
