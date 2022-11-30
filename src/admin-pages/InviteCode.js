@@ -20,15 +20,13 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
 function InviteCode(props) {
-
   const navigate = useNavigate();
 
-
-    useEffect(() => {
-        if (!props.loggedIn.token) {
-          navigate('/login');
-        }
-      },[]);
+  useEffect(() => {
+    if (!props.loggedIn.token) {
+      navigate('/login');
+    }
+  }, []);
 
   const toast = useToast();
   const inviteURL = `${process.env.REACT_APP_API_URL}/admin/invite`;
@@ -67,16 +65,12 @@ function InviteCode(props) {
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w='full'>
-      <RouteLink to={'/admin'}>
-                <Button
-                  size="sm"
-                  colorScheme={'blue'}
-                  leftIcon={<FaArrowLeft/>}
-                >
-                  Back to menu
-                </Button>
-              </RouteLink>
+      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w="full">
+        <RouteLink to={'/admin'}>
+          <Button size="sm" colorScheme={'blue'} leftIcon={<FaArrowLeft />}>
+            Back to menu
+          </Button>
+        </RouteLink>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>Invitation code</Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
@@ -103,12 +97,7 @@ function InviteCode(props) {
             </FormControl>
 
             <Stack spacing={10}>
-              <Button
-                onClick={generateCode}
-                colorScheme='green'
-                size="lg"
-                
-              >
+              <Button onClick={generateCode} colorScheme="green" size="lg">
                 Generate code
               </Button>
               <Flex>
@@ -122,7 +111,6 @@ function InviteCode(props) {
                   fontSize="x-large"
                 ></Input>
               </Flex>
-              
             </Stack>
           </Stack>
         </Box>
