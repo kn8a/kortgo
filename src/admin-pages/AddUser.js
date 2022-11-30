@@ -42,9 +42,7 @@ export default function AddUser(props) {
   });
 
   const register = e => {
-    // setRegBtnState("is-loading")
     e.preventDefault();
-    //console.log(registerInfo)
     axios
       .post(registerURL, registerInfo, {
         headers: { Authorization: `Bearer ${props.loggedIn.token}` },
@@ -67,7 +65,6 @@ export default function AddUser(props) {
             address: '',
             role: 'user',
           });
-          // toggleRegModal()
         }
       })
       .catch(error => {
@@ -79,8 +76,6 @@ export default function AddUser(props) {
           duration: 4000,
           isClosable: true,
         });
-        // toast.error(error.response.data.message)
-        // setRegBtnState("")
       });
   };
 
@@ -93,11 +88,6 @@ export default function AddUser(props) {
   };
 
   const [showPassword, setShowPassword] = useState(false);
-
-  function validateAddress(input) {
-    let regex = /\d\d\/\d\d\d/i;
-    return regex.test(input);
-  }
 
   return (
     <Flex
