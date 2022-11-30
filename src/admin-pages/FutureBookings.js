@@ -32,7 +32,6 @@ function FutureBookings(props) {
         headers: { Authorization: `Bearer ${props.loggedIn.token}` },
       })
       .then(response => {
-        //console.log(response.data.upcoming)
         if (response.data.bookings.length == 0) {
           navigate('/admin');
           toast({
@@ -84,22 +83,15 @@ function FutureBookings(props) {
       justify={'space-between'}
       flexDirection={'column'}
     >
-      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w='full'>
-      <RouteLink to={'/admin'}>
-                <Button
-                  size="sm"
-                  colorScheme={'blue'}
-                  leftIcon={<FaArrowLeft/>}
-                >
-                  Back to menu
-                </Button>
-              </RouteLink>
+      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w="full">
+        <RouteLink to={'/admin'}>
+          <Button size="sm" colorScheme={'blue'} leftIcon={<FaArrowLeft />}>
+            Back to menu
+          </Button>
+        </RouteLink>
         <Stack align={'center'}>
           <Heading fontSize={'3xl'}>Upcoming bookings</Heading>
           <Divider />
-          {/* <Text fontSize={'lg'} >
-              {`Your account balance is ${props.loggedIn.balance}`}
-            </Text> */}
         </Stack>
         {bookings.map(booking => {
           return (
@@ -114,7 +106,6 @@ function FutureBookings(props) {
           );
         })}
       </Stack>
-      
     </Flex>
   );
 }
