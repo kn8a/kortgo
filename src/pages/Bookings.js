@@ -4,10 +4,7 @@ import {
   Stack,
   Heading,
   Flex,
-  Box,
   Button,
-  Text,
-  useColorModeValue,
   Divider,
   useToast,
 } from '@chakra-ui/react';
@@ -15,7 +12,7 @@ import { Link as RouteLink } from 'react-router-dom';
 import Booking from '../components/Booking';
 import Loader from '../components/Loader';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft, FaCaretLeft } from 'react-icons/fa';
+import { FaArrowLeft} from 'react-icons/fa';
 
 function Bookings(props) {
   const toast = useToast();
@@ -35,7 +32,6 @@ function Bookings(props) {
         headers: { Authorization: `Bearer ${props.loggedIn.token}` },
       })
       .then(response => {
-        //console.log(response.data.upcoming)
         if (response.data.upcoming.length == 0) {
           navigate('/');
           toast({
@@ -67,7 +63,6 @@ function Bookings(props) {
             status: 'warning',
             duration: 2000,
             isClosable: true,
-
           });
         }
         setUpcoming(response.data.upcoming);
@@ -88,22 +83,15 @@ function Bookings(props) {
       justify={'space-between'}
       flexDirection={'column'}
     >
-      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w='full'>
-      <RouteLink to={'/'}>
-                <Button
-                  size="sm"
-                  colorScheme={'blue'}
-                  leftIcon={<FaArrowLeft/>}
-                >
-                  Back to menu
-                </Button>
-              </RouteLink>
+      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w="full">
+        <RouteLink to={'/'}>
+          <Button size="sm" colorScheme={'blue'} leftIcon={<FaArrowLeft />}>
+            Back to menu
+          </Button>
+        </RouteLink>
         <Stack align={'center'}>
           <Heading fontSize={'3xl'}>Upcoming bookings</Heading>
           <Divider />
-          {/* <Text fontSize={'lg'} >
-            {`Your account balance is ${props.loggedIn.balance}`}
-          </Text> */}
         </Stack>
         {upcoming.map(booking => {
           return (
@@ -117,11 +105,7 @@ function Bookings(props) {
             </Flex>
           );
         })}
-
-        
       </Stack>
-
-      
     </Flex>
   );
 }
