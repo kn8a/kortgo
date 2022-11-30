@@ -2,30 +2,28 @@ import React from 'react';
 import {
   Flex,
   Box,
-  FormControl,
-  FormLabel,
-  Input,
-  Checkbox,
   Stack,
-  Link,
   Button,
   Heading,
   Text,
   useColorModeValue,
-  useToast,
 } from '@chakra-ui/react';
-import { useState } from 'react';
 import { Link as RouteLink } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { PhoneIcon, AddIcon, WarningIcon, InfoOutlineIcon, CalendarIcon, EditIcon, PlusSquareIcon, LockIcon } from '@chakra-ui/icons'
+import {
+  InfoOutlineIcon,
+  CalendarIcon,
+  EditIcon,
+  LockIcon,
+} from '@chakra-ui/icons';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 
 function Menu(props) {
   const navigate = useNavigate();
-  const isAdminURL = `${process.env.REACT_APP_API_URL}/admin/check`
-  const isGuardURL = `${process.env.REACT_APP_API_URL}/guard/check`
+  const isAdminURL = `${process.env.REACT_APP_API_URL}/admin/check`;
+  const isGuardURL = `${process.env.REACT_APP_API_URL}/guard/check`;
 
   useEffect(() => {
     if (!props.loggedIn.token) {
@@ -34,32 +32,36 @@ function Menu(props) {
   });
 
   useEffect(() => {
-    axios.get(isAdminURL,{headers: { Authorization: `Bearer ${props.loggedIn.token}` }})
-    .then(response => {
-      console.log(response.data)
-      if (response.data.admin === true) {
-        navigate('/admin')
-      }
-    })
-    .catch(err => {
-
-      console.log('user')
-    })
-  },[])
+    axios
+      .get(isAdminURL, {
+        headers: { Authorization: `Bearer ${props.loggedIn.token}` },
+      })
+      .then(response => {
+        console.log(response.data);
+        if (response.data.admin === true) {
+          navigate('/admin');
+        }
+      })
+      .catch(err => {
+        console.log('user');
+      });
+  }, []);
 
   useEffect(() => {
-    axios.get(isGuardURL,{headers: { Authorization: `Bearer ${props.loggedIn.token}` }})
-    .then(response => {
-      console.log(response.data)
-      if (response.data.guard === true) {
-        navigate('/guard')
-      }
-    })
-    .catch(err => {
-      
-      console.log('user')
-    })
-  },[])
+    axios
+      .get(isGuardURL, {
+        headers: { Authorization: `Bearer ${props.loggedIn.token}` },
+      })
+      .then(response => {
+        console.log(response.data);
+        if (response.data.guard === true) {
+          navigate('/guard');
+        }
+      })
+      .catch(err => {
+        console.log('user');
+      });
+  }, []);
 
   return (
     <Flex
@@ -68,7 +70,7 @@ function Menu(props) {
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w='full'>
+      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w="full">
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>
             Welcome {`${props.loggedIn.name_first}`}
@@ -90,33 +92,55 @@ function Menu(props) {
             width="full"
           >
             <RouteLink to={'/book'}>
-              <Button colorScheme={'green'} width="full" leftIcon={<EditIcon/>} size={'lg'}>
+              <Button
+                colorScheme={'green'}
+                width="full"
+                leftIcon={<EditIcon />}
+                size={'lg'}
+              >
                 New booking
               </Button>
             </RouteLink>
             <RouteLink to={'/Bookings'}>
-              <Button colorScheme={'blue'} width="full" leftIcon={<CalendarIcon/>}>
+              <Button
+                colorScheme={'blue'}
+                width="full"
+                leftIcon={<CalendarIcon />}
+              >
                 My bookings
               </Button>
             </RouteLink>
             <RouteLink to={'/howto'}>
-              <Button colorScheme={'blue'} leftIcon={<InfoOutlineIcon/>} width="full">
+              <Button
+                colorScheme={'blue'}
+                leftIcon={<InfoOutlineIcon />}
+                width="full"
+              >
                 Manage account
               </Button>
             </RouteLink>
             <RouteLink to={'/howto'}>
-              <Button colorScheme={'blue'} leftIcon={<InfoOutlineIcon/>} width="full">
+              <Button
+                colorScheme={'blue'}
+                leftIcon={<InfoOutlineIcon />}
+                width="full"
+              >
                 How to use?
               </Button>
             </RouteLink>
-            <Flex gap={4} justifyContent='center'>
-              <ColorModeSwitcher/>
-              <Button onClick={() => {props.setLogin({}); props.logout()}} leftIcon={<LockIcon/>} colorScheme={'red'}>
-              Logout
-            </Button>
+            <Flex gap={4} justifyContent="center">
+              <ColorModeSwitcher />
+              <Button
+                onClick={() => {
+                  props.setLogin({});
+                  props.logout();
+                }}
+                leftIcon={<LockIcon />}
+                colorScheme={'red'}
+              >
+                Logout
+              </Button>
             </Flex>
-            {/* <Button colorScheme={'blue'}>My account</Button> */}
-            
           </Stack>
         </Box>
       </Stack>
