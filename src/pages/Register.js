@@ -13,9 +13,7 @@ import {
   useColorModeValue,
   Link,
   useToast,
-
   FormHelperText,
-
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
@@ -27,9 +25,7 @@ export default function Register() {
   const navigate = useNavigate();
   const toast = useToast();
 
-
   const registerURL = `${process.env.REACT_APP_API_URL}/users/register`;
-  const validationURL = `${process.env.REACT_APP_API_URL}/users/validate`;
 
   const [registerInfo, setRegisterInfo] = useState({
     name_first: '',
@@ -41,9 +37,7 @@ export default function Register() {
   });
 
   const register = e => {
-    // setRegBtnState("is-loading")
     e.preventDefault();
-    //console.log(registerInfo)
     axios
       .post(registerURL, registerInfo)
       .then(response => {
@@ -51,11 +45,12 @@ export default function Register() {
           toast({
             title: 'Account created.',
             description:
-              'Please verify your email address with the code we sent you.',
+              'Your account has been created. please login with your credentials.',
             status: 'success',
             duration: 9000,
             isClosable: true,
           });
+
           setRegisterInfo({
             name_first: '',
             name_last: '',
@@ -64,7 +59,7 @@ export default function Register() {
             confirm_password: '',
             address: '',
           });
-          // toggleRegModal()
+          navigate('/login');
         }
       })
       .catch(error => {
@@ -76,8 +71,6 @@ export default function Register() {
           duration: 4000,
           isClosable: true,
         });
-        // toast.error(error.response.data.message)
-        // setRegBtnState("")
       });
   };
 
@@ -91,13 +84,6 @@ export default function Register() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  function validateAddress(input) {
-    let regex = /\d\d\/\d\d\d/i;
-    return regex.test(input);
-  }
-
-
-
   return (
     <Flex
       minH={'100vh'}
@@ -105,7 +91,7 @@ export default function Register() {
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w='full'>
+      <Stack spacing={4} mx={'auto'} maxW={'lg'} py={4} px={4} w="full">
         <Stack align={'center'}>
           <Heading fontSize={'4xl'} textAlign={'center'}>
             Sign up
@@ -151,7 +137,7 @@ export default function Register() {
             </HStack>
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
-              
+
               <Input
                 required
                 onChange={onRegChange}
@@ -159,7 +145,11 @@ export default function Register() {
                 name="email"
                 type="email"
                 placeholder="example@email.com"
-              /><FormHelperText>Used only to send important notifications about your bookings. No spam!</FormHelperText>
+              />
+              <FormHelperText>
+                Used only to send important notifications about your bookings.
+                No spam!
+              </FormHelperText>
             </FormControl>
             <FormControl id="address" isRequired>
               <FormLabel>Condo / Apt Number</FormLabel>
@@ -225,7 +215,6 @@ export default function Register() {
               >
                 Sign up
               </Button>
-              
             </Stack>
             <Stack pt={6}>
               <Text align={'center'}>
@@ -237,7 +226,6 @@ export default function Register() {
           </Stack>
         </Box>
       </Stack>
-      
     </Flex>
   );
 }
