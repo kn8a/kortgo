@@ -41,6 +41,7 @@ function Book(props) {
       navigate('/login');
     }
   }, []);
+  
   const toast = useToast();
   const availabilityURL = `${process.env.REACT_APP_API_URL}/bookings/check/`;
 

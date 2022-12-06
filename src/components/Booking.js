@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   useColorModeValue,
@@ -82,10 +82,17 @@ function BookikngDrawer(props) {
               mr={3}
               onClick={props.onClose}
               size="lg"
+              isDisabled={props.loading}
             >
               Go back
             </Button>
-            <Button colorScheme="red" size={'lg'} onClick={props.cancelBooking}>
+            <Button
+              colorScheme="red"
+              size={'lg'}
+              onClick={props.cancelBooking}
+              loadingText="Processing..."
+              isLoading={props.loading}
+            >
               Confirm cancellation
             </Button>
           </Flex>
@@ -96,10 +103,12 @@ function BookikngDrawer(props) {
 }
 
 function Booking(props) {
+  const [cancelLoading, setCancelLoading] = useState(false);
   const toast = useToast();
   const cancelURL = `${process.env.REACT_APP_API_URL}/bookings/cancel`;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelBooking = () => {
+    setCancelLoading(true);
     axios
       .put(cancelURL, props.booking, {
         headers: { Authorization: `Bearer ${props.loggedIn.token}` },
@@ -115,6 +124,7 @@ function Booking(props) {
           duration: 8000,
           isClosable: true,
         });
+        setCancelLoading(false);
       })
       .catch(err => {
         toast({
@@ -124,6 +134,7 @@ function Booking(props) {
           duration: 8000,
           isClosable: true,
         });
+        setCancelLoading(false);
       });
   };
   return (
@@ -166,6 +177,7 @@ function Booking(props) {
       </Flex>
 
       <BookikngDrawer
+        loading={cancelLoading}
         booking={props.booking}
         isOpen={isOpen}
         onClose={onClose}
