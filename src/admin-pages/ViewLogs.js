@@ -29,6 +29,7 @@ function ViewLogs(props) {
     }
   }, []);
 
+  const [loading, setLoading] = useState(false)
   const [logs, setLogs] = useState([]);
   const [logsForm, setLogsForm] = useState({
     type: '',
@@ -36,6 +37,7 @@ function ViewLogs(props) {
   });
 
   const fetchLogs = () => {
+    setLoading(true)
     const logsURL = `${process.env.REACT_APP_API_URL}/admin/logs/${logsForm.type}/${logsForm.duration}`;
     axios
       .get(logsURL, {
@@ -44,7 +46,9 @@ function ViewLogs(props) {
       .then(response => {
         setLogs(response.data.logs);
         console.log(response.data.logs);
+        setLoading(false)
       });
+      
   };
 
   const onFormChange = e => {
@@ -120,7 +124,8 @@ function ViewLogs(props) {
             <Stack spacing={10} pt={2}>
               <Button
                 onClick={fetchLogs}
-                loadingText="Submitting"
+                loadingText="Loading..."
+                isLoading={loading}
                 size="md"
                 bg={'blue.400'}
                 color={'white'}
