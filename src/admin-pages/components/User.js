@@ -31,6 +31,7 @@ function User(props) {
   const [user, setUser] = useState(props.user);
   const [note, setNote] = useState('');
 
+  const [loading, setLoading] = useState(false)
   const [color, setColor] = useState('green');
   const [warning, setWarning] = useState('');
 
@@ -60,6 +61,7 @@ function User(props) {
   };
 
   const submitChanges = () => {
+    
     if (user == userOrg) {
       toast({
         title: 'No updates',
@@ -72,7 +74,7 @@ function User(props) {
     }
     const beforeChange = diff(user, userOrg);
     const toChange = diff(userOrg, user);
-
+    setLoading(true)
     axios
       .put(
         userUpdateURL,
@@ -93,6 +95,7 @@ function User(props) {
           duration: 3000,
           isClosable: true,
         });
+        setLoading(false)
       })
       .catch(err => {
         toast({
@@ -102,6 +105,7 @@ function User(props) {
           duration: 4000,
           isClosable: true,
         });
+        setLoading(false)
       });
   };
 
@@ -308,10 +312,11 @@ function User(props) {
                 mr={3}
                 onClick={cancelEdit}
                 size="lg"
+                isDisabled={loading}
               >
                 Go back
               </Button>
-              <Button colorScheme="green" size={'lg'} onClick={submitChanges}>
+              <Button colorScheme="green" size={'lg'} onClick={submitChanges} loadingText='Saving...' isLoading={loading}>
                 Submit changes
               </Button>
             </Flex>

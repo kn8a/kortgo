@@ -31,6 +31,7 @@ function InviteCode(props) {
   const toast = useToast();
   const inviteURL = `${process.env.REACT_APP_API_URL}/admin/invite`;
 
+  const [loading, setLoading] = useState(false)
   const [address, setAddress] = useState({ address: '' });
   const [code, setCode] = useState('');
 
@@ -40,12 +41,14 @@ function InviteCode(props) {
   };
 
   const generateCode = () => {
+    setLoading(true)
     axios
       .post(inviteURL, address, {
         headers: { Authorization: `Bearer ${props.loggedIn.token}` },
       })
       .then(response => {
         setCode(response.data.code);
+        setLoading(false)
       })
       .catch(err => {
         toast({
@@ -55,6 +58,7 @@ function InviteCode(props) {
           duration: 4000,
           isClosable: true,
         });
+        setLoading(false)
       });
   };
 
@@ -97,7 +101,7 @@ function InviteCode(props) {
             </FormControl>
 
             <Stack spacing={10}>
-              <Button onClick={generateCode} colorScheme="green" size="lg">
+              <Button onClick={generateCode} colorScheme="green" size="lg" isLoading={loading} loadingText='Generating...'>
                 Generate code
               </Button>
               <Flex>

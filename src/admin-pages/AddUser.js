@@ -29,6 +29,8 @@ export default function AddUser(props) {
     }
   }, []);
 
+  const[loading, setLoading] = useState(false)
+
   const registerURL = `${process.env.REACT_APP_API_URL}/admin/users/add`;
 
   const [registerInfo, setRegisterInfo] = useState({
@@ -42,6 +44,7 @@ export default function AddUser(props) {
   });
 
   const register = e => {
+    setLoading(true)
     e.preventDefault();
     axios
       .post(registerURL, registerInfo, {
@@ -66,6 +69,7 @@ export default function AddUser(props) {
             role: 'user',
           });
         }
+        setLoading(false)
       })
       .catch(error => {
         console.log(error);
@@ -76,6 +80,7 @@ export default function AddUser(props) {
           duration: 4000,
           isClosable: true,
         });
+        setLoading(false)
       });
   };
 
@@ -211,6 +216,7 @@ export default function AddUser(props) {
               <Button
                 onClick={register}
                 loadingText="Submitting"
+                isLoading={loading}
                 size="lg"
                 bg={'blue.400'}
                 color={'white'}
@@ -218,7 +224,7 @@ export default function AddUser(props) {
                   bg: 'blue.500',
                 }}
               >
-                Sign up
+                Create user
               </Button>
             </Stack>
           </Stack>
