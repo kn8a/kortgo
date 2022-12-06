@@ -48,6 +48,10 @@ function Book(props) {
   const [times, setTimes] = useState([]); //received available times from API
   const [selected, setSelected] = useState([]); //used for user selected times
 
+  //loading states
+  const [checkLoading, setCheckLoading] = useState(false)
+  const [confirmBookLoading, setConfirmBookLoading] = useState(false)
+
   const onDateChange = e => {
     setDate(e.target.value);
     setTimes([]);
@@ -64,12 +68,14 @@ function Book(props) {
   }, [selected, times, date]);
 
   const checkAvailability = e => {
+    setCheckLoading(true)
     setTimes([]);
     setSelected([]);
     axios
       .get(`${availabilityURL}${date}`)
       .then(response => {
         setTimes(response.data.times);
+        setCheckLoading(false)
       })
       .catch(error => {
         setTimes([]);
@@ -80,6 +86,7 @@ function Book(props) {
           duration: 4000,
           isClosable: true,
         });
+        setCheckLoading(false)
       });
   };
 
@@ -129,8 +136,8 @@ function Book(props) {
   };
 
   const submitBooking = () => {
-    console.log(props.loggedIn.token);
-
+    //console.log(props.loggedIn.token);
+    setConfirmBookLoading(true)
     axios
       .post(
         bookingURL,
@@ -147,6 +154,7 @@ function Book(props) {
           duration: 8000,
           isClosable: true,
         });
+        setConfirmBookLoading(false)
         checkAvailability();
       })
       .catch(err => {
@@ -157,6 +165,7 @@ function Book(props) {
           duration: 8000,
           isClosable: true,
         });
+        setConfirmBookLoading(false)
       });
   };
 
@@ -202,6 +211,8 @@ function Book(props) {
                 colorScheme={'blue'}
                 size={'lg'}
                 onClick={checkAvailability}
+                loadingText='Checking availability...'
+                isLoading={checkLoading}
               >
                 Check availability
               </Button>
@@ -317,10 +328,10 @@ function Book(props) {
             </DrawerBody>
 
             <DrawerFooter justifyContent={'space-evenly'}>
-              <Button colorScheme={'red'} mr={3} onClick={onClose} size="lg">
+              <Button colorScheme={'red'} mr={3} onClick={onClose} size="lg" isDisabled={confirmBookLoading}>
                 X Cancel
               </Button>
-              <Button colorScheme="green" size={'lg'} onClick={submitBooking}>
+              <Button colorScheme="green" size={'lg'} onClick={submitBooking} loadingText='Processing...' isLoading={confirmBookLoading}>
                 🎾 Confirm & Pay
               </Button>
             </DrawerFooter>
