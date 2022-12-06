@@ -97,7 +97,7 @@ export default function Register() {
             Sign up
           </Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
-            To start using the booking system
+            To start using KortGo
           </Text>
         </Stack>
         <Box
