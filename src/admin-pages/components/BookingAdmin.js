@@ -39,9 +39,12 @@ function BookingAdmin(props) {
   const cancelURL = `${process.env.REACT_APP_API_URL}/admin/bookings/cancel`;
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const [cancelLoading, setCancelLoading] = useState(false);
+
   const [reason, setReason] = useState('');
 
   const cancelBooking = () => {
+    setCancelLoading(true);
     axios
       .put(
         cancelURL,
@@ -60,6 +63,7 @@ function BookingAdmin(props) {
           duration: 8000,
           isClosable: true,
         });
+        setCancelLoading(false);
       })
       .catch(err => {
         toast({
@@ -69,6 +73,7 @@ function BookingAdmin(props) {
           duration: 8000,
           isClosable: true,
         });
+        setCancelLoading(false);
       });
   };
 
@@ -182,10 +187,22 @@ function BookingAdmin(props) {
               <strong>This cannot be undone</strong>
             </Text>
             <Flex>
-              <Button colorScheme={'blue'} mr={3} onClick={onClose} size="lg">
+              <Button
+                colorScheme={'blue'}
+                mr={3}
+                onClick={onClose}
+                size="lg"
+                isDisabled={cancelLoading}
+              >
                 Go back
               </Button>
-              <Button colorScheme="red" size={'lg'} onClick={cancelBooking}>
+              <Button
+                colorScheme="red"
+                size={'lg'}
+                onClick={cancelBooking}
+                isLoading={cancelLoading}
+                loadingText={'Cancelling...'}
+              >
                 Confirm cancellation
               </Button>
             </Flex>
