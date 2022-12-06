@@ -49,8 +49,8 @@ function Book(props) {
   const [selected, setSelected] = useState([]); //used for user selected times
 
   //loading states
-  const [checkLoading, setCheckLoading] = useState(false)
-  const [confirmBookLoading, setConfirmBookLoading] = useState(false)
+  const [checkLoading, setCheckLoading] = useState(false);
+  const [confirmBookLoading, setConfirmBookLoading] = useState(false);
 
   const onDateChange = e => {
     setDate(e.target.value);
@@ -68,14 +68,14 @@ function Book(props) {
   }, [selected, times, date]);
 
   const checkAvailability = e => {
-    setCheckLoading(true)
+    setCheckLoading(true);
     setTimes([]);
     setSelected([]);
     axios
       .get(`${availabilityURL}${date}`)
       .then(response => {
         setTimes(response.data.times);
-        setCheckLoading(false)
+        setCheckLoading(false);
       })
       .catch(error => {
         setTimes([]);
@@ -86,7 +86,7 @@ function Book(props) {
           duration: 4000,
           isClosable: true,
         });
-        setCheckLoading(false)
+        setCheckLoading(false);
       });
   };
 
@@ -137,7 +137,7 @@ function Book(props) {
 
   const submitBooking = () => {
     //console.log(props.loggedIn.token);
-    setConfirmBookLoading(true)
+    setConfirmBookLoading(true);
     axios
       .post(
         bookingURL,
@@ -154,7 +154,7 @@ function Book(props) {
           duration: 8000,
           isClosable: true,
         });
-        setConfirmBookLoading(false)
+        setConfirmBookLoading(false);
         checkAvailability();
       })
       .catch(err => {
@@ -165,7 +165,7 @@ function Book(props) {
           duration: 8000,
           isClosable: true,
         });
-        setConfirmBookLoading(false)
+        setConfirmBookLoading(false);
       });
   };
 
@@ -211,7 +211,7 @@ function Book(props) {
                 colorScheme={'blue'}
                 size={'lg'}
                 onClick={checkAvailability}
-                loadingText='Checking availability...'
+                loadingText="Checking availability..."
                 isLoading={checkLoading}
               >
                 Check availability
@@ -328,10 +328,22 @@ function Book(props) {
             </DrawerBody>
 
             <DrawerFooter justifyContent={'space-evenly'}>
-              <Button colorScheme={'red'} mr={3} onClick={onClose} size="lg" isDisabled={confirmBookLoading}>
+              <Button
+                colorScheme={'red'}
+                mr={3}
+                onClick={onClose}
+                size="lg"
+                isDisabled={confirmBookLoading}
+              >
                 X Cancel
               </Button>
-              <Button colorScheme="green" size={'lg'} onClick={submitBooking} loadingText='Processing...' isLoading={confirmBookLoading}>
+              <Button
+                colorScheme="green"
+                size={'lg'}
+                onClick={submitBooking}
+                loadingText="Processing..."
+                isLoading={confirmBookLoading}
+              >
                 🎾 Confirm & Pay
               </Button>
             </DrawerFooter>
