@@ -17,12 +17,15 @@ import {
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import { useState } from 'react';
 
 function GuardBooking(props) {
+  const [confirmLoading, setConfirmLoading] = useState(false);
     const toast = useToast();
     const confirmURL = `${process.env.REACT_APP_API_URL}/guard/confirm`;
     const { isOpen, onOpen, onClose } = useDisclosure();
     const confirmBooking = () => {
+      setConfirmLoading(true)
       axios
         .put(confirmURL, {id: props.booking._id} , {
           headers: { Authorization: `Bearer ${props.loggedIn.token}` },
@@ -37,6 +40,7 @@ function GuardBooking(props) {
             duration: 8000,
             isClosable: true,
           });
+          setConfirmLoading(false)
         })
         .catch(err => {
           toast({
@@ -46,6 +50,7 @@ function GuardBooking(props) {
             duration: 8000,
             isClosable: true,
           });
+          setConfirmLoading(false)
         });
     };
     return (
@@ -153,10 +158,10 @@ function GuardBooking(props) {
                 <strong>This cannot be undone</strong>
               </Text>
               <Flex justifyContent={'space-around'} w='100%'>
-                <Button colorScheme={'blue'} mr={3} onClick={onClose} size="lg">
+                <Button colorScheme={'blue'} mr={3} onClick={onClose} size="lg" isDisabled={confirmLoading}>
                   Cancel
                 </Button>
-                <Button colorScheme="green" size={'lg'} onClick={confirmBooking}>
+                <Button colorScheme="green" size={'lg'} onClick={confirmBooking} loadingText='Processing...' isLoading={confirmLoading}>
                   Confirm
                 </Button>
               </Flex>
