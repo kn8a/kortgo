@@ -16,7 +16,7 @@ import {
   FormHelperText,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+//import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { Link as RouteLink } from 'react-router-dom';
@@ -24,7 +24,7 @@ import { Link as RouteLink } from 'react-router-dom';
 export default function Register() {
   const navigate = useNavigate();
   const toast = useToast();
-
+  const [loading, setLoading] = useState(false)
   const registerURL = `${process.env.REACT_APP_API_URL}/users/register`;
 
   const [registerInfo, setRegisterInfo] = useState({
@@ -37,6 +37,7 @@ export default function Register() {
   });
 
   const register = e => {
+    setLoading(true)
     e.preventDefault();
     axios
       .post(registerURL, registerInfo)
@@ -59,7 +60,9 @@ export default function Register() {
             confirm_password: '',
             address: '',
           });
+          setLoading(false)
           navigate('/login');
+          
         }
       })
       .catch(error => {
@@ -71,6 +74,7 @@ export default function Register() {
           duration: 4000,
           isClosable: true,
         });
+        setLoading(false)
       });
   };
 
@@ -187,6 +191,9 @@ export default function Register() {
                   type={showPassword ? 'text' : 'password'}
                 />
               </InputGroup>
+              <FormHelperText>
+                Must be at least 8 characters.
+              </FormHelperText>
             </FormControl>
 
             <FormControl id="confirm_password" isRequired>
@@ -199,13 +206,16 @@ export default function Register() {
                   name="confirm_password"
                   type={showPassword ? 'text' : 'password'}
                 />
+                
               </InputGroup>
+              
             </FormControl>
 
             <Stack spacing={10} pt={2}>
               <Button
                 onClick={register}
-                loadingText="Submitting"
+                loadingText="Registering..."
+                isLoading={loading}
                 size="lg"
                 bg={'blue.400'}
                 color={'white'}

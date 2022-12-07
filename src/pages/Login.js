@@ -26,7 +26,7 @@ export default function Login(props) {
   const toast = useToast();
   const navigate = useNavigate();
   const loginURL = `${process.env.REACT_APP_API_URL}/users/login`;
-
+  const [loading, setLoading] = useState(false)
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
@@ -47,6 +47,7 @@ export default function Login(props) {
   };
 
   const login = e => {
+    setLoading(true)
     e.preventDefault();
     axios
       .post(loginURL, credentials)
@@ -63,7 +64,7 @@ export default function Login(props) {
             localStorage.setItem('waterfordLastName', response.data.name_last);
           }
           setCredentials({ email: '', password: '' });
-
+          setLoading(false)
           if (response.data.role == 'user') {
             navigate('/');
           } else if (response.data.role == 'admin') {
@@ -72,6 +73,7 @@ export default function Login(props) {
             navigate('/guard');
           }
         }
+        
       })
       .catch(error => {
         console.log(error);
@@ -82,6 +84,7 @@ export default function Login(props) {
           duration: 4000,
           isClosable: true,
         });
+        setLoading(false)
       });
   };
 
@@ -151,6 +154,8 @@ export default function Login(props) {
                 size="lg"
                 colorScheme={'whatsapp'}
                 shadow="md"
+                isLoading={loading}
+                loadingText='Signing in...'
               >
                 Sign in
               </Button>
