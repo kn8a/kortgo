@@ -11,7 +11,7 @@ import {
   theme,
 } from '@chakra-ui/react';
 import 'react-toastify/dist/ReactToastify.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Howto from './pages/Howto';
 import axios from 'axios';
 import AdminMenu from './admin-pages/AdminMenu';
@@ -67,7 +67,7 @@ function App() {
     <>
       <ChakraProvider theme={theme}>
         <Box>
-          <Router>
+          <Router basename='/'>
             <Routes>
               <Route
                 path="/"
