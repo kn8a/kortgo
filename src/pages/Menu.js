@@ -24,44 +24,65 @@ function Menu(props) {
   const navigate = useNavigate();
   const isAdminURL = `${process.env.REACT_APP_API_URL}/admin/check`;
   const isGuardURL = `${process.env.REACT_APP_API_URL}/guard/check`;
+  const userCheck = `${process.env.REACT_APP_API_URL}/users/check`;
 
   useEffect(() => {
     if (!props.loggedIn.token) {
       navigate('/login');
     }
-  });
+    axios.get(userCheck, {
+      headers: { Authorization: `Bearer ${props.loggedIn.token}` },
+    })
+    .then(response => {
+      if (response.data.role == 'admin') {
+        navigate('/admin');
+      }
+      else if (response.data.role == 'guard') {
+        navigate('/guard');
+      }
+      else if (response.data.role == 'user') {
+        return
+      }
+      else {
+        console.log('authentication error')
+        props.setLogin({});
+        props.logout()
+        navigate('/login');
+      }
+    })
+  },[]);
 
-  useEffect(() => {
-    axios
-      .get(isAdminURL, {
-        headers: { Authorization: `Bearer ${props.loggedIn.token}` },
-      })
-      .then(response => {
-        console.log(response.data);
-        if (response.data.admin === true) {
-          navigate('/admin');
-        }
-      })
-      .catch(err => {
-        console.log('user');
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(isAdminURL, {
+  //       headers: { Authorization: `Bearer ${props.loggedIn.token}` },
+  //     })
+  //     .then(response => {
+  //       console.log(response.data);
+  //       if (response.data.admin === true) {
+  //         navigate('/admin');
+  //       }
+  //     })
+  //     .catch(err => {
+  //       console.log('user');
+  //     });
+  // }, []);
 
-  useEffect(() => {
-    axios
-      .get(isGuardURL, {
-        headers: { Authorization: `Bearer ${props.loggedIn.token}` },
-      })
-      .then(response => {
-        console.log(response.data);
-        if (response.data.guard === true) {
-          navigate('/guard');
-        }
-      })
-      .catch(err => {
-        console.log('user');
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(isGuardURL, {
+  //       headers: { Authorization: `Bearer ${props.loggedIn.token}` },
+  //     })
+  //     .then(response => {
+  //       console.log(response.data);
+  //       if (response.data.guard === true) {
+  //         navigate('/guard');
+  //       }
+  //     })
+  //     .catch(err => {
+  //       console.log('user');
+  //     });
+  // }, []);
 
   return (
     <Flex
@@ -110,7 +131,7 @@ function Menu(props) {
                 My bookings
               </Button>
             </RouteLink>
-            <RouteLink to={'/howto'}>
+            <RouteLink to={'/account'}>
               <Button
                 colorScheme={'blue'}
                 leftIcon={<InfoOutlineIcon />}
@@ -134,6 +155,7 @@ function Menu(props) {
                 onClick={() => {
                   props.setLogin({});
                   props.logout();
+                  navigate('/login')
                 }}
                 leftIcon={<LockIcon />}
                 colorScheme={'red'}

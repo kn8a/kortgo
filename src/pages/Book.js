@@ -36,11 +36,34 @@ function Book(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const navigate = useNavigate();
+  
+  const userCheck = `${process.env.REACT_APP_API_URL}/users/check`;
+
   useEffect(() => {
     if (!props.loggedIn.token) {
       navigate('/login');
     }
-  }, []);
+    axios.get(userCheck, {
+      headers: { Authorization: `Bearer ${props.loggedIn.token}` },
+    })
+    .then(response => {
+      if (response.data.role == 'admin') {
+        navigate('/admin');
+      }
+      else if (response.data.role == 'guard') {
+        navigate('/guard');
+      }
+      else if (response.data.role == 'user') {
+        return
+      }
+      else {
+        console.log('authentication error')
+        props.setLogin({});
+        props.logout()
+        navigate('/login');
+      }
+    })
+  },[]);
   
   const toast = useToast();
   const availabilityURL = `${process.env.REACT_APP_API_URL}/bookings/check/`;

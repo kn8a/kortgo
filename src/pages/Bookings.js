@@ -20,11 +20,33 @@ function Bookings(props) {
   const upcomingURL = `${process.env.REACT_APP_API_URL}/bookings/upcoming`;
   const [upcoming, setUpcoming] = useState([]);
 
+  const userCheck = `${process.env.REACT_APP_API_URL}/users/check`;
+
   useEffect(() => {
     if (!props.loggedIn.token) {
       navigate('/login');
     }
-  }, []);
+    axios.get(userCheck, {
+      headers: { Authorization: `Bearer ${props.loggedIn.token}` },
+    })
+    .then(response => {
+      if (response.data.role == 'admin') {
+        navigate('/admin');
+      }
+      else if (response.data.role == 'guard') {
+        navigate('/guard');
+      }
+      else if (response.data.role == 'user') {
+        return
+      }
+      else {
+        console.log('authentication error')
+        props.setLogin({});
+        props.logout()
+        navigate('/login');
+      }
+    })
+  },[]);
 
   useEffect(() => {
     axios

@@ -21,11 +21,33 @@ function GuardPage(props) {
   const BookingsURL = `${process.env.REACT_APP_API_URL}/guard/bookings`;
   const [bookings, setBookings] = useState([]);
 
+  const userCheck = `${process.env.REACT_APP_API_URL}/users/check`;
+
   useEffect(() => {
     if (!props.loggedIn.token) {
       navigate('/login');
     }
-  }, []);
+    axios.get(userCheck, {
+      headers: { Authorization: `Bearer ${props.loggedIn.token}` },
+    })
+    .then(response => {
+      if (response.data.role == 'admin') {
+        navigate('/admin');
+      }
+      else if (response.data.role == 'user') {
+        navigate('/');
+      }
+      else if (response.data.role == 'guard') {
+        return
+      }
+      else {
+        console.log('authentication error')
+        props.setLogin({});
+        props.logout()
+        navigate('/login');
+      }
+    })
+  },[]);
 
   useEffect(() => {
     axios

@@ -1,0 +1,98 @@
+{
+    "adminMenu": {
+      "title": "Welcome",
+      "subtitle": "You are logged in as admin",
+      "menu": {
+        "titleBookings": "Manage Bookings",
+        "addBtn": "Add booking",
+        "pastBtn": "Refund past booking",
+        "futureBtn": "Refund future Booking",
+        "titleUsers": "Manage Users",
+        "topUpBtn": "Top-up",
+        "inviteBtn": "New invite code",
+        "manageUsersBtn": "Manage users",
+        "createUserBtn": "Create new user",
+        "titleMaint": "Maintenance",
+        "logsBtn": "View logs",
+        "dbBtn": "Database maintenance",
+        "logout": "Logout" 
+      },
+      "topUp": {
+        "title": "Top-up",
+        "subtitle": "Add funds to user",
+        "selectTitle": "Select user",
+        "amountTitle": "Amount (increments of 50)",
+        "receiptTitle": "Receipt #",
+        "warning": "Ensure information accuracy",
+        "topUpBtn": "Top-up"
+      },
+      "inviteCode": {
+        "title": "Invitation code",
+        "subtitle:": "Generate one-time registration code",
+        "address": "Address",
+        "btn": "Generate code",
+        "Code": "Invite Code"
+      },
+      "manageUsers": {
+        "title": "Manage users",
+        "subtitle": "Edit existing users",
+        "editBtn": "Edit",
+        "userEditDrawer": {
+            "title": "Editing",
+            "fName": "First Name",
+            "lName": "Last Name",
+            "email": "Email",
+            "address": "Address",
+            "bal": "Balance",
+            "status": "Status",
+            "role": "Role",
+            "note": "Admin note",
+            "noteDesc": "(required) Explain the change and reason. For internal use (Not visible to user)",
+            "warning": "Ensure information accuracy",
+            "danger": "Be careful!!! Do NOT to change your status/role. This can lock your account!!! If it must be changed, ask another Admin!",
+            "backBtn": "Go Back",
+            "submitBtn": "Submit Changes"
+        }
+      },
+      "createUser": {
+        "title": "Add new user",
+        "fName": "First Name",
+        "lName": "Last Name",
+        "email": "Email",
+        "address": "Address",  
+        "role": "Role",
+        "pass": "Password",
+        "passConfirm": "Confirm Password",
+        "createUserBtn": "Create user"
+      },
+      "logs": {
+        "title": "View logs",
+        "type": "Log type",
+        "typeSelect": "Select type",
+        "dur": "Duration",
+        "durSelect": "Select duration",
+        "logTypes": {
+          "book": "Booking",
+          "ref": "Refund",
+          "top": "Top-up",
+          "reg": "Registration",
+          "edit": "Edit",
+          "oth": "Other",
+          "all": "All"  
+        },
+        "durations": {
+            "past3": "Past 3 days",
+            "past7": "Past 7 days",
+            "past30": "Past 30 days",
+            "past3m": "Past 3 Months",
+            "past6m": "Past 6 Months",
+            "past1y": "Past 1 Year",
+            "past2y": "Past 2 Years"
+        },
+        "logsBtn":"Get logs"
+      }
+    },
+    "backToMenu": "Back to menu",
+    "hello": "Hello {name}!",
+    "fallback": "Fallback message"
+  }
