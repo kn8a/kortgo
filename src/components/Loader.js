@@ -1,16 +1,17 @@
 import React from 'react';
-import { Flex, Spinner } from '@chakra-ui/react';
+import { Flex, Spinner, Text } from '@chakra-ui/react';
 
 function Loader() {
   return (
-    <Flex minH={'100vh'} align={'center'} justify={'center'}>
+    <Flex minH={'100vh'} align={'center'} justify={'center'} flexDirection='column' gap={2}>
       <Spinner
-        thickness="4px"
+        thickness="10px"
         speed="0.65s"
-        emptyColor="gray.200"
-        color="blue.500"
+        emptyColor="green.100"
+        color="green.400"
         size="xl"
       />
+      <Text>Loading... Please wait.</Text>
     </Flex>
   );
 }

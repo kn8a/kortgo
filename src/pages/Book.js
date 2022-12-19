@@ -241,7 +241,7 @@ function Book(props) {
                 Check availability
               </Button>
               <Divider />
-              <Flex justifyContent={'space-between'}>
+              <Flex justifyContent={'space-evenly'}>
                 <Flex
                   maxH={400}
                   gap={0}

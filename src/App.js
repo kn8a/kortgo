@@ -32,6 +32,7 @@ function App() {
     name_first: localStorage.getItem('waterfordFirstName'),
     name_last: localStorage.getItem('waterfordLastName'),
     token: localStorage.getItem('waterfordToken'),
+    balance: '(loading...)'
   });
 
   useEffect(() => {
