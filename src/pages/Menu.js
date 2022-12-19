@@ -22,8 +22,6 @@ import { ColorModeSwitcher } from '../ColorModeSwitcher';
 
 function Menu(props) {
   const navigate = useNavigate();
-  const isAdminURL = `${process.env.REACT_APP_API_URL}/admin/check`;
-  const isGuardURL = `${process.env.REACT_APP_API_URL}/guard/check`;
   const userCheck = `${process.env.REACT_APP_API_URL}/users/check`;
 
   useEffect(() => {
@@ -51,38 +49,6 @@ function Menu(props) {
       }
     })
   },[]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get(isAdminURL, {
-  //       headers: { Authorization: `Bearer ${props.loggedIn.token}` },
-  //     })
-  //     .then(response => {
-  //       console.log(response.data);
-  //       if (response.data.admin === true) {
-  //         navigate('/admin');
-  //       }
-  //     })
-  //     .catch(err => {
-  //       console.log('user');
-  //     });
-  // }, []);
-
-  // useEffect(() => {
-  //   axios
-  //     .get(isGuardURL, {
-  //       headers: { Authorization: `Bearer ${props.loggedIn.token}` },
-  //     })
-  //     .then(response => {
-  //       console.log(response.data);
-  //       if (response.data.guard === true) {
-  //         navigate('/guard');
-  //       }
-  //     })
-  //     .catch(err => {
-  //       console.log('user');
-  //     });
-  // }, []);
 
   return (
     <Flex
