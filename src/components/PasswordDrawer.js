@@ -36,6 +36,8 @@ export default function PasswordDrawer(props) {
               <InputGroup>
                 <Input
                   name="password"
+                  placeholder='********'
+                  shadow={'inner'}
                   required
                   onChange={props.onPassChange}
                   value={props.pass.password}
@@ -49,6 +51,8 @@ export default function PasswordDrawer(props) {
               <InputGroup>
                 <Input
                   required
+                  placeholder='********'
+                  shadow={'inner'}
                   onChange={props.onPassChange}
                   value={props.pass.confirmPass}
                   name="confirmPass"

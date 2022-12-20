@@ -19,6 +19,7 @@ import {
   useDisclosure,
   Select,
   Divider,
+  HStack,
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -108,6 +109,7 @@ export default function Account(props) {
 
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState({ password: '', confirmPass: '' });
+  const [logDuration, setLogDuration] = useState('')
 
   const onPassChange = e => {
     const value = e.target.value;
@@ -238,7 +240,35 @@ export default function Account(props) {
       });
   };
 
-  const delAccount = () => {};
+  const onDurChange = e => {
+    setLogDuration(e.target.value)
+  };
+
+  const delAccount = () => {
+    setLoading({ ...loading, delete: true })
+    const deleteURL = `${process.env.REACT_APP_API_URL}/users/delete`
+    axios.delete(deleteURL, {
+      headers: { Authorization: `Bearer ${props.loggedIn.token}` },
+    })
+    .then(response => {
+      if (response.data.message == 'deleted'){
+        props.setLogin({});
+        props.logout();
+        navigate('/login')
+      }
+      setLoading({ ...loading, delete: false })
+    })
+    .catch(err=>{
+      toast({
+        title: 'Account deletion failed',
+        description: err.response.data.message,
+        status: 'error',
+        duration: 6000,
+        isClosable: true,
+      });
+      setLoading({ ...loading, delete: false })
+    })
+  };
 
   if (!userInfo.email) {
     return <Loader />;
@@ -281,6 +311,7 @@ export default function Account(props) {
 
               <Input
                 required
+                shadow={'inner'}
                 onChange={onRegChange}
                 value={email}
                 name="email"
@@ -336,7 +367,7 @@ export default function Account(props) {
               <Select
                 name="duration"
                 placeholder="Select option"
-                //onChange={onFormChange}
+                onChange={onDurChange}
               >
                 <option value="3">Past 3 Days</option>
                 <option value="7">Past 7 Days</option>
@@ -400,52 +431,40 @@ export default function Account(props) {
           <DrawerHeader>Confirm account deletion</DrawerHeader>
 
           <DrawerBody>
-            <FormControl id="duration" isRequired>
-              <FormLabel fontSize={'sm'} fontWeight="bold">
-                Duration
-              </FormLabel>
-              <Select
-                name="duration"
-                placeholder="Select option"
-                //onChange={onFormChange}
-              >
-                <option value="3">Past 3 Days</option>
-                <option value="7">Past 7 Days</option>
-                <option value="30">Past 30 Days</option>
-              </Select>
-            </FormControl>
-            <Stack spacing={10} pt={2}>
-              <Button
-                //onClick={fetchLogs}
-                loadingText="Loading..."
-                isLoading={loading}
-                size="md"
-                colorScheme={'blue'}
-              >
-                Get my activity
-              </Button>
-            </Stack>
+            <Flex flexDirection={'column'} gap='4'>
+              <Divider/>
+            <Heading color={'red'} fontSize='x-large'>Warning: Account deletion is final and cannot be undone!</Heading>
+            <Divider/>
+            <Heading fontSize='large' mt={4}>Account deletion requirements:</Heading>
+            <Text>1. You don't have any upcoming bookings.</Text>
+            <Text>2. Your account balance is 0.</Text>
+            </Flex>
+            
           </DrawerBody>
 
-          <DrawerFooter>
+          <DrawerFooter display={'flex'} gap='4' flexDirection='column'>
+            <Heading color={'red'} fontSize='medium'>Account deletion is irreversible!</Heading>
+            <HStack justifyContent={'space-between'}>
             <Button
               colorScheme={'red'}
               mr={3}
               onClick={onDelClose}
               size="lg"
-              //isDisabled={confirmBookLoading}
+              isDisabled={loading.delete}
             >
-              X Close
+              X Cancel
             </Button>
-            {/* <Button
+            <Button
                 colorScheme="green"
                 size={'lg'}
-                //onClick={submitBooking}
+                onClick={delAccount}
                 loadingText="Processing..."
-                //isLoading={confirmBookLoading}
+                isLoading={loading.delete}
               >
-                🎾 Confirm & Pay
-              </Button> */}
+                Confirm deletion
+              </Button>
+            </HStack>
+            
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

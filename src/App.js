@@ -5,11 +5,7 @@ import Book from './pages/Book';
 import Bookings from './pages/Bookings';
 import Account from './pages/Account';
 import Menu from './pages/Menu';
-import {
-  ChakraProvider,
-  Box,
-  theme,
-} from '@chakra-ui/react';
+import { ChakraProvider, Box, theme } from '@chakra-ui/react';
 import 'react-toastify/dist/ReactToastify.css';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Howto from './pages/Howto';
@@ -32,7 +28,7 @@ function App() {
     name_first: localStorage.getItem('waterfordFirstName'),
     name_last: localStorage.getItem('waterfordLastName'),
     token: localStorage.getItem('waterfordToken'),
-    balance: '(loading...)'
+    balance: '(loading...)',
   });
 
   useEffect(() => {
@@ -68,7 +64,7 @@ function App() {
     <>
       <ChakraProvider theme={theme}>
         <Box>
-          <Router basename='/'>
+          <Router basename="/">
             <Routes>
               <Route
                 path="/"
@@ -92,7 +88,13 @@ function App() {
               {/* <Route path='/' element={<Board />} /> */}
               <Route
                 path="/account"
-                element={<Account loggedIn={loggedIn} />}
+                element={
+                  <Account
+                    loggedIn={loggedIn}
+                    setLogin={setLogin}
+                    logout={logout}
+                  />
+                }
               />
               <Route
                 path="/book"
