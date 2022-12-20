@@ -16,6 +16,8 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  InputGroup,
+  FormHelperText,
   useDisclosure,
   Select,
   Divider,
@@ -106,6 +108,15 @@ export default function Account(props) {
   });
 
   const [email, setEmail] = useState('');
+  const [pass, setPass] = useState({password:'', confirmPass:''})
+
+  const onPassChange = e => {
+    const value = e.target.value;
+    setPass({
+      ...pass,
+      [e.target.name]: value,
+    });
+  };
 
   const onRegChange = e => {
     const value = e.target.value;
@@ -153,7 +164,7 @@ export default function Account(props) {
             onEmailClose();
           } else {
             toast({
-              title: 'Email updated',
+              title: 'Email update',
               description: `Email did not update. Please try again.`,
               status: 'error',
               duration: 2000,
@@ -174,11 +185,62 @@ export default function Account(props) {
     }
   };
 
-  const passChange = () => {};
+  const submitPass = () => {
+    if (pass.password != pass.confirmPass) {
+      toast({
+        title: 'Password change',
+        description: `Passwords Don't match.`,
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
+      return
+    }
+    if (pass.password.length < 8){
+      toast({
+        title: 'Password change',
+        description: `Password is too short.`,
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
+      return
+    }
+    setLoading({...loading, password:true})
+    const updateURL = `${process.env.REACT_APP_API_URL}/users/update`;
+    axios.put(updateURL, pass, {
+      headers: { Authorization: `Bearer ${props.loggedIn.token}` },
+    })
+    .then(response=> {
+      console.log(response)
+      if (response.data.message == 'updated') {
+        toast({
+          title: 'Password updated',
+          description: `Your account password has been changed.`,
+          status: 'success',
+          duration: 2000,
+          isClosable: true,
+        });
+      }
+      setLoading({...loading, password:false})
+      onPassClose()
+    })
+    .catch(err => {
+      toast({
+        title: 'Password update failed',
+        description: err.response.data.message,
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
+      setLoading({...loading, password:false})
+      onPassClose()
+    })
+  };
 
   const delAccount = () => {};
 
-  const [showPassword, setShowPassword] = useState(false);
+
 
   if (!userInfo.email) {
     return <Loader />;
@@ -306,19 +368,10 @@ export default function Account(props) {
             >
               X Close
             </Button>
-            {/* <Button
-                colorScheme="green"
-                size={'lg'}
-                //onClick={submitBooking}
-                loadingText="Processing..."
-                //isLoading={confirmBookLoading}
-              >
-                🎾 Confirm & Pay
-              </Button> */}
+
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
-      {/* Email Drawer */}
       <EmailDrawer
         isEmailOpen={isEmailOpen}
         onEmailClose={onEmailClose}
@@ -340,52 +393,61 @@ export default function Account(props) {
           <DrawerHeader>Password change</DrawerHeader>
 
           <DrawerBody>
-            <FormControl id="duration" isRequired>
-              <FormLabel fontSize={'sm'} fontWeight="bold">
-                Duration
-              </FormLabel>
-              <Select
-                name="duration"
-                placeholder="Select option"
-                //onChange={onFormChange}
-              >
-                <option value="3">Past 3 Days</option>
-                <option value="7">Past 7 Days</option>
-                <option value="30">Past 30 Days</option>
-              </Select>
+            <Flex flexDirection={'column'} gap='4'>
+              <Divider/>
+            <FormControl id="password" isRequired>
+              <FormLabel>New password</FormLabel>
+              <InputGroup>
+                <Input
+                  name="password"
+                  required
+                  onChange={onPassChange}
+                  value={pass.password}
+                  type='password'
+                />
+              </InputGroup>
+              <FormHelperText>
+                Must be at least 8 characters.
+              </FormHelperText>
             </FormControl>
-            <Stack spacing={10} pt={2}>
-              <Button
-                //onClick={fetchLogs}
-                loadingText="Loading..."
-                isLoading={loading}
-                size="md"
-                colorScheme={'blue'}
-              >
-                Get my activity
-              </Button>
-            </Stack>
+
+            <FormControl id="confirmPass" isRequired>
+              <FormLabel>Confirm new password</FormLabel>
+              <InputGroup>
+                <Input
+                  required
+                  onChange={onPassChange}
+                  value={pass.confirmPass}
+                  name="confirmPass"
+                  type='password'
+                />
+                
+              </InputGroup>
+              
+            </FormControl>
+            </Flex>
+          
           </DrawerBody>
 
-          <DrawerFooter>
+          <DrawerFooter justifyContent={'space-between'}>
             <Button
               colorScheme={'red'}
               mr={3}
-              onClick={onPassClose}
+              onClick={()=>{onPassClose(); setPass({password:'', confirmPass:''})}}
               size="lg"
-              //isDisabled={confirmBookLoading}
+              isDisabled={loading.password}
             >
-              X Close
+              X Cancel
             </Button>
-            {/* <Button
+            <Button
                 colorScheme="green"
                 size={'lg'}
-                //onClick={submitBooking}
+                onClick={submitPass}
                 loadingText="Processing..."
-                //isLoading={confirmBookLoading}
+                isLoading={loading.password}
               >
-                🎾 Confirm & Pay
-              </Button> */}
+                Change password
+              </Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
