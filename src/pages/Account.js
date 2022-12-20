@@ -8,9 +8,7 @@ import {
   Stack,
   Button,
   Heading,
-  useColorModeValue,
   useToast,
-  useEditableControls,
   Drawer,
   DrawerBody,
   DrawerFooter,
@@ -27,8 +25,10 @@ import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { Link as RouteLink } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
-import { CheckIcon, CloseIcon, EditIcon } from '@chakra-ui/icons';
 import Loader from '../components/Loader';
+import EmailDrawer from '../components/EmailDrawer';
+
+
 
 export default function Account(props) {
   const navigate = useNavigate();
@@ -57,7 +57,12 @@ export default function Account(props) {
 
   const userCheck = `${process.env.REACT_APP_API_URL}/users/check`;
   const userInfoURL = `${process.env.REACT_APP_API_URL}/users/user/${props.loggedIn.id}`;
-  
+  const [loading, setLoading] = useState({
+    email: false,
+    logs: false,
+    password: false,
+    delete: false,
+  });
 
   useEffect(() => {
     if (!props.loggedIn.token) {
@@ -92,61 +97,15 @@ export default function Account(props) {
       });
   }, []);
 
-  const [loading, setLoading] = useState(false); 
-
-  const registerURL = `${process.env.REACT_APP_API_URL}/admin/users/add`;
-
   const [userInfo, setUserInfo] = useState({
     name_first: '',
     name_last: '',
     email: '',
-    password: '',
-    confirm_password: '',
     address: '',
+    balance: 0,
   });
 
   const [email, setEmail] = useState('');
-
-  const register = e => {
-    // setLoading(true)
-    // e.preventDefault();
-    // axios
-    //   .post(registerURL, userInfo, {
-    //     headers: { Authorization: `Bearer ${props.loggedIn.token}` },
-    //   })
-    //   .then(response => {
-    //     if (response.data.message == 'User created successfully') {
-    //       toast({
-    //         title: 'User added.',
-    //         description: `You have successfully added ${userInfo.name_first} ${userInfo.name_last}`,
-    //         status: 'success',
-    //         duration: 3000,
-    //         isClosable: true,
-    //       });
-    //       setUserInfo({
-    //         name_first: '',
-    //         name_last: '',
-    //         email: '',
-    //         password: '',
-    //         confirm_password: '',
-    //         address: '',
-    //         role: 'user',
-    //       });
-    //     }
-    //     setLoading(false)
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //     toast({
-    //       title: 'Error creating account',
-    //       description: error.response.data.message,
-    //       status: 'error',
-    //       duration: 4000,
-    //       isClosable: true,
-    //     });
-    //     setLoading(false)
-    //   });
-  };
 
   const onRegChange = e => {
     const value = e.target.value;
@@ -157,40 +116,63 @@ export default function Account(props) {
     if (email == userInfo.email) {
       toast({
         title: 'No change',
-            description: "Please enter a new email address and try again.",
+        description: 'Please enter a new email address and try again.',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
+      return;
+    }
+    onEmailOpen();
+  };
+
+  const submitEmailUpdate = () => {
+    if (email != userInfo.email) {
+      setLoading({ ...loading, email: true });
+      const updateURL = `${process.env.REACT_APP_API_URL}/users/update`;
+      axios
+        .put(
+          updateURL,
+          { email: email },
+          {
+            headers: { Authorization: `Bearer ${props.loggedIn.token}` },
+          }
+        )
+        .then(response => {
+          console.log(response.data);
+          if (response.data.message == 'updated') {
+            setUserInfo({ ...userInfo, email: email });
+            toast({
+              title: 'Email updated',
+              description: `Email address updated to ${email}`,
+              status: 'success',
+              duration: 2000,
+              isClosable: true,
+            });
+            setLoading({ ...loading, email: false });
+            onEmailClose();
+          } else {
+            toast({
+              title: 'Email updated',
+              description: `Email did not update. Please try again.`,
+              status: 'error',
+              duration: 2000,
+              isClosable: true,
+            });
+            setLoading({ ...loading, email: false });
+          }
+        })
+        .catch(err => {
+          toast({
+            title: 'Email update failed',
+            description: err.response.data.message,
             status: 'error',
             duration: 2000,
             isClosable: true,
-      })
-      return
+          });
+        });
     }
-    onEmailOpen()
   };
-
-  const submitEmailUpdate = ()=>{
-    if (email != userInfo.email) {
-      const updateURL = `${process.env.REACT_APP_API_URL}/users/update`;
-      axios.put(updateURL, {email: email}, {
-        headers: { Authorization: `Bearer ${props.loggedIn.token}` },
-      })
-      .then(response => {
-        console.log(response.data)
-        if (response.data.message == "updated") {
-          setUserInfo({...userInfo, email: email})
-          toast({
-            title: 'Email updated',
-                description: `Email address updated to ${email}`,
-                status: 'success',
-                duration: 2000,
-                isClosable: true,
-          })
-          onEmailClose()
-        }
-      })
-    }
-    
-    
-  }
 
   const passChange = () => {};
 
@@ -248,41 +230,24 @@ export default function Account(props) {
             </FormControl>
 
             <Stack spacing={4} pt={2}>
-              <Button
-                onClick={emailUpdate}
-                loadingText="Submitting"
-                isLoading={loading}
-                colorScheme={'blue'}
-              >
+              <Button onClick={emailUpdate} colorScheme={'blue'}>
                 Update email
               </Button>
               <Divider />
               <Flex flexDirection={'column'} gap="2">
-                <Button
-                  onClick={onLogsOpen}
-                  loadingText="Submitting"
-                  isLoading={loading}
-                  colorScheme={'blue'}
-                >
+                <Button onClick={onLogsOpen} colorScheme={'blue'}>
                   View my activity
                 </Button>
 
-                <Button
-                  onClick={onPassOpen}
-                  loadingText="Submitting"
-                  isLoading={loading}
-                  colorScheme={'blue'}
-                >
+                <Button onClick={onPassOpen} colorScheme={'blue'}>
                   Change password
                 </Button>
-                <Divider mt={2}/>
+                <Divider mt={2} />
                 <Button
                   onClick={onDelOpen}
-                  loadingText="Submitting"
-                  isLoading={loading}
                   size="sm"
                   colorScheme={'red'}
-                  mt='2'
+                  mt="2"
                 >
                   Delete my account
                 </Button>
@@ -354,52 +319,14 @@ export default function Account(props) {
         </DrawerContent>
       </Drawer>
       {/* Email Drawer */}
-      <Drawer
-        isOpen={isEmailOpen}
-        placement="right"
-        onClose={onEmailClose}
-        size="md"
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Confirm email change</DrawerHeader>
-
-          <DrawerBody>
-            <Flex flexDirection={'column'} gap="4">
-              <Text fontSize={'larger'}>
-                Change email address from <strong>{userInfo.email}</strong> to{' '}
-                <strong>{email}</strong>?
-              </Text>
-              <small>
-                Email is only used to send important notifications about your
-                bookings. No spam!
-              </small>
-            </Flex>
-          </DrawerBody>
-
-          <DrawerFooter justifyContent={'space-between'}>
-            <Button
-              colorScheme={'red'}
-              mr={3}
-              onClick={onEmailClose}
-              size="lg"
-              //isDisabled={confirmBookLoading}
-            >
-              X Cancel
-            </Button>
-            <Button
-              colorScheme="green"
-              size={'lg'}
-              onClick={submitEmailUpdate}
-              loadingText="Processing..."
-              //isLoading={confirmBookLoading}
-            >
-              Confirm and save
-            </Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
+      <EmailDrawer
+        isEmailOpen={isEmailOpen}
+        onEmailClose={onEmailClose}
+        loading={loading}
+        email={userInfo.email}
+        _email={email}
+        submitEmailUpdate={submitEmailUpdate}
+      ></EmailDrawer>
       {/* Password Drawer */}
       <Drawer
         isOpen={isPassOpen}
