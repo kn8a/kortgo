@@ -223,6 +223,7 @@ export default function Account(props) {
         });
       }
       setLoading({...loading, password:false})
+      setPass({password:'', confirmPass:''})
       onPassClose()
     })
     .catch(err => {
@@ -234,7 +235,6 @@ export default function Account(props) {
         isClosable: true,
       });
       setLoading({...loading, password:false})
-      onPassClose()
     })
   };
 
