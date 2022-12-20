@@ -29,6 +29,7 @@ import { Link as RouteLink } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import Loader from '../components/Loader';
 import EmailDrawer from '../components/EmailDrawer';
+import PasswordDrawer from '../components/PasswordDrawer';
 
 
 
@@ -108,7 +109,7 @@ export default function Account(props) {
   });
 
   const [email, setEmail] = useState('');
-  const [pass, setPass] = useState({password:'', confirmPass:''})
+  const [pass, setPass] = useState({ password: '', confirmPass: '' });
 
   const onPassChange = e => {
     const value = e.target.value;
@@ -194,9 +195,9 @@ export default function Account(props) {
         duration: 2000,
         isClosable: true,
       });
-      return
+      return;
     }
-    if (pass.password.length < 8){
+    if (pass.password.length < 8) {
       toast({
         title: 'Password change',
         description: `Password is too short.`,
@@ -204,43 +205,42 @@ export default function Account(props) {
         duration: 2000,
         isClosable: true,
       });
-      return
+      return;
     }
-    setLoading({...loading, password:true})
+    setLoading({ ...loading, password: true });
     const updateURL = `${process.env.REACT_APP_API_URL}/users/update`;
-    axios.put(updateURL, pass, {
-      headers: { Authorization: `Bearer ${props.loggedIn.token}` },
-    })
-    .then(response=> {
-      console.log(response)
-      if (response.data.message == 'updated') {
+    axios
+      .put(updateURL, pass, {
+        headers: { Authorization: `Bearer ${props.loggedIn.token}` },
+      })
+      .then(response => {
+        console.log(response);
+        if (response.data.message == 'updated') {
+          toast({
+            title: 'Password updated',
+            description: `Your account password has been changed.`,
+            status: 'success',
+            duration: 2000,
+            isClosable: true,
+          });
+        }
+        setLoading({ ...loading, password: false });
+        setPass({ password: '', confirmPass: '' });
+        onPassClose();
+      })
+      .catch(err => {
         toast({
-          title: 'Password updated',
-          description: `Your account password has been changed.`,
-          status: 'success',
+          title: 'Password update failed',
+          description: err.response.data.message,
+          status: 'error',
           duration: 2000,
           isClosable: true,
         });
-      }
-      setLoading({...loading, password:false})
-      setPass({password:'', confirmPass:''})
-      onPassClose()
-    })
-    .catch(err => {
-      toast({
-        title: 'Password update failed',
-        description: err.response.data.message,
-        status: 'error',
-        duration: 2000,
-        isClosable: true,
+        setLoading({ ...loading, password: false });
       });
-      setLoading({...loading, password:false})
-    })
   };
 
   const delAccount = () => {};
-
-
 
   if (!userInfo.email) {
     return <Loader />;
@@ -368,7 +368,6 @@ export default function Account(props) {
             >
               X Close
             </Button>
-
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
@@ -381,76 +380,15 @@ export default function Account(props) {
         submitEmailUpdate={submitEmailUpdate}
       ></EmailDrawer>
       {/* Password Drawer */}
-      <Drawer
-        isOpen={isPassOpen}
-        placement="right"
-        onClose={onPassClose}
-        size="md"
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Password change</DrawerHeader>
-
-          <DrawerBody>
-            <Flex flexDirection={'column'} gap='4'>
-              <Divider/>
-            <FormControl id="password" isRequired>
-              <FormLabel>New password</FormLabel>
-              <InputGroup>
-                <Input
-                  name="password"
-                  required
-                  onChange={onPassChange}
-                  value={pass.password}
-                  type='password'
-                />
-              </InputGroup>
-              <FormHelperText>
-                Must be at least 8 characters.
-              </FormHelperText>
-            </FormControl>
-
-            <FormControl id="confirmPass" isRequired>
-              <FormLabel>Confirm new password</FormLabel>
-              <InputGroup>
-                <Input
-                  required
-                  onChange={onPassChange}
-                  value={pass.confirmPass}
-                  name="confirmPass"
-                  type='password'
-                />
-                
-              </InputGroup>
-              
-            </FormControl>
-            </Flex>
-          
-          </DrawerBody>
-
-          <DrawerFooter justifyContent={'space-between'}>
-            <Button
-              colorScheme={'red'}
-              mr={3}
-              onClick={()=>{onPassClose(); setPass({password:'', confirmPass:''})}}
-              size="lg"
-              isDisabled={loading.password}
-            >
-              X Cancel
-            </Button>
-            <Button
-                colorScheme="green"
-                size={'lg'}
-                onClick={submitPass}
-                loadingText="Processing..."
-                isLoading={loading.password}
-              >
-                Change password
-              </Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
+      <PasswordDrawer
+        isPassOpen={isPassOpen}
+        onPassClose={onPassClose}
+        loading={loading}
+        pass={pass}
+        setPass={setPass}
+        onPassChange={onPassChange}
+        submitPass={submitPass}
+      ></PasswordDrawer>
       {/* Delete Account Drawer */}
       <Drawer
         isOpen={isDelOpen}
