@@ -23,8 +23,6 @@ import PasswordDrawer from '../components/PasswordDrawer';
 import AccountDeleteDrawer from '../components/AccountDeleteDrawer';
 import LogsDrawer from '../components/LogsDrawer';
 
-
-
 export default function Account(props) {
   const navigate = useNavigate();
   const toast = useToast();
@@ -310,7 +308,6 @@ export default function Account(props) {
               Account Balance: {userInfo.balance}
             </Heading>
             <Divider />
-
             <Flex>
               <Text fontWeight={'bold'}>Name: </Text>
               <Text>
@@ -322,10 +319,8 @@ export default function Account(props) {
               <Text fontWeight={'bold'}>Condo/Apt Number: </Text>
               <Text> {userInfo.address}</Text>
             </Flex>
-
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
-
               <Input
                 required
                 shadow={'inner'}
@@ -336,7 +331,6 @@ export default function Account(props) {
                 placeholder="example@email.com"
               />
             </FormControl>
-
             <Stack spacing={4} pt={2}>
               <Button onClick={emailUpdate} colorScheme={'blue'}>
                 Update email
@@ -346,7 +340,6 @@ export default function Account(props) {
                 <Button onClick={onLogsOpen} colorScheme={'blue'}>
                   View my activity
                 </Button>
-
                 <Button onClick={onPassOpen} colorScheme={'blue'}>
                   Change password
                 </Button>
