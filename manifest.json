@@ -1,6 +1,7 @@
 {
   "short_name": "KortGo",
-  "name": "Court booking app",
+  "name": "KortGo",
+  "description": "Court booking app",
   "icons": [
     {
       "src": "favicon.svg",
