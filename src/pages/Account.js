@@ -30,6 +30,7 @@ import Loader from '../components/Loader';
 import EmailDrawer from '../components/EmailDrawer';
 import PasswordDrawer from '../components/PasswordDrawer';
 import AccountDeleteDrawer from '../components/AccountDeleteDrawer';
+import UserLog from '../components/UserLog';
 
 
 export default function Account(props) {
@@ -110,6 +111,7 @@ export default function Account(props) {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState({ password: '', confirmPass: '' });
   const [logDuration, setLogDuration] = useState('');
+  const [logs, setLogs] = useState([])
 
   const onPassChange = e => {
     const value = e.target.value;
@@ -271,6 +273,23 @@ export default function Account(props) {
       });
   };
 
+  const fetchLogs = () => {
+    setLoading({...loading, logs: true})
+    const logsURL = `${process.env.REACT_APP_API_URL}/users/logs/${logDuration}`;
+    axios
+      .get(logsURL, {
+        headers: { Authorization: `Bearer ${props.loggedIn.token}` },
+      })
+      .then(response => {
+        setLogs(response.data.logs);
+        console.log(response.data.logs);
+        setLoading({...loading, logs: false})
+      })
+      .catch(err => {
+        setLoading({...loading, logs: false})
+      })     
+  };
+
   if (!userInfo.email) {
     return <Loader />;
   }
@@ -375,17 +394,27 @@ export default function Account(props) {
                 <option value="30">Past 30 Days</option>
               </Select>
             </FormControl>
-            <Stack spacing={10} pt={2}>
+            <Stack spacing={2} pt={2}>
               <Button
-                //onClick={fetchLogs}
+                onClick={fetchLogs}
                 loadingText="Loading..."
-                isLoading={loading}
+                isLoading={loading.logs}
                 size="md"
                 colorScheme={'blue'}
               >
                 Get my activity
               </Button>
             </Stack>
+            <Divider mt={2} mb={2} />
+            <Flex flexDirection={'column'} gap={2} px={2}>
+          {logs.map(log => {
+            return (
+              <div>
+                <UserLog log={log} />
+              </div>
+            );
+          })}
+        </Flex>
           </DrawerBody>
 
           <DrawerFooter>
