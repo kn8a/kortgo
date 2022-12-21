@@ -84,7 +84,7 @@ function AdminMenu(props) {
           >
             <Flex flexDir={'column'} gap="2" w={'100%'}>
               <Heading size={'md'}>Manage Bookings</Heading>
-              <RouteLink to={'/admin/invite'}>
+              {/* <RouteLink to={'/admin/invite'}>
                 <Button
                   justifyContent="flex-start"
                   disabled
@@ -94,7 +94,7 @@ function AdminMenu(props) {
                 >
                   Add booking
                 </Button>
-              </RouteLink>
+              </RouteLink> */}
               <RouteLink to={'/admin/past-bookings'}>
                 <Button
                   justifyContent="flex-start"
@@ -172,7 +172,7 @@ function AdminMenu(props) {
                   View logs
                 </Button>
               </RouteLink>
-              <RouteLink to={'/admin/past-bookings'}>
+              {/* <RouteLink to={'/admin/past-bookings'}>
                 <Button
                   justifyContent="flex-start"
                   disabled
@@ -182,7 +182,7 @@ function AdminMenu(props) {
                 >
                   Database maintenance
                 </Button>
-              </RouteLink>
+              </RouteLink> */}
             </Flex>
 
             {/* <Button colorScheme={'blue'}>My account</Button> */}
