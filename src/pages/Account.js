@@ -9,17 +9,8 @@ import {
   Button,
   Heading,
   useToast,
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
   useDisclosure,
-  Select,
   Divider,
-  HStack,
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -87,7 +78,6 @@ export default function Account(props) {
               headers: { Authorization: `Bearer ${props.loggedIn.token}` },
             })
             .then(response => {
-              console.log(response.data);
               setUserInfo(response.data.userInfo);
               setEmail(response.data.userInfo.email);
             });
@@ -283,10 +273,16 @@ export default function Account(props) {
       })
       .then(response => {
         setLogs(response.data.logs);
-        console.log(response.data.logs);
         setLoading({ ...loading, logs: false });
       })
       .catch(err => {
+        toast({
+          title: 'Account deletion failed',
+          description: err.response.data.message,
+          status: 'error',
+          duration: 6000,
+          isClosable: true,
+        });
         setLoading({ ...loading, logs: false });
       });
   };
