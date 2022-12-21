@@ -30,7 +30,8 @@ import Loader from '../components/Loader';
 import EmailDrawer from '../components/EmailDrawer';
 import PasswordDrawer from '../components/PasswordDrawer';
 import AccountDeleteDrawer from '../components/AccountDeleteDrawer';
-import UserLog from '../components/UserLog';
+import LogsDrawer from '../components/LogsDrawer';
+
 
 
 export default function Account(props) {
@@ -111,7 +112,7 @@ export default function Account(props) {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState({ password: '', confirmPass: '' });
   const [logDuration, setLogDuration] = useState('');
-  const [logs, setLogs] = useState([])
+  const [logs, setLogs] = useState([]);
 
   const onPassChange = e => {
     const value = e.target.value;
@@ -274,7 +275,7 @@ export default function Account(props) {
   };
 
   const fetchLogs = () => {
-    setLoading({...loading, logs: true})
+    setLoading({ ...loading, logs: true });
     const logsURL = `${process.env.REACT_APP_API_URL}/users/logs/${logDuration}`;
     axios
       .get(logsURL, {
@@ -283,11 +284,11 @@ export default function Account(props) {
       .then(response => {
         setLogs(response.data.logs);
         console.log(response.data.logs);
-        setLoading({...loading, logs: false})
+        setLoading({ ...loading, logs: false });
       })
       .catch(err => {
-        setLoading({...loading, logs: false})
-      })     
+        setLoading({ ...loading, logs: false });
+      });
   };
 
   if (!userInfo.email) {
@@ -368,68 +369,14 @@ export default function Account(props) {
         </Box>
       </Stack>
       {/* Logs Drawer */}
-      <Drawer
-        isOpen={isLogsOpen}
-        placement="right"
-        onClose={onLogsClose}
-        size="md"
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>View my activity</DrawerHeader>
-
-          <DrawerBody>
-            <FormControl id="duration" isRequired>
-              <FormLabel fontSize={'sm'} fontWeight="bold">
-                Duration
-              </FormLabel>
-              <Select
-                name="duration"
-                placeholder="Select option"
-                onChange={onDurChange}
-              >
-                <option value="3">Past 3 Days</option>
-                <option value="7">Past 7 Days</option>
-                <option value="30">Past 30 Days</option>
-              </Select>
-            </FormControl>
-            <Stack spacing={2} pt={2}>
-              <Button
-                onClick={fetchLogs}
-                loadingText="Loading..."
-                isLoading={loading.logs}
-                size="md"
-                colorScheme={'blue'}
-              >
-                Get my activity
-              </Button>
-            </Stack>
-            <Divider mt={2} mb={2} />
-            <Flex flexDirection={'column'} gap={2} px={2}>
-          {logs.map(log => {
-            return (
-              <div>
-                <UserLog log={log} />
-              </div>
-            );
-          })}
-        </Flex>
-          </DrawerBody>
-
-          <DrawerFooter>
-            <Button
-              colorScheme={'red'}
-              mr={3}
-              onClick={onLogsClose}
-              size="lg"
-              //isDisabled={confirmBookLoading}
-            >
-              X Close
-            </Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
+      <LogsDrawer
+        isLogsOpen={isLogsOpen}
+        onLogsClose={onLogsClose}
+        logs={loading.logs}
+        _logs={logs}
+        onDurChange={onDurChange}
+        fetchLogs={fetchLogs}
+      ></LogsDrawer>
       <EmailDrawer
         isEmailOpen={isEmailOpen}
         onEmailClose={onEmailClose}
