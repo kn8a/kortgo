@@ -29,7 +29,7 @@ import { FaArrowLeft } from 'react-icons/fa';
 import Loader from '../components/Loader';
 import EmailDrawer from '../components/EmailDrawer';
 import PasswordDrawer from '../components/PasswordDrawer';
-
+import AccountDeleteDrawer from '../components/AccountDeleteDrawer';
 
 
 export default function Account(props) {
@@ -109,7 +109,7 @@ export default function Account(props) {
 
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState({ password: '', confirmPass: '' });
-  const [logDuration, setLogDuration] = useState('')
+  const [logDuration, setLogDuration] = useState('');
 
   const onPassChange = e => {
     const value = e.target.value;
@@ -241,33 +241,34 @@ export default function Account(props) {
   };
 
   const onDurChange = e => {
-    setLogDuration(e.target.value)
+    setLogDuration(e.target.value);
   };
 
   const delAccount = () => {
-    setLoading({ ...loading, delete: true })
-    const deleteURL = `${process.env.REACT_APP_API_URL}/users/delete`
-    axios.delete(deleteURL, {
-      headers: { Authorization: `Bearer ${props.loggedIn.token}` },
-    })
-    .then(response => {
-      if (response.data.message == 'deleted'){
-        props.setLogin({});
-        props.logout();
-        navigate('/login')
-      }
-      setLoading({ ...loading, delete: false })
-    })
-    .catch(err=>{
-      toast({
-        title: 'Account deletion failed',
-        description: err.response.data.message,
-        status: 'error',
-        duration: 6000,
-        isClosable: true,
+    setLoading({ ...loading, delete: true });
+    const deleteURL = `${process.env.REACT_APP_API_URL}/users/delete`;
+    axios
+      .delete(deleteURL, {
+        headers: { Authorization: `Bearer ${props.loggedIn.token}` },
+      })
+      .then(response => {
+        if (response.data.message == 'deleted') {
+          props.setLogin({});
+          props.logout();
+          navigate('/login');
+        }
+        setLoading({ ...loading, delete: false });
+      })
+      .catch(err => {
+        toast({
+          title: 'Account deletion failed',
+          description: err.response.data.message,
+          status: 'error',
+          duration: 6000,
+          isClosable: true,
+        });
+        setLoading({ ...loading, delete: false });
       });
-      setLoading({ ...loading, delete: false })
-    })
   };
 
   if (!userInfo.email) {
@@ -419,55 +420,12 @@ export default function Account(props) {
         submitPass={submitPass}
       ></PasswordDrawer>
       {/* Delete Account Drawer */}
-      <Drawer
-        isOpen={isDelOpen}
-        placement="right"
-        onClose={onDelClose}
-        size="md"
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Confirm account deletion</DrawerHeader>
-
-          <DrawerBody>
-            <Flex flexDirection={'column'} gap='4'>
-              <Divider/>
-            <Heading color={'red'} fontSize='x-large'>Warning: Account deletion is final and cannot be undone!</Heading>
-            <Divider/>
-            <Heading fontSize='large' mt={4}>Account deletion requirements:</Heading>
-            <Text>1. You don't have any upcoming bookings.</Text>
-            <Text>2. Your account balance is 0.</Text>
-            </Flex>
-            
-          </DrawerBody>
-
-          <DrawerFooter display={'flex'} gap='4' flexDirection='column'>
-            <Heading color={'red'} fontSize='medium'>Account deletion is irreversible!</Heading>
-            <HStack justifyContent={'space-between'}>
-            <Button
-              colorScheme={'red'}
-              mr={3}
-              onClick={onDelClose}
-              size="lg"
-              isDisabled={loading.delete}
-            >
-              X Cancel
-            </Button>
-            <Button
-                colorScheme="green"
-                size={'lg'}
-                onClick={delAccount}
-                loadingText="Processing..."
-                isLoading={loading.delete}
-              >
-                Confirm deletion
-              </Button>
-            </HStack>
-            
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
+      <AccountDeleteDrawer
+        isDelOpen={isDelOpen}
+        onDelClose={onDelClose}
+        loading={loading}
+        delAccount={delAccount}
+      ></AccountDeleteDrawer>
     </Flex>
   );
 }

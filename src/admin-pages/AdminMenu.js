@@ -192,6 +192,7 @@ function AdminMenu(props) {
                 onClick={() => {
                   props.setLogin({});
                   props.logout();
+                  navigate('/login')
                 }}
                 leftIcon={<LockIcon />}
                 colorScheme={'red'}
