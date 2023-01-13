@@ -319,7 +319,7 @@ export default function Account(props) {
               <Text fontWeight={'bold'}>Condo/Apt Number: </Text>
               <Text> {userInfo.address}</Text>
             </Flex>
-            <FormControl id="email" isRequired>
+            <FormControl id="email">
               <FormLabel>Email address</FormLabel>
               <Input
                 required

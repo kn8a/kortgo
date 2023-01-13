@@ -288,7 +288,7 @@ function User(props) {
                     onChange={onNoteChange}
                     value={note}
                     name="note"
-                    placeholder="(required) Explain the change and reason. For internal use (Not visible to user)"
+                    placeholder="(required) Explain the change and reason."
                   />
                 </FormControl>
               </Flex>
