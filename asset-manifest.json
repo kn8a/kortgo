@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/kortgo/static/css/main.3d10672c.css",
-    "main.js": "/kortgo/static/js/main.ea842c6c.js",
+    "main.js": "/kortgo/static/js/main.0061683f.js",
     "static/js/787.2c2e1d22.chunk.js": "/kortgo/static/js/787.2c2e1d22.chunk.js",
     "static/media/kortgo-logo.svg": "/kortgo/static/media/kortgo-logo.df2138475dd6d47f2b854580d387adb0.svg",
     "index.html": "/kortgo/index.html",
     "main.3d10672c.css.map": "/kortgo/static/css/main.3d10672c.css.map",
-    "main.ea842c6c.js.map": "/kortgo/static/js/main.ea842c6c.js.map",
+    "main.0061683f.js.map": "/kortgo/static/js/main.0061683f.js.map",
     "787.2c2e1d22.chunk.js.map": "/kortgo/static/js/787.2c2e1d22.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.3d10672c.css",
-    "static/js/main.ea842c6c.js"
+    "static/js/main.0061683f.js"
   ]
 }
